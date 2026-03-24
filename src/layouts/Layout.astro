@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  image?: string;
+}
+
+const { title, image = '/pwa-512x512.svg' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | The Automated Solo</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#0a0f18" />
+
+    <!-- OpenGraph / Social Meta Tags -->
+    <meta property="og:title" content={`${title} | The Automated Solo`} />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | The Automated Solo`} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Premium Typography: Inter for UI, Playfair Display for Editorial -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen flex flex-col selection:bg-slate-700 selection:text-white">
+    <!-- Global Navigation -->
+    <nav class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-lg sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="/" class="text-white font-serif font-semibold text-lg tracking-wide hover:text-slate-300 transition-colors">The Automated Solo.</a>
+        <div class="flex gap-8 text-sm font-medium text-slate-400 hidden md:flex">
+          <a href="/about" class="hover:text-emerald-400 transition-colors">About the Lab</a>
+          <a href="/#research" class="hover:text-emerald-400 transition-colors">Research Reports</a>
+          <a href="/playbooks" class="hover:text-emerald-400 transition-colors">Automation Playbooks</a>
+          <a href="/tracker" class="hover:text-emerald-400 transition-colors">Software Index</a>
+        </div>
+      </div>
+    </nav>
+    <slot />
+    
+    <!-- Professional Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-12 px-6 mt-auto">
+      <div class="max-w-6xl mx-auto flex flex-col items-center text-center space-y-6">
+        <div class="max-w-3xl text-xs text-slate-500 leading-relaxed">
+          <p class="font-semibold text-slate-400 mb-2 uppercase tracking-wider">FTC Disclosure</p>
+          <p>I am an independent researcher. Some links on this site are affiliate links, meaning I may earn a commission if you make a purchase, at no extra cost to you. This helps fund my deep-dive testing.</p>
+        </div>
+        <div class="flex items-center justify-center gap-6 text-sm font-medium text-slate-400">
+          <a href="/about" class="hover:text-emerald-400 transition-colors">About Us</a>
+          <a href="/privacy" class="hover:text-emerald-400 transition-colors">Privacy Policy</a>
+          <a href="/terms" class="hover:text-emerald-400 transition-colors">Terms of Service</a>
+        </div>
+        <div class="flex flex-col items-center justify-center space-y-2 mt-4 border-t border-slate-800/80 pt-6">
+          <p class="text-slate-400 text-sm font-serif italic tracking-wide">Directed by James | Lead Systems Architect</p>
+          <div class="text-slate-600 text-xs">
+            &copy; 2026 The Automated Solo. All rights reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

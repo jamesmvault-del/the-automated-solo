@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from 'astro:content';
+import PlaybookLayout from '../../layouts/PlaybookLayout.astro';
+
+export async function getStaticPaths() {
+  const playbooks = await getCollection('playbooks');
+  return playbooks.map(playbook => ({
+    params: { slug: playbook.id },
+    props: { playbook },
+  }));
+}
+
+const { playbook } = Astro.props;
+const { Content } = await render(playbook);
+---
+
+<PlaybookLayout {...playbook.data}>
+  <Content />
+</PlaybookLayout>

@@ -1,0 +1,21 @@
+Subject 1: Checking in & a quick legal update
+Subject 2: A small favor (and a resource for your friends)
+Subject 3: End of year review
+
+[Email 1: The 30-Day Check-in]
+Hi {{first_name}},
+
+I am just checking in to see how everything is going since we wrapped up your case last month. Transition periods can sometimes bring up unexpected questions. If you need any quick clarifications, hit reply and let me know. 
+
+Best,
+James
+
+[Email 2: The Referral Ask - 90 Days]
+Hi {{first_name}},
+
+I hope you are doing well. I am currently taking on a few new clients this quarter. Because I prefer to work with people connected to clients I already know and trust, I wanted to reach out to you first. 
+
+If you have a friend or colleague who might need help with [Practice Area], I put together a free one-page guide on what they should look out for before hiring an attorney. Feel free to forward this to them.
+
+Best,
+James

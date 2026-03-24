@@ -1,17 +1,190 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
+const allPlaybooks = await getCollection('playbooks');
+const latestPlaybook = allPlaybooks
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+
+const allResearch = await getCollection('research');
+const latestResearch = allResearch
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Home">
+  <main class="flex-grow flex flex-col w-full bg-slate-950">
+    <!-- Hero Section -->
+    <section class="flex flex-col items-center justify-center min-h-[90vh] p-6 text-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/50">
+      <div class="max-w-3xl mx-auto space-y-8 animate-fade-in-up">
+        
+        <!-- Premium Dark Glass Badge -->
+        <div class="inline-flex items-center px-3 py-1.5 rounded-full border border-slate-700/50 bg-slate-800/30 backdrop-blur-md text-sm text-slate-300 font-medium tracking-wide shadow-xl">
+          <span class="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+          Independent Systems Research for the Modern Law Firm
+        </div>
+
+        <!-- Hero Headline -->
+        <h1 class="text-5xl md:text-7xl font-semibold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
+          The Automated Solo.
+        </h1>
+
+        <!-- The Persona Introduction -->
+        <p class="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
+          We bridge the gap between legacy legal practice and the AI-driven future. The Automated Solo is a research lab dedicated to vetting, testing, and automating the workflows of US-based solo practitioners.
+        </p>
+
+        <!-- Primary Call to Action -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/playbooks" class="px-8 py-3.5 rounded-md bg-white text-slate-950 font-medium hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+            Explore Playbooks
+          </a>
+          <a href="#research" class="px-8 py-3.5 rounded-md border border-slate-700 text-white hover:bg-slate-800 transition-colors">
+            View Research
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Research Methodology Section -->
+    <section class="py-20 px-6 sm:px-12 bg-slate-950 border-b border-slate-800/50">
+      <div class="max-w-6xl mx-auto">
+        <header class="mb-16 md:text-center">
+          <h2 class="text-2xl md:text-3xl font-serif text-white mb-4">Our Research Methodology</h2>
+          <p class="text-slate-400 text-base font-light max-w-2xl mx-auto">How we evaluate legal technology to ensure reliability, security, and true return on investment.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <!-- Column 1 -->
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+            </div>
+            <h3 class="text-white font-serif text-lg">Stress Testing</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">We do not read marketing copy. We build 100+ task workflows in every tool we review.</p>
+          </div>
+          
+          <!-- Column 2 -->
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <h3 class="text-white font-serif text-lg">Security First</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">We audit data residency, SOC2 compliance, and encryption standards specifically for legal privilege.</p>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            </div>
+            <h3 class="text-white font-serif text-lg">ROI Focused</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">We measure Time Saved vs. Subscription Cost to ensure the automation actually pays for itself.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research & Playbooks Section -->
+    <section id="research" class="py-24 px-6 sm:px-12 bg-slate-950 relative overflow-hidden">
+      <!-- Subtle background glow -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+      
+      <div class="max-w-6xl mx-auto relative z-10">
+        <header class="mb-16 md:text-center">
+          <h2 class="text-3xl md:text-4xl font-serif text-white mb-4">Research & Playbooks</h2>
+          <p class="text-slate-400 text-lg font-light max-w-2xl mx-auto">Deep-dive audits and step-by-step systems to automate your practice.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          {latestResearch && (
+            <article class="flex flex-col relative rounded-2xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800/60 transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.05)] overflow-hidden group">
+              {latestResearch.data.image && (
+                <div class="w-full aspect-video overflow-hidden bg-slate-900 border-b border-slate-800 relative">
+                  <div class="absolute inset-0 bg-slate-900/20 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500"></div>
+                  <img src={latestResearch.data.image} alt={latestResearch.data.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+              )}
+              <div class="p-8 flex flex-col flex-grow">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    {latestResearch.data.tags ? latestResearch.data.tags[0] : 'Research Report'}
+                  </span>
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.2)]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5 animate-pulse"></span>
+                    Verified
+                  </span>
+                </div>
+                <h3 class="text-xl font-serif text-white mb-3 group-hover:text-amber-400 transition-colors">
+                  <a href={`/research/${latestResearch.id}`}>
+                    <span class="absolute inset-0 z-10"></span>
+                    {latestResearch.data.title}
+                  </a>
+                </h3>
+                <p class="text-slate-400 text-sm leading-relaxed flex-grow">
+                  {latestResearch.data.description}
+                </p>
+              </div>
+            </article>
+          )}
+
+          {latestPlaybook && (
+            <article class="flex flex-col relative rounded-2xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800/60 transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.05)] overflow-hidden group">
+              {latestPlaybook.data.image && (
+                <div class="w-full aspect-video overflow-hidden bg-slate-900 border-b border-slate-800 relative">
+                  <div class="absolute inset-0 bg-slate-900/20 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500"></div>
+                  <img src={latestPlaybook.data.image} alt={latestPlaybook.data.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+              )}
+              <div class="p-8 flex flex-col flex-grow">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    {latestPlaybook.data.tags ? latestPlaybook.data.tags[0] : 'Automation Playbook'}
+                  </span>
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+                    Live
+                  </span>
+                </div>
+                <h3 class="text-xl font-serif text-white mb-3 group-hover:text-emerald-400 transition-colors">
+                  <a href={`/playbooks/${latestPlaybook.id}`}>
+                    <span class="absolute inset-0 z-10"></span>
+                    {latestPlaybook.data.title}
+                  </a>
+                </h3>
+                <p class="text-slate-400 text-sm leading-relaxed flex-grow">
+                  {latestPlaybook.data.description}
+                </p>
+              </div>
+            </article>
+          )}
+
+          <!-- Tool Index / Deal Tracker Card -->
+          <article class="flex flex-col relative rounded-2xl border border-slate-700 bg-gradient-to-br from-slate-800/80 to-slate-900/80 hover:from-slate-800 hover:to-slate-900 transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] overflow-hidden group">
+            <div class="p-8 flex flex-col flex-grow relative z-10 h-full justify-center">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-white mb-3 group-hover:text-emerald-400 transition-colors">
+                <a href="/tracker">
+                  <span class="absolute inset-0 z-10"></span>
+                  The Live Software Index
+                </a>
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                Browse our active database of vetted legal technology, lifetime deals, and ROI calculators.
+              </p>
+              <div class="mt-auto flex items-center text-emerald-400 text-sm font-medium">
+                View Tracker <span class="ml-2 transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </div>
+            </div>
+            
+            <!-- Decorative Background Element -->
+            <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-emerald-500/10 blur-[40px] rounded-full group-hover:bg-emerald-500/20 transition-colors duration-500"></div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

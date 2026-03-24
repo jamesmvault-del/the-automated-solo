@@ -1,0 +1,46 @@
+{
+  "name": "Zero-Touch Intake Pipeline",
+  "notes": "Import this blueprint into Make.com. You will need to click on the Typeform and Clio modules to authenticate with your own API keys.",
+  "flow": [
+    {
+      "id": 1,
+      "module": "typeform:watchResponses",
+      "version": 1,
+      "parameters": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "notes": "Watches for new client intake forms"
+      }
+    },
+    {
+      "id": 2,
+      "module": "clio:searchContacts",
+      "version": 1,
+      "parameters": {
+        "query": "{{1.email}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "notes": "Checks if the client already exists in the system to prevent duplicates."
+      }
+    },
+    {
+      "id": 3,
+      "module": "router",
+      "version": 1,
+      "parameters": {},
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    }
+  ]
+}

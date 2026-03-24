@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tools');
+  return tools.map(tool => ({
+    params: { slug: tool.id },
+    props: { tool },
+  }));
+}
+
+const { tool } = Astro.props;
+const { Content } = await render(tool);
+---
+
+<Layout title={`${tool.data.name} | Research Note`} image={tool.data.image}>
+  <main class="min-h-screen bg-slate-950 text-slate-300 py-20 px-6 sm:px-12">
+    <article class="max-w-3xl mx-auto animate-fade-in-up">
+      
+      <header class="mb-12 border-b border-slate-800 pb-8">
+        <a href="/tracker" class="text-emerald-500 hover:text-emerald-400 font-medium tracking-wide text-sm mb-6 inline-block uppercase transition-colors">← Back to Software Index</a>
+        
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+          <h1 class="text-4xl md:text-5xl font-serif text-white leading-tight">{tool.data.name}</h1>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            {tool.data.dealType}
+          </span>
+        </div>
+
+        <p class="text-xl text-slate-400 font-light leading-relaxed mb-8">{tool.data.useCase}</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-slate-900/50 rounded-xl border border-slate-800 mb-8">
+          <div>
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-1">Category</div>
+            <div class="font-medium text-white">{tool.data.category}</div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-1">Standard</div>
+            <div class="font-medium text-slate-400 line-through">{tool.data.standardPrice}</div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-1">Our Deal</div>
+            <div class="font-medium text-emerald-400">{tool.data.dealPrice}</div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-1">Est. ROI</div>
+            <div class="font-medium text-white">{tool.data.roiEstimate}</div>
+          </div>
+        </div>
+
+        <a 
+          href={tool.data.affiliateLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white text-base font-semibold rounded-md transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        >
+          Claim {tool.data.dealType}
+        </a>
+
+        {tool.data.image && (
+          <div class="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border border-slate-800 relative shadow-2xl mt-12 group">
+            <div class="absolute inset-0 bg-slate-900/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500"></div>
+            <img src={tool.data.image} alt={`Cover for ${tool.data.name}`} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </div>
+        )}
+</Layout>

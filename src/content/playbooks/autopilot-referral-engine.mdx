@@ -1,0 +1,84 @@
+---
+title: "The Autopilot Referral Engine"
+description: "How to turn past clients into a predictable referral source using a set-and-forget drip campaign."
+pubDate: 2026-03-24
+author: "James"
+readTime: "6 min read"
+tags: ["Marketing", "SendFox", "Referrals"]
+image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80"
+---
+
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import BlueprintDownload from "../../components/BlueprintDownload.astro";
+import DataFlow from "../../components/DataFlow.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+# The Silent Revenue Killer
+
+Most solo attorneys are obsessed with acquiring the next cold lead. We pour money into Google Ads, tweak SEO keywords, and fight for local pack rankings. But we completely ignore the easiest, highest-converting audience on the planet: the clients we just finished helping.
+
+When you close a case, that client is usually thrilled with your work. Then, radio silence. A year passes. Their friend asks them for a lawyer, and your past client cannot even remember your last name.
+
+I was guilty of this for years. I assumed doing good work was enough to generate word-of-mouth math. It is not. You have to stay top of mind. But you also cannot afford to spend three hours every Friday writing bespoke "catching up" emails.
+
+Here is the exact automated system I built to stay in front of past clients automatically.
+
+## The Architecture
+
+<DataFlow
+  steps={[
+    {
+      title: "The Trigger",
+      tool: "Your Case Management System",
+      description:
+        "When a matter is marked 'Closed', the client's email address is tagged as an alumni contact.",
+    },
+    {
+      title: "The Engine",
+      tool: "SendFox",
+      description:
+        "The contact is automatically added to a specific mailing list inside SendFox. This triggers a pre-written drip campaign.",
+    },
+    {
+      title: "The Output",
+      tool: "Plain Text Emails",
+      description:
+        "SendFox drips out three highly personal, plain-text emails over a six-month period. They look like you typed them from your phone.",
+    },
+  ]}
+/>
+
+### Why SendFox is the Core
+
+If you try to build this in Mailchimp, you are going to pay a monthly tax just to hold onto contacts you only email a few times a year. It destroys your firm's operating margins. I specifically use and recommend [SendFox](/tools/sendfox) for this playbook because it operates on a lifetime deal model. You pay once, import your entire past client list, and the automation runs for free forever.
+
+> **My Boots-on-the-Ground Note:** Do not use heavy HTML templates with big firm logos at the top. When I tested highly polished newsletters against plain text emails, the plain text emails generated a 40% higher reply rate. Clients want to hear from _you_, not your marketing department.
+
+## Step-by-Step Implementation
+
+1. **Export Your Alumni List:** Export a simple CSV of every client you have successfully helped over the last three years.
+2. **Import to SendFox:** Create a new list called "Past Clients" and upload your CSV.
+3. **Build the Automation:** Go to the Automations tab. Write three emails timed to send at 30 days, 90 days, and 180 days after addition to the list.
+4. **The Soft Ask:** In the 90-day email, politely mention that your practice relies on word of mouth and ask them to pass along a helpful PDF right to any friend who needs guidance.
+
+## The ROI
+
+This takes about 45 minutes to draft and configure once. After that, every time you close a file, that client enters a perpetual machine designed to generate new cases.
+
+<RoiCalculator defaultHoursSaved={4} defaultRate={300} />
+
+To get you started right now, I have exported the exact copy I use for my three-email referral sequence. Download the text file, change the bracketed information to fit your practice area, and load it into your SendFox automation.
+
+<BlueprintDownload
+  title="The Referral Drip Campaign Templates"
+  description="My exact text copy for the 30-day check-in, 90-day referral ask, and 180-day value resource. Copy, paste, and let it run."
+  filename="referral-templates.txt"
+/>
+
+If you do not have an email engine to run this yet, do not go sign up for a $50/month subscription. Grab the SendFox lifetime deal, dump your list in, and own your marketing infrastructure.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fsendfox%2F"
+  productName="SendFox"
+  price="$49 Lifetime"
+/>

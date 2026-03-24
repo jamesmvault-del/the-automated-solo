@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  filename: string;
+  description: string;
+}
+const { title, filename, description } = Astro.props;
+---
+<a href={`/blueprints/${filename}`} download={filename} class="my-10 p-6 rounded-xl border border-slate-700/60 bg-slate-800/20 shadow-lg group hover:border-emerald-500/30 hover:bg-slate-800/40 transition-all duration-300 backdrop-blur-sm not-prose cursor-pointer block no-underline hover:no-underline">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div class="flex items-center gap-5">
+      <div class="h-14 w-14 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner">
+        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+      </div>
+      <div>
+        <h4 class="text-white font-medium text-lg tracking-wide mb-1 group-hover:text-emerald-400 transition-colors">{title}</h4>
+        <p class="text-slate-400 text-sm leading-relaxed max-w-lg">{description}</p>
+      </div>
+    </div>
+    <div class="shrink-0 w-full sm:w-auto px-6 py-3 bg-white text-slate-950 text-sm font-medium rounded-md hover:bg-slate-200 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] flex items-center justify-center gap-2 border border-white/20">
+      <span>Get Blueprint</span>
+      <span class="text-slate-500 text-xs font-mono border-l border-slate-300 pl-2 leading-none">{filename}</span>
+    </div>
+  </div>
+</a>

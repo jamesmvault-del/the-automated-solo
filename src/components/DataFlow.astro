@@ -1,0 +1,33 @@
+---
+interface Step {
+  title: string;
+  tool: string;
+  description: string;
+}
+interface Props {
+  steps: Step[];
+}
+const { steps } = Astro.props;
+---
+<div class="my-12 relative not-prose">
+  <!-- Connecting line -->
+  <div class="absolute left-[27px] top-8 bottom-8 w-[2px] bg-slate-800/80 z-0 rounded-full"></div>
+  
+  <div class="space-y-10 relative z-10">
+    {steps.map((step, index) => (
+      <div class="flex items-start gap-6 group">
+        <div class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0 group-hover:border-emerald-500 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all duration-300 shadow-xl shadow-black relative">
+          <span class="text-slate-300 font-mono text-lg">{index + 1}</span>
+          <div class="absolute -z-10 w-full h-full rounded-full bg-emerald-500/0 group-hover:bg-emerald-500/10 transition-colors blur-md"></div>
+        </div>
+        <div class="pt-2 bg-slate-900/30 border border-slate-800/50 rounded-xl p-6 w-full backdrop-blur-sm group-hover:bg-slate-900/50 group-hover:border-slate-700/80 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <h4 class="text-xl font-serif text-white">{step.title}</h4>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-slate-800 text-emerald-400 border border-slate-700 shadow-inner">{step.tool}</span>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed">{step.description}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

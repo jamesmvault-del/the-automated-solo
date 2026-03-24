@@ -1,0 +1,37 @@
+---
+interface Score {
+  label: string;
+  value: number; // Out of 10
+}
+interface Props {
+  scores: Score[];
+  summary: string;
+}
+const { scores, summary } = Astro.props;
+---
+<div class="my-8 rounded-2xl border border-slate-800 bg-slate-900/30 overflow-hidden shadow-xl not-prose">
+  <div class="p-6 border-b border-slate-800/50 bg-slate-900/80">
+    <div class="flex items-center gap-3 mb-2">
+      <div class="h-8 w-8 rounded bg-slate-800 border border-slate-700 flex items-center justify-center">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+      </div>
+      <h3 class="text-xl font-serif text-white">Lab Testing Scorecard</h3>
+    </div>
+    <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">{summary}</p>
+  </div>
+  <div class="p-6 space-y-6 bg-slate-950/40">
+    {scores.map(score => (
+      <div class="group relative">
+        <div class="flex justify-between items-end mb-2">
+          <span class="text-sm font-medium text-slate-300">{score.label}</span>
+          <span class="text-xs font-mono text-emerald-400">{score.value}/10</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 ease-out w-0 relative" style={`width: ${score.value * 10}%`}>
+             <div class="absolute inset-0 bg-white/20 blur-[2px]"></div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

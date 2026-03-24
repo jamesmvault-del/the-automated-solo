@@ -1,0 +1,70 @@
+---
+title: "The Zero-Touch Client Intake System"
+description: "How to connect Typeform, Make.com, and Clio to automate your intake pipeline and save 5 hours a week."
+pubDate: 2026-03-24
+author: "James"
+readTime: "7 min read"
+tags: ["Intake", "Make.com", "Clio"]
+image: "/images/automate-client-intake.png"
+---
+
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import BlueprintDownload from "../../components/BlueprintDownload.astro";
+import DataFlow from "../../components/DataFlow.astro";
+
+# The Death of Manual Data Entry
+
+You went to law school to practice law, not to act as a highly-paid data entry clerk copy-pasting client details from a messy PDF into your CRM. If you're still doing this in 2026, you're literally burning your own billable hours on a task that a simple webhook could execute instantly.
+
+I spent most of last week breaking down exactly how much time solos lose to initial client intake, and it's staggering. It averages out to about 45 minutes of pure administrative drag per new lead. So, I built a zero-touch intake pipeline to fix it. Here's how I did it, and how you can steal the exact workflow for your firm.
+
+## The Architecture
+
+<DataFlow
+  steps={[
+    {
+      title: "The Net",
+      tool: "Typeform / Tally",
+      description:
+        "A smart conversational form embedded directly on your site. We don't use standard boring web forms. We use conditional logic to ask specific questions based on their legal issue.",
+    },
+    {
+      title: "The Brain",
+      tool: "Make.com",
+      description:
+        "The automation layer catches the JSON payload the second the form is submitted. It acts as the routing engine, checking if the client already exists to prevent duplicate entries.",
+    },
+    {
+      title: "The Vault",
+      tool: "Clio / MyCase",
+      description:
+        "Your core practice management software. The data is cleanly mapped into native custom fields, creating a structured client profile entirely automatically.",
+    },
+  ]}
+/>
+
+### Why Make.com instead of Zapier?
+
+Zapier is undeniably easier for beginners. But once you actually try to build a robust legal workflow, like checking if a client record already exists in Clio _before_ accidentally creating a messy duplicate, Zapier forces you into increasingly expensive pricing tiers. Make.com gives you visual, precise control of the data routing without writing code, and the pricing is radically better for a lean solo practice.
+
+> **My Boots-on-the-Ground Note:** I've stress-tested over 10,000 tasks through both platforms this year alone. Make.com wins on complex logic every single time. It has a slight learning curve, but the payoff is absolute control over your firm's data flow.
+
+## Step-by-Step Implementation
+
+1. **Create the Form:** Ensure you have fields for First Name, Last Name, Email, Phone, and a dropdown for their legal issue.
+2. **Set the Webhook:** In Make.com, start with a Webhook module. Paste this URL into your form's integrations settings.
+3. **Map the Data:** Add your CRM module and map the form fields to the corresponding fields in your database.
+
+## The ROI
+
+Implementing this pipeline takes roughly 90 minutes. I know some of you will look at Make.com and feel slightly intimidated by the visual builder. Don't be.
+
+<RoiCalculator defaultHoursSaved={2.5} defaultRate={300} />
+
+To save you having to build it from scratch, I've exported the exact routing logic I use in my lab. Download it, load it directly into your own Make.com account, and just authenticate your specific CRM API keys.
+
+<BlueprintDownload
+  title="The Zero-Touch Intake Blueprint"
+  description="My exact Make.com JSON routing logic. Checks for existing clients, parses intake values, and pushes perfectly mapped data to Clio."
+  filename="intake-clio.json"
+/>

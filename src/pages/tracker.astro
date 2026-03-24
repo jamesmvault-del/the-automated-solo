@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allTools = await getCollection('tools');
+
+// Sort tools to put Lifetime Deals at the top, as they generate high affiliate conversions
+const sortedTools = allTools.sort((a, b) => {
+  if (a.data.dealType === 'Lifetime Deal' && b.data.dealType !== 'Lifetime Deal') return -1;
+  if (a.data.dealType !== 'Lifetime Deal' && b.data.dealType === 'Lifetime Deal') return 1;
+  return 0;
+});
+---
+
+<Layout title="Software Index">
+  <main class="min-h-screen bg-slate-950 py-20 px-6 sm:px-12 text-slate-300">
+    <div class="max-w-6xl mx-auto animate-fade-in-up">
+      <header class="mb-12">
+        <h1 class="text-4xl md:text-5xl font-serif text-white mb-4">The Software Index</h1>
+        <p class="text-xl text-slate-400 font-light max-w-3xl">An analytical breakdown of the tools we use to automate legal pipelines. We negotiate discounts or source AppSumo lifetime deals whenever possible so you can scale your solo practice lean. Click any tool to read our full Research Note.</p>
+      </header>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/40 shadow-2xl backdrop-blur-sm">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 bg-slate-900/80 text-sm tracking-wider uppercase text-slate-400 font-semibold">
+              <th class="p-5 font-medium">Software</th>
+              <th class="p-5 font-medium hidden md:table-cell">Primary Use Case</th>
+              <th class="p-5 font-medium text-right">The Math</th>
+              <th class="p-5 font-medium text-right">Estimated ROI</th>
+              <th class="p-5 font-medium text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60">
+            {sortedTools.map((tool) => (
+              <tr class="hover:bg-slate-800/40 transition-colors group">
+                <td class="p-5">
+                  <a href={`/tools/${tool.id}`} class="font-serif text-lg font-medium text-white group-hover:text-emerald-400 transition-colors block">
+                    {tool.data.name}
+                  </a>
+                  <div class="text-xs text-slate-500 mt-1 uppercase tracking-wide">{tool.data.category}</div>
+                  <div class="md:hidden mt-2 text-sm text-slate-400">{tool.data.useCase}</div>
+                </td>
+                <td class="p-5 hidden md:table-cell align-top text-slate-400 text-sm leading-relaxed max-w-xs">
+                  {tool.data.useCase}
+                </td>
+                <td class="p-5 align-top text-right">
+                  <div class="text-slate-500 line-through text-sm">{tool.data.standardPrice}</div>
+                  <div class="text-emerald-400 font-semibold text-base mt-0.5">{tool.data.dealPrice}</div>
+                  <div class="text-xs text-slate-500 mt-1 uppercase tracking-wider">{tool.data.dealType}</div>
+                </td>
+                <td class="p-5 align-top text-right">
+                  <div class="text-white font-medium">{tool.data.roiEstimate}</div>
+                  <div class="text-xs text-slate-500 mt-1">Saved</div>
+                </td>
+                <td class="p-5 align-middle text-center">
+                  <a 
+                    href={`/tools/${tool.id}`}
+                    class="inline-block px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-md border border-slate-700 transition-all focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  >
+                    Read Note
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="mt-8 text-sm text-slate-500 text-center md:text-left max-w-2xl">
+        <p><strong>Disclaimer:</strong> This index contains affiliate links. If you purchase through these links, we may earn a small commission at zero extra cost to you. This funds the research lab.</p>
+      </div>
+
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About Us">
+  <main class="flex-grow flex flex-col w-full bg-slate-950 py-20 px-6 sm:px-12">
+    <div class="max-w-3xl mx-auto w-full">
+      
+      <header class="mb-12 border-b border-slate-800 pb-8">
+        <div class="inline-flex items-center px-3 py-1.5 rounded-full border border-slate-700/50 bg-slate-800/30 backdrop-blur-md text-sm text-slate-300 font-medium tracking-wide mb-6">
+          <span class="flex h-2 w-2 rounded-full bg-emerald-500 mr-2"></span>
+          Independent Research Lab
+        </div>
+        <h1 class="text-4xl md:text-5xl font-serif text-white mb-6">About The Automated Solo</h1>
+        <p class="text-xl text-slate-400 font-light leading-relaxed">
+          We exist to bridge the gap between legacy legal practice and the AI-driven future for solo attorneys and boutique firms.
+        </p>
+      </header>
+
+      <section class="space-y-8 text-slate-300 leading-relaxed font-light">
+        
+        <div>
+          <h2 class="text-2xl font-serif text-white mb-4">Our Mission</h2>
+          <p class="mb-4">
+            The legal industry is overwhelmed by noise. Every day, a new platform claims it will revolutionize the practice of law. The reality is much more complex. 
+            At The Automated Solo, our mission is simple: we ruthlessly vet, test, and document legal technology so that solo practitioners can buy back their billable time.
+          </p>
+          <p>
+            We focus exclusively on robust, scalable systems that do not require an IT department to deploy. If a tool cannot fundamentally streamline client intake, document assembly, or firm operations, it does not pass our review.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-serif text-white mb-4">Our Methodology</h2>
+          <p class="mb-4">
+            We do not syndicate press releases or regurgitate marketing copy. As an independent research lab, our approach is strictly "boots on the ground." 
+            We build out massive task workflows in every piece of software we evaluate, actively hunting for bugs, bottlenecks, and integration flaws.
+          </p>
+          <ul class="list-disc pl-6 space-y-2 mt-4 marker:text-emerald-500">
+            <li><strong>Security First:</strong> We analyze data residency, encryption standards, and SOC2 compliance to protect legal privilege.</li>
+            <li><strong>High-Speed Utility:</strong> We value software that operates quickly and reliably without bloat.</li>
+            <li><strong>Measurable ROI:</strong> We calculate time saved versus subscription cost to ensure the technology actually pays for itself.</li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-8 mt-12">
+          <h2 class="text-xl font-serif text-white mb-3">Partner With Us</h2>
+          <p class="text-sm text-slate-400 mb-6">
+            Are you developing a tool that can fundamentally improve the lives of solo attorneys? We are always looking for reliable software to put through our stress tests.
+          </p>
+          <a href="mailto:partnerships@theautomatedsolo.com" class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-white text-slate-950 font-medium hover:bg-slate-200 transition-colors shadow-lg">
+            Contact the Lab
+          </a>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+</Layout>
