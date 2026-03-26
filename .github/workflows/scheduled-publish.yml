@@ -68,6 +68,7 @@ jobs:
             core.setOutput('recent_published', recentPublished || 'none yet');
 
       - name: Create issue for Copilot
+        id: create-issue
         uses: actions/github-script@v7
         with:
           script: |
@@ -214,16 +215,62 @@ jobs:
 
             console.log(`Created issue #${issue.number}: ${issue.title}`);
             console.log(`URL: ${issue.html_url}`);
+            core.setOutput('issue_number', issue.number);
 
-            // Auto-assign to Copilot coding agent
+            // --- Auto-assign Copilot coding agent (multi-method) ---
+            let assigned = false;
+
+            // Method 1: addAssignees API
             try {
-              await github.rest.issues.addAssignees({
+              const result = await github.rest.issues.addAssignees({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issue.number,
                 assignees: ['copilot-swe-agent[bot]']
               });
-              console.log('Assigned to Copilot coding agent');
+              assigned = (result.data.assignees || []).some(a => (a.login || '').includes('copilot'));
+              if (assigned) {
+                console.log('Copilot assigned via addAssignees API');
+              } else {
+                console.log('addAssignees returned OK but Copilot not in assignees list');
+              }
             } catch (e) {
-              console.log(`Could not auto-assign Copilot: ${e.message}. Assign manually from the issue page.`);
+              console.log(`addAssignees failed: ${e.message}`);
+            }
+
+            // Method 2: Copilot-specific API endpoints
+            if (!assigned) {
+              const endpoints = [
+                'POST /repos/{owner}/{repo}/copilot/sessions',
+                'POST /repos/{owner}/{repo}/copilot/tasks'
+              ];
+              for (const endpoint of endpoints) {
+                try {
+                  await github.request(endpoint, {
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number
+                  });
+                  console.log(`Copilot triggered via ${endpoint}`);
+                  assigned = true;
+                  break;
+                } catch (e) {
+                  console.log(`${endpoint}: ${e.status || ''} ${e.message}`);
+                }
+              }
+            }
+
+            // Method 3: @copilot comment trigger
+            if (!assigned) {
+              try {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: '@copilot'
+                });
+                console.log('Posted @copilot comment as fallback trigger');
+              } catch (e) {
+                console.log(`Comment trigger also failed: ${e.message}`);
+              }
             }
