@@ -17,10 +17,12 @@ const { Content } = await render(post);
 
 <PlaybookLayout 
   title={post.data.title}
+  description={post.data.description}
   pubDate={post.data.pubDate}
   readTime={post.data.readTime}
   author={post.data.author}
   image={post.data.image}
+  contentType="research"
 >
   <Content />
 </PlaybookLayout>

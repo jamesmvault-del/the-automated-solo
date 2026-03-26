@@ -1,0 +1,162 @@
+================================================================
+  SOLO PRACTICE AUTOMATION READINESS CHECKLIST
+  by The Automated Solo (theautomatedsolo.com)
+================================================================
+
+Score your firm across five core categories. For each statement, 
+mark YES if you have it fully handled, or NO if it is still manual 
+or nonexistent. Count your YES answers at the end.
+
+================================================================
+CATEGORY 1: CLIENT INTAKE (5 questions)
+================================================================
+
+[ ] 1. New leads can submit their information through an online form 
+      (not just phone or email).
+
+[ ] 2. Form submissions automatically create a contact record in 
+      your case management software (Clio, MyCase, PracticePanther, etc.).
+
+[ ] 3. You have duplicate detection in place so the same client 
+      does not get entered twice.
+
+[ ] 4. New leads receive an automatic confirmation email or text 
+      within 5 minutes of submitting their inquiry.
+
+[ ] 5. Your intake form uses conditional logic to route different 
+      practice areas to different workflows.
+
+================================================================
+CATEGORY 2: SCHEDULING & CALENDAR (5 questions)
+================================================================
+
+[ ] 6. Clients can book consultations directly from your website 
+      without calling or emailing your office.
+
+[ ] 7. Your booking tool automatically sends calendar invites with 
+      meeting details (Zoom link, office address, etc.).
+
+[ ] 8. Clients receive automated reminders 24 hours and 1 hour 
+      before their appointment.
+
+[ ] 9. No-shows automatically trigger a follow-up email or text 
+      offering to reschedule.
+
+[ ] 10. Your calendar blocks off prep time before and after 
+       consultations automatically.
+
+================================================================
+CATEGORY 3: DOCUMENT DRAFTING & EMAIL (5 questions)
+================================================================
+
+[ ] 11. You use text expansion or templates for emails you send 
+       more than twice a week (status updates, confirmations, etc.).
+
+[ ] 12. Engagement letters and retainer agreements are generated 
+       from templates with client data auto-filled.
+
+[ ] 13. You have saved reply templates for your five most common 
+       client questions.
+
+[ ] 14. Court filing cover sheets or routine correspondence 
+       pull from client data without manual copy-pasting.
+
+[ ] 15. Your email signature, disclaimers, and disclosures are 
+       standardized across all outgoing communication.
+
+================================================================
+CATEGORY 4: CLIENT COMMUNICATION & NURTURING (5 questions)
+================================================================
+
+[ ] 16. Past clients receive at least one follow-up email from 
+       you within 90 days of case closure.
+
+[ ] 17. You have an automated drip sequence (2-3 emails) for 
+       past client nurturing and referral generation.
+
+[ ] 18. Your firm sends a regular newsletter or legal update 
+       to your contact list (monthly or quarterly minimum).
+
+[ ] 19. You have a system to collect Google reviews or 
+       testimonials after successful case resolution.
+
+[ ] 20. Referral sources are tracked so you know which past 
+       clients are generating new business.
+
+================================================================
+CATEGORY 5: BILLING & FINANCIAL OPERATIONS (5 questions)
+================================================================
+
+[ ] 21. Time entries are captured in real time (not reconstructed 
+       from memory at the end of the day).
+
+[ ] 22. Invoices are generated and sent automatically on a 
+       set schedule (weekly, bi-weekly, or monthly).
+
+[ ] 23. Clients can pay invoices online through a link in the 
+       invoice email.
+
+[ ] 24. Overdue invoices trigger an automatic reminder sequence 
+       before you have to make an awkward phone call.
+
+[ ] 25. Trust account reconciliation reports run automatically 
+       or with a single click.
+
+================================================================
+SCORING
+================================================================
+
+Count your YES answers:
+
+  21-25 YES: Advanced. Your firm is highly automated. Focus on 
+             optimization and AI integration next.
+
+  15-20 YES: Intermediate. Strong foundation, but you have clear 
+             gaps that are costing you hours every week. Target 
+             the weakest category first.
+
+  8-14 YES:  Early stage. You are leaving significant revenue on 
+             the table. Start with intake and scheduling, as those 
+             have the highest immediate payoff.
+
+  0-7 YES:   Manual operation. Nearly everything in your practice 
+             could benefit from automation. The good news: you have 
+             the most to gain. Start with a single playbook and 
+             build from there.
+
+================================================================
+NEXT STEPS BY CATEGORY
+================================================================
+
+Low score in INTAKE?
+  -> Read: "The Zero-Touch Client Intake System" playbook
+     theautomatedsolo.com/playbooks/automate-client-intake
+
+Low score in SCHEDULING?
+  -> Review: TidyCal (lifetime scheduling tool)
+     theautomatedsolo.com/tools/tidycal
+
+Low score in DRAFTING & EMAIL?
+  -> Review: Typedesk (lifetime text expansion tool)
+     theautomatedsolo.com/tools/typedesk
+
+Low score in CLIENT NURTURING?
+  -> Read: "The Autopilot Referral Engine" playbook
+     theautomatedsolo.com/playbooks/autopilot-referral-engine
+  -> Review: SendFox (lifetime email marketing tool)
+     theautomatedsolo.com/tools/sendfox
+
+Low score in BILLING?
+  -> Coming soon. We are currently stress-testing billing 
+     automation tools for solo practices.
+
+================================================================
+  Calculate your exact annual savings:
+  theautomatedsolo.com/calculator
+================================================================
+
+  This checklist is free to distribute. If you found it valuable, 
+  share it with a colleague.
+
+  theautomatedsolo.com
+  james@theautomatedsolo.com

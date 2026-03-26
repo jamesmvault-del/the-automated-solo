@@ -1,0 +1,217 @@
+name: Scheduled Content Publish
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+    - cron: "0 9 * * 4"
+  workflow_dispatch:
+    inputs:
+      content_type:
+        description: "Override: force a specific content type (tool, playbook, or research)"
+        required: false
+        type: choice
+        options:
+          - auto
+          - tool
+          - playbook
+          - research
+        default: auto
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  create-content-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine content type from rotation
+        id: rotation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const calendar = JSON.parse(fs.readFileSync('src/data/content-calendar.json', 'utf8'));
+
+            const override = '${{ inputs.content_type }}'.trim();
+            let contentType;
+
+            if (override && override !== 'auto') {
+              contentType = override;
+              console.log(`Manual override: ${contentType}`);
+            } else {
+              const slot = calendar.nextSlot % calendar.rotation.length;
+              contentType = calendar.rotation[slot];
+              console.log(`Rotation slot ${slot}: ${contentType}`);
+            }
+
+            const toolFiles = fs.readdirSync('src/content/tools').filter(f => f.endsWith('.mdx'));
+            const playbookFiles = fs.readdirSync('src/content/playbooks').filter(f => f.endsWith('.mdx'));
+            const researchFiles = fs.readdirSync('src/content/research').filter(f => f.endsWith('.mdx'));
+
+            const existingTools = toolFiles.map(f => f.replace('.mdx', '')).join(', ');
+            const existingPlaybooks = playbookFiles.map(f => f.replace('.mdx', '')).join(', ');
+            const existingResearch = researchFiles.map(f => f.replace('.mdx', '')).join(', ');
+
+            const recentPublished = calendar.published
+              .slice(-10)
+              .map(p => `${p.type}: ${p.title} (${p.date})`)
+              .join('\n- ');
+
+            core.setOutput('content_type', contentType);
+            core.setOutput('existing_tools', existingTools || 'none');
+            core.setOutput('existing_playbooks', existingPlaybooks || 'none');
+            core.setOutput('existing_research', existingResearch || 'none');
+            core.setOutput('recent_published', recentPublished || 'none yet');
+
+      - name: Create issue for Copilot
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const contentType = '${{ steps.rotation.outputs.content_type }}';
+            const existingTools = '${{ steps.rotation.outputs.existing_tools }}';
+            const existingPlaybooks = '${{ steps.rotation.outputs.existing_playbooks }}';
+            const existingResearch = '${{ steps.rotation.outputs.existing_research }}';
+            const recentPublished = `${{ steps.rotation.outputs.recent_published }}`;
+            const hasGeminiKey = '${{ secrets.GEMINI_API_KEY }}' !== '';
+
+            const typeLabels = {
+              tool: 'Tool Review',
+              playbook: 'Playbook',
+              research: 'Research Report'
+            };
+
+            const typeInstructions = {
+              tool: [
+                '## Your Mission: Find and Review a Tool',
+                '',
+                'You are the autonomous publisher for The Automated Solo. Your job is to **research, select, and write** a tool review.',
+                '',
+                '### Step 1: Research & Select a Tool',
+                '',
+                '1. **Search for legal-tech tools on AppSumo** relevant to solo attorneys (1-10 person firms). Categories: Intake & Scheduling, Drafting, Marketing, Case Management, Billing, Document Automation, Legal Research, Communication.',
+                `2. **Already reviewed (do NOT duplicate):** ${existingTools}`,
+                '3. **Verify the deal is currently active.** If expired or discontinued, pick a different tool.',
+                '4. **Verify niche fit.** Ask: "Would a solo practitioner running a general practice, family law, estate planning, or personal injury firm use this weekly?" If no, pick another.',
+                '5. **Prefer tools that fill gaps** in the current coverage or complement existing reviews.',
+                '',
+                '### Step 2: Create the Review',
+                '',
+                '1. Create `src/content/tools/{slug}.mdx` following the template in `.github/agents/publisher.agent.md`.',
+                '2. Frontmatter: name, category, useCase, standardPrice, dealPrice, dealType, roiEstimate, image ("/images/{slug}.png"), imageStyle ("tech-thumbnail"), affiliateLink.',
+                '3. Affiliate link format: `https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded product page}`',
+                '4. Import and use: Scorecard, RoiCalculator, DealCTA.',
+                '5. Write in James\'s first-person voice. Be honest about limitations.',
+                '',
+                '### Step 3: Generate the Hero Image',
+                '',
+                'Run: `GEMINI_API_KEY=$GEMINI_API_KEY node scripts/generate-images.mjs --tool {slug}`'
+              ].join('\n'),
+
+              playbook: [
+                '## Your Mission: Research and Write a Playbook',
+                '',
+                'You are the autonomous publisher for The Automated Solo. Your job is to **identify an automation gap and write a step-by-step playbook**.',
+                '',
+                '### Step 1: Research & Select a Topic',
+                '',
+                `1. **Tools already reviewed:** ${existingTools}`,
+                `2. **Existing playbooks (do NOT duplicate):** ${existingPlaybooks}`,
+                '3. **Identify an automation workflow** that saves a solo attorney significant time. Prioritize workflows using tools already reviewed on the site.',
+                '4. **Search for trending automation questions** solo attorneys are asking. What repetitive task is eating their billable hours?',
+                '5. **Must be actionable and reproducible.** Specific tools, specific steps.',
+                '',
+                '### Step 2: Create the Playbook',
+                '',
+                '1. Create `src/content/playbooks/{slug}.mdx` following the template in `.github/agents/publisher.agent.md`.',
+                '2. Frontmatter: title, description, pubDate (today), author ("James"), readTime, tags, image ("/images/{slug}.png"), imageStyle ("system-blueprint").',
+                '3. Import and use: DataFlow, BlueprintDownload, RoiCalculator, DealCTA as appropriate.',
+                '4. Link to existing tool reviews using `/tools/{slug}/` paths.',
+                '5. Write in James\'s first-person voice.',
+                '',
+                '### Step 3: Generate the Hero Image',
+                '',
+                'Run: `GEMINI_API_KEY=$GEMINI_API_KEY node scripts/generate-images.mjs --playbook {slug}`'
+              ].join('\n'),
+
+              research: [
+                '## Your Mission: Research and Write an Analytical Report',
+                '',
+                'You are the autonomous publisher for The Automated Solo. Your job is to **identify a high-value research question and produce a data-driven report**.',
+                '',
+                '### Step 1: Research & Select a Topic',
+                '',
+                `1. **Existing research (do NOT duplicate):** ${existingResearch}`,
+                '2. **Search for trending questions** in the solo attorney / legal-tech space: comparisons, benchmarks, privacy audits, regulatory impacts, AI tool evaluations.',
+                '3. **Must be searchable.** Something a solo attorney would actually Google.',
+                '4. **Data from primary sources only:** vendor docs, published certifications, official pricing, public court tech guidelines, bar association publications.',
+                '',
+                '### Step 2: Create the Report',
+                '',
+                '1. Create `src/content/research/{slug}.mdx` following the template in `.github/agents/publisher.agent.md`.',
+                '2. Frontmatter: title, description, pubDate (today), author ("James"), readTime, tags, image ("/images/{slug}.png"), imageStyle ("emotional-photography").',
+                '3. Import and use: ComparisonTable, StatCallout, KeyTakeaway as appropriate.',
+                '4. Mark ALL vendor-reported figures with "(vendor-reported figure)" and date stamps.',
+                '5. Write in James\'s first-person voice.',
+                '',
+                '### Step 3: Generate the Hero Image',
+                '',
+                'Run: `GEMINI_API_KEY=$GEMINI_API_KEY node scripts/generate-images.mjs --research {slug}`'
+              ].join('\n')
+            };
+
+            const imageNote = hasGeminiKey
+              ? '**Image generation:** The `GEMINI_API_KEY` secret is configured. Run the image generation command in Step 3.'
+              : '> **Note:** No `GEMINI_API_KEY` secret found. Skip image generation. James will generate the hero image locally after merge.';
+
+            const body = [
+              `## Scheduled Content: ${typeLabels[contentType]}`,
+              '',
+              `**Date:** ${new Date().toISOString().split('T')[0]}`,
+              '',
+              '### Existing Content Inventory',
+              `- **Tools reviewed:** ${existingTools}`,
+              `- **Playbooks published:** ${existingPlaybooks}`,
+              `- **Research reports:** ${existingResearch}`,
+              '',
+              '### Recently Published',
+              `- ${recentPublished}`,
+              '',
+              typeInstructions[contentType],
+              '',
+              '## Non-Negotiable Rules',
+              '',
+              '- **NEVER use em-dash characters.** Use commas, colons, or separate sentences.',
+              '- **NEVER fabricate statistics, benchmarks, or metrics.** Verifiable sources only, or frame as personal testing.',
+              '- **NEVER publish placeholder text** like `[VERIFY]`, `[TODO]`, or `[PLACEHOLDER]`.',
+              '- **Active deals only.** Verify the product/deal is live before writing.',
+              '- **AI Detection Prevention:** All content must pass AI detection tools. Read the Writing Style Fingerprint in `.github/agents/publisher.agent.md` before writing. Vary sentence lengths aggressively, use blunt openers, concede limitations honestly, use specific numbers, and NEVER use AI-flagged phrases (seamlessly, robust, leverage, game-changer, delve into, cutting-edge, comprehensive solution, etc.).',
+              '- **Copy Review:** After writing, run the 4-pass proofread in Phase 5 of `.github/agents/publisher.agent.md`. Scan for banned phrases, structural patterns, voice authenticity, and factual integrity. Fix violations before proceeding.',
+              '- **SEO Checklist:** Run through every item in Phase 7 (Article SEO Checklist) of `.github/agents/publisher.agent.md` before committing. Slug, H1, meta description, internal links, word count, niche targeting, and keyword placement all matter.',
+              '- Read `AGENTS.md` for full brand guidelines and `.github/agents/publisher.agent.md` for content templates and style rules.',
+              '',
+              imageNote,
+              '',
+              '## After Creating Content',
+              '',
+              '1. Update `src/data/content-calendar.json`:',
+              '   - Increment `nextSlot` by 1',
+              `   - Add to the \`published\` array: \`{"type": "${contentType}", "title": "Your Title", "slug": "your-slug", "date": "YYYY-MM-DD"}\``,
+              '2. Increment the `CACHE_NAME` version in `public/sw.js`.',
+              '3. Run `npm run build` to confirm zero errors.'
+            ].join('\n');
+
+            const { data: issue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Publisher] Create ${typeLabels[contentType]} (${new Date().toISOString().split('T')[0]})`,
+              body: body,
+              labels: ['content', `content-${contentType}`],
+              assignees: ['claude']
+            });
+
+            console.log(`Created issue #${issue.number}: ${issue.title}`);
+            console.log(`URL: ${issue.html_url}`);

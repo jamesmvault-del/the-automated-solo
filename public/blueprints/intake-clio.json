@@ -1,6 +1,6 @@
 {
   "name": "Zero-Touch Intake Pipeline",
-  "notes": "Import this blueprint into Make.com. You will need to click on the Typeform and Clio modules to authenticate with your own API keys.",
+  "notes": "Import this blueprint into Make.com. You will need to click on the Typeform and Clio modules to authenticate with your own API keys. The router handles duplicate detection: if a contact already exists in Clio, it updates the existing record instead of creating a duplicate.",
   "flow": [
     {
       "id": 1,
@@ -8,11 +8,8 @@
       "version": 1,
       "parameters": {},
       "metadata": {
-        "designer": {
-          "x": 0,
-          "y": 0
-        },
-        "notes": "Watches for new client intake forms"
+        "designer": { "x": 0, "y": 0 },
+        "notes": "Watches for new client intake form submissions. Connect your Typeform account and select your intake form."
       }
     },
     {
@@ -23,11 +20,8 @@
         "query": "{{1.email}}"
       },
       "metadata": {
-        "designer": {
-          "x": 300,
-          "y": 0
-        },
-        "notes": "Checks if the client already exists in the system to prevent duplicates."
+        "designer": { "x": 300, "y": 0 },
+        "notes": "Searches Clio for an existing contact matching the submitted email address. This prevents duplicate client records."
       }
     },
     {
@@ -35,12 +29,87 @@
       "module": "router",
       "version": 1,
       "parameters": {},
-      "metadata": {
-        "designer": {
-          "x": 600,
-          "y": 0
+      "routes": [
+        {
+          "label": "New Client",
+          "filter": {
+            "condition": "{{2.totalCount}} = 0"
+          },
+          "target": 4
+        },
+        {
+          "label": "Existing Client",
+          "filter": {
+            "condition": "{{2.totalCount}} > 0"
+          },
+          "target": 6
         }
+      ],
+      "metadata": {
+        "designer": { "x": 600, "y": 0 },
+        "notes": "Routes to 'Create' if no match found, or 'Update' if the contact already exists."
+      }
+    },
+    {
+      "id": 4,
+      "module": "clio:createContact",
+      "version": 1,
+      "parameters": {
+        "first_name": "{{1.first_name}}",
+        "last_name": "{{1.last_name}}",
+        "email": "{{1.email}}",
+        "phone": "{{1.phone}}",
+        "type": "Person",
+        "custom_fields": {
+          "practice_area": "{{1.practice_area}}",
+          "referral_source": "{{1.how_did_you_hear}}",
+          "brief_description": "{{1.case_summary}}"
+        }
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": -150 },
+        "notes": "Creates a new contact in Clio with all intake form fields mapped to the correct custom fields."
+      }
+    },
+    {
+      "id": 5,
+      "module": "clio:createMatter",
+      "version": 1,
+      "parameters": {
+        "description": "{{1.case_summary}}",
+        "client_id": "{{4.id}}",
+        "practice_area": "{{1.practice_area}}",
+        "status": "Pending"
+      },
+      "metadata": {
+        "designer": { "x": 1200, "y": -150 },
+        "notes": "Automatically creates a new matter linked to the new contact. Set your default practice area and status."
+      }
+    },
+    {
+      "id": 6,
+      "module": "clio:updateContact",
+      "version": 1,
+      "parameters": {
+        "id": "{{2.results[0].id}}",
+        "custom_fields": {
+          "brief_description": "{{1.case_summary}}",
+          "last_intake_date": "{{now}}"
+        }
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": 150 },
+        "notes": "If the contact already exists, updates their record with the new intake info instead of creating a duplicate."
       }
     }
+  ],
+  "setup_instructions": [
+    "1. Import this JSON into Make.com via Create Scenario > Import Blueprint.",
+    "2. Click the Typeform module and connect your Typeform account. Select your intake form.",
+    "3. Click each Clio module and authenticate with your Clio API credentials.",
+    "4. Map your Typeform question IDs to the placeholder fields (first_name, last_name, email, phone, practice_area, case_summary, how_did_you_hear).",
+    "5. Adjust the custom_fields in modules 4 and 6 to match your Clio custom field names.",
+    "6. Test with a sample submission before turning on the scenario.",
+    "7. Set the scenario schedule to 'Immediately' for real-time processing."
   ]
 }

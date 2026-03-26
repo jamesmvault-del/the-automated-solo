@@ -1,0 +1,73 @@
+---
+interface Column {
+  key: string;
+  label: string;
+}
+interface Row {
+  [key: string]: string;
+}
+interface Props {
+  title?: string;
+  columns: Column[];
+  rows: Row[];
+}
+const { title, columns, rows } = Astro.props;
+
+function getCellStyle(value: string) {
+  const v = value.toLowerCase().trim();
+  if (v === 'pass' || v === 'yes' || v === 'none' || v === 'zero retention') return 'pass';
+  if (v === 'fail' || v === 'no' || v === 'high' || v === 'trains on data') return 'fail';
+  if (v === 'partial' || v === 'mixed' || v === 'moderate' || v === 'unclear') return 'warn';
+  return 'neutral';
+}
+
+function getCellIcon(style: string) {
+  if (style === 'pass') return '✓';
+  if (style === 'fail') return '✗';
+  if (style === 'warn') return '~';
+  return '';
+}
+---
+<div class="my-10 rounded-2xl border border-slate-800 bg-slate-900/30 overflow-hidden shadow-xl not-prose">
+  {title && (
+    <div class="px-6 py-4 border-b border-slate-800/50 bg-slate-900/60">
+      <h3 class="text-lg font-serif text-white">{title}</h3>
+    </div>
+  )}
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-slate-800">
+          {columns.map((col, i) => (
+            <th class={`px-5 py-3.5 text-left text-[11px] uppercase tracking-wider font-semibold ${i === 0 ? 'text-slate-300 bg-slate-900/80 sticky left-0 z-10' : 'text-slate-500'}`}>
+              {col.label}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, rowIdx) => (
+          <tr class={`border-b border-slate-800/40 ${rowIdx % 2 === 0 ? 'bg-slate-950/30' : 'bg-slate-950/10'} hover:bg-slate-800/20 transition-colors`}>
+            {columns.map((col, colIdx) => {
+              const val = row[col.key] || '';
+              const style = colIdx > 0 ? getCellStyle(val) : 'neutral';
+              const icon = getCellIcon(style);
+              return (
+                <td class={`px-5 py-3.5 whitespace-nowrap ${colIdx === 0 ? 'font-medium text-white bg-slate-900/80 sticky left-0 z-10' : 'text-slate-400'}`}>
+                  <span class={`inline-flex items-center gap-1.5 ${
+                    style === 'pass' ? 'text-emerald-400' : 
+                    style === 'fail' ? 'text-red-400' : 
+                    style === 'warn' ? 'text-amber-400' : ''
+                  }`}>
+                    {icon && <span class="text-xs font-bold">{icon}</span>}
+                    {val}
+                  </span>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>

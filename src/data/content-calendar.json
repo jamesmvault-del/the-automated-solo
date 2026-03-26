@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "description": "Content rotation schedule and publish log for The Automated Solo. The scheduled-publish workflow uses the rotation to determine what TYPE of content to publish next. The agent autonomously decides the topic through research.",
+    "rotation": "A repeating 5-slot cycle: tool, playbook, tool, playbook, research. The workflow picks the next slot in sequence.",
+    "cadence": "2x per week (Monday and Thursday)",
+    "pillars": {
+      "tools": "Software reviews with active AppSumo or SaaS deals, chosen by the agent based on trending legal-tech products and deal availability",
+      "playbooks": "Step-by-step automation workflows, chosen by the agent based on what tools have been reviewed and what gaps exist",
+      "research": "Data-driven reports, chosen by the agent based on trending questions in the solo attorney space"
+    }
+  },
+  "rotation": ["tool", "playbook", "tool", "playbook", "research"],
+  "nextSlot": 0,
+  "published": []
+}

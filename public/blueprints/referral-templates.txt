@@ -1,16 +1,24 @@
 Subject 1: Checking in & a quick legal update
 Subject 2: A small favor (and a resource for your friends)
-Subject 3: End of year review
+Subject 3: End of year review, and a free resource
 
+===========================
 [Email 1: The 30-Day Check-in]
+Send timing: 30 days after case close
+===========================
+
 Hi {{first_name}},
 
 I am just checking in to see how everything is going since we wrapped up your case last month. Transition periods can sometimes bring up unexpected questions. If you need any quick clarifications, hit reply and let me know. 
 
 Best,
-James
+{{your_name}}
 
+===========================
 [Email 2: The Referral Ask - 90 Days]
+Send timing: 90 days after case close
+===========================
+
 Hi {{first_name}},
 
 I hope you are doing well. I am currently taking on a few new clients this quarter. Because I prefer to work with people connected to clients I already know and trust, I wanted to reach out to you first. 
@@ -18,4 +26,36 @@ I hope you are doing well. I am currently taking on a few new clients this quart
 If you have a friend or colleague who might need help with [Practice Area], I put together a free one-page guide on what they should look out for before hiring an attorney. Feel free to forward this to them.
 
 Best,
-James
+{{your_name}}
+
+===========================
+[Email 3: The Value Resource - 180 Days]
+Send timing: 180 days after case close
+===========================
+
+Hi {{first_name}},
+
+Hard to believe it has been about six months since we closed your [Case Type] matter. I wanted to share a quick resource I have been putting together for past clients.
+
+I wrote a short checklist of [3-5 common legal pitfalls in your practice area] that I see people run into all the time. Nothing scary, just practical stuff worth knowing. I attached it to this email in case it is useful.
+
+And if anyone in your circle ever needs a hand with [Practice Area], I always appreciate the introduction. My calendar link is below if they want to grab a quick call.
+
+[Insert your TidyCal or booking link here]
+
+Wishing you a great rest of the year.
+
+Best,
+{{your_name}}
+
+===========================
+CUSTOMIZATION NOTES
+===========================
+
+1. Replace all {{first_name}} with your email tool's merge tag (SendFox uses {first_name})
+2. Replace {{your_name}} with your actual name
+3. Replace [Practice Area] with your specific area (e.g., "family law", "estate planning", "business formation")
+4. Replace [Case Type] with the relevant matter type
+5. For Email 3, create a simple one-page PDF checklist relevant to your practice area. This positions you as a resource, not a salesperson.
+6. Keep the tone casual and plain text. Do not add HTML formatting, logos, or images. These should read like a quick note from a real person.
+7. In SendFox, set up an Automation with three steps timed at 30, 90, and 180 days after the contact is added to your "Past Clients" list.

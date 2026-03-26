@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theautomatedsolo.com/sitemap-index.xml

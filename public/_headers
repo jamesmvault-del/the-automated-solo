@@ -1,0 +1,4 @@
+# Service worker must always be revalidated so users pick up new versions immediately
+
+/sw.js
+Cache-Control: no-cache

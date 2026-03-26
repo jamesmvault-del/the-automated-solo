@@ -1,17 +1,20 @@
 ﻿---
 import Layout from './Layout.astro';
-const { title, description, pubDate, readTime, author, image } = Astro.props.frontmatter || Astro.props;
+const { title, description, pubDate, readTime, author, image, contentType = 'playbook' } = Astro.props.frontmatter || Astro.props;
+const isResearch = contentType === 'research';
+const backLabel = isResearch ? 'Back to Research' : 'Back to Playbooks';
+const backHref = isResearch ? '/research' : '/playbooks';
 ---
 
-<Layout title={title} image={image}>
+<Layout title={title} description={description} image={image}>
   <main class="min-h-screen bg-slate-950 text-slate-300 py-20 px-6 sm:px-12">   
     <article class="max-w-3xl mx-auto animate-fade-in-up">
       <header class="mb-12 border-b border-slate-800 pb-8">
-        <a href="/playbooks" class="text-emerald-500 hover:text-emerald-400 font-medium tracking-wide text-sm mb-6 inline-block uppercase transition-colors">&larr; Back to Playbooks</a>
+        <a href={backHref} class="text-emerald-500 hover:text-emerald-400 font-medium tracking-wide text-sm mb-6 inline-block uppercase transition-colors">&larr; {backLabel}</a>
         <h1 class="text-4xl md:text-5xl font-serif text-white leading-tight mb-6">{title}</h1>
         <p class="text-xl text-slate-400 font-light leading-relaxed mb-6">{description}</p>
         
-        <div class="flex items-center gap-4 text-sm text-slate-500 mb-8">
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500 mb-8">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 font-medium shadow-inner">J</span>
             <span class="font-medium text-slate-300">{author}</span>
@@ -38,5 +41,22 @@ const { title, description, pubDate, readTime, author, image } = Astro.props.fro
         <slot />
       </div>
     </article>
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": title,
+      "description": description,
+      "datePublished": pubDate ? new Date(pubDate).toISOString() : undefined,
+      "author": {
+        "@type": "Person",
+        "name": author || "James"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The Automated Solo"
+      },
+      "image": image ? `https://theautomatedsolo.com${image}` : undefined
+    })} />
   </main>
 </Layout>

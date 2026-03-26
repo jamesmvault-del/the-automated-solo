@@ -1,0 +1,24 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  context?: string;
+  variant?: 'emerald' | 'red' | 'amber' | 'white';
+}
+const { value, label, context, variant = 'emerald' } = Astro.props;
+
+const colors = {
+  emerald: 'text-emerald-400 border-emerald-500/20',
+  red: 'text-red-400 border-red-500/20',
+  amber: 'text-amber-400 border-amber-500/20',
+  white: 'text-white border-slate-700/40',
+};
+const c = colors[variant];
+---
+<div class={`my-8 py-6 px-8 rounded-xl border ${c.split(' ')[1]} bg-slate-900/30 not-prose flex flex-col sm:flex-row items-center gap-4 sm:gap-8`}>
+  <div class={`text-4xl md:text-5xl font-serif tracking-tight shrink-0 ${c.split(' ')[0]}`}>{value}</div>
+  <div class="text-center sm:text-left">
+    <div class="text-white text-sm font-medium">{label}</div>
+    {context && <div class="text-slate-500 text-xs mt-1">{context}</div>}
+  </div>
+</div>

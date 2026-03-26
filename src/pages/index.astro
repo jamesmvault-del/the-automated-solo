@@ -9,44 +9,98 @@ const latestPlaybook = allPlaybooks
 const allResearch = await getCollection('research');
 const latestResearch = allResearch
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+
+const allTools = await getCollection('tools');
+const toolCount = allTools.length;
+
+// Dynamic stats
+const ltdCount = allTools.filter(t => t.data.dealType === 'Lifetime Deal').length;
+const ltdPercent = toolCount > 0 ? Math.round((ltdCount / toolCount) * 100) : 0;
+const totalWeeklyHours = allTools.reduce((sum, t) => {
+  const m = t.data.roiEstimate.match(/([\d.]+)\s*hrs?/i);
+  return sum + (m ? parseFloat(m[1]) : 0);
+}, 0);
 ---
 
-<Layout title="Home">
+<Layout title="Home" description="Independent automation research for solo attorneys. We stress-test legal technology, build workflow playbooks, and track the best lifetime deals so you can buy back billable time." ogType="website">
   <main class="flex-grow flex flex-col w-full bg-slate-950">
     <!-- Hero Section -->
-    <section class="flex flex-col items-center justify-center min-h-[90vh] p-6 text-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/50">
-      <div class="max-w-3xl mx-auto space-y-8 animate-fade-in-up">
+    <section class="flex flex-col items-center justify-center min-h-[90vh] px-4 sm:px-6 py-12 text-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/50">
+      <div class="max-w-3xl mx-auto space-y-8 animate-fade-in-up w-full">
         
         <!-- Premium Dark Glass Badge -->
         <div class="inline-flex items-center px-3 py-1.5 rounded-full border border-slate-700/50 bg-slate-800/30 backdrop-blur-md text-sm text-slate-300 font-medium tracking-wide shadow-xl">
           <span class="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-          Independent Systems Research for the Modern Law Firm
+          Automation Research for Solo Law Practitioners
         </div>
 
         <!-- Hero Headline -->
-        <h1 class="text-5xl md:text-7xl font-semibold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-semibold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
           The Automated Solo.
         </h1>
 
         <!-- The Persona Introduction -->
         <p class="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
-          We bridge the gap between legacy legal practice and the AI-driven future. The Automated Solo is a research lab dedicated to vetting, testing, and automating the workflows of US-based solo practitioners.
+          We stress-test legal technology so solo attorneys and small firms can stop paying for tools that don't deliver. Every review on this site comes from hands-on workflow testing, not marketing copy.
         </p>
 
         <!-- Primary Call to Action -->
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/playbooks" class="px-8 py-3.5 rounded-md bg-white text-slate-950 font-medium hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+        <div class="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
+          <a href="/calculator" class="whitespace-nowrap text-center px-4 py-3.5 rounded-md bg-white text-slate-950 font-medium hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+            Calculate Your Savings
+          </a>
+          <a href="/playbooks" class="whitespace-nowrap text-center px-4 py-3.5 rounded-md border border-slate-700 text-white hover:bg-slate-800 transition-colors">
             Explore Playbooks
           </a>
-          <a href="#research" class="px-8 py-3.5 rounded-md border border-slate-700 text-white hover:bg-slate-800 transition-colors">
+          <a href="#research" class="whitespace-nowrap text-center px-4 py-3.5 rounded-md border border-slate-700 text-white hover:bg-slate-800 transition-colors">
             View Research
           </a>
+        </div>
+
+        <!-- Latest Software Reviews (dynamic) -->
+        {allTools.length > 0 && (
+          <div class="pt-12 mt-4">
+            <p class="text-[11px] uppercase tracking-[0.25em] text-slate-600 font-semibold mb-5">Latest Software Reviews</p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              {allTools.map(tool => (
+                <a href={`/tools/${tool.id}`} class="group flex items-center gap-3 px-4 py-2.5 rounded-lg border border-slate-800/80 bg-slate-900/50 hover:bg-slate-800/70 hover:border-slate-700 transition-all duration-200">
+                  <span class="text-sm text-white font-medium group-hover:text-emerald-400 transition-colors">{tool.data.name}</span>
+                  <span class="text-[10px] uppercase tracking-wider text-slate-500">{tool.data.category}</span>
+                  <span class={`text-xs font-mono px-2 py-0.5 rounded-full ${tool.data.dealType === 'Lifetime Deal' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'}`}>
+                    {tool.data.dealPrice}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Social Proof Stats Bar -->
+    <section class="py-12 px-6 sm:px-12 bg-slate-950 border-b border-slate-800/50 reveal">
+      <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-2xl md:text-3xl font-serif text-white">{toolCount}</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-1">Tools Reviewed</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-serif text-white">{totalWeeklyHours}+ hrs</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-1">Weekly Time Saved</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-serif text-emerald-400">{ltdPercent}%</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-1">Lifetime Deals</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-serif text-white">{allPlaybooks.length + allResearch.length}</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-1">Guides Published</div>
         </div>
       </div>
     </section>
 
     <!-- Our Research Methodology Section -->
-    <section class="py-20 px-6 sm:px-12 bg-slate-950 border-b border-slate-800/50">
+    <section class="py-20 px-6 sm:px-12 bg-slate-950 border-b border-slate-800/50 reveal">
       <div class="max-w-6xl mx-auto">
         <header class="mb-16 md:text-center">
           <h2 class="text-2xl md:text-3xl font-serif text-white mb-4">Our Research Methodology</h2>
@@ -85,7 +139,7 @@ const latestResearch = allResearch
     </section>
 
     <!-- Research & Playbooks Section -->
-    <section id="research" class="py-24 px-6 sm:px-12 bg-slate-950 relative overflow-hidden">
+    <section id="research" class="py-24 px-6 sm:px-12 bg-slate-950 relative overflow-hidden reveal">
       <!-- Subtle background glow -->
       <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none"></div>
       
@@ -183,6 +237,43 @@ const latestResearch = allResearch
             <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-emerald-500/10 blur-[40px] rounded-full group-hover:bg-emerald-500/20 transition-colors duration-500"></div>
           </article>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- Free Tools Section -->
+    <section class="py-20 px-6 sm:px-12 bg-slate-950 border-b border-slate-800/50 reveal">
+      <div class="max-w-6xl mx-auto">
+        <header class="mb-12 md:text-center">
+          <h2 class="text-2xl md:text-3xl font-serif text-white mb-4">Free Practice Tools</h2>
+          <p class="text-slate-400 text-base font-light max-w-2xl mx-auto">Interactive utilities built for solo attorneys. Add this app to your home screen for instant offline access.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Calculator Card -->
+          <a href="/calculator" class="group relative rounded-2xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800/60 transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.05)] overflow-hidden p-8 flex flex-col">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-emerald-400 transition-colors">Automation Savings Calculator</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">Input your hourly rate and weekly admin hours across five categories. See exactly how much revenue your firm is losing to manual work every year.</p>
+            <div class="flex items-center text-emerald-400 text-sm font-medium">
+              Open Calculator <span class="ml-2 transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+            </div>
+          </a>
+
+          <!-- Checklist Download Card -->
+          <div class="group relative rounded-2xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800/60 transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.05)] overflow-hidden p-8 flex flex-col">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+            </div>
+            <h3 class="text-xl font-serif text-white mb-2">Automation Readiness Checklist</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">Score your firm across 25 questions covering intake, scheduling, drafting, client nurturing, and billing. Takes five minutes. Tells you exactly where to start.</p>
+            <a href="/blueprints/automation-readiness-checklist.txt" download class="inline-flex items-center text-emerald-400 text-sm font-medium hover:underline">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              Download Free Checklist
+            </a>
+          </div>
         </div>
       </div>
     </section>

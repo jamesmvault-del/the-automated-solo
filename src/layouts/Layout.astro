@@ -1,12 +1,17 @@
 ---
 import '../styles/global.css';
+import { mainNav, footerNav } from '../data/nav';
 
 interface Props {
   title: string;
+  description?: string;
   image?: string;
+  ogType?: string;
 }
 
-const { title, image = '/pwa-512x512.svg' } = Astro.props;
+const { title, description = 'Independent automation research and software testing for solo law practitioners. We stress-test legal tech so you can buy back billable time.', image = '/pwa-512x512.svg', ogType = 'article' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const absoluteImage = image.startsWith('http') ? image : new URL(image, Astro.site).href;
 ---
 
 <!DOCTYPE html>
@@ -15,18 +20,40 @@ const { title, image = '/pwa-512x512.svg' } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <link rel="apple-touch-icon" href="/pwa-192x192.svg" />
+    <link rel="canonical" href={canonicalURL} />
     <title>{title} | The Automated Solo</title>
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#0a0f18" />
 
+    <!-- SEO Meta -->
+    <meta name="description" content={description} />
+
     <!-- OpenGraph / Social Meta Tags -->
     <meta property="og:title" content={`${title} | The Automated Solo`} />
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content={image} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={absoluteImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | The Automated Solo`} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "The Automated Solo",
+      "url": "https://theautomatedsolo.com",
+      "email": "james@theautomatedsolo.com",
+      "description": "Independent automation research and software testing for solo law practitioners.",
+      "founder": {
+        "@type": "Person",
+        "name": "James",
+        "jobTitle": "Lead Systems Architect"
+      }
+    })} />
 
     <!-- Premium Typography: Inter for UI, Playfair Display for Editorial -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,11 +65,25 @@ const { title, image = '/pwa-512x512.svg' } = Astro.props;
     <nav class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-lg sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="/" class="text-white font-serif font-semibold text-lg tracking-wide hover:text-slate-300 transition-colors">The Automated Solo.</a>
-        <div class="flex gap-8 text-sm font-medium text-slate-400 hidden md:flex">
-          <a href="/about" class="hover:text-emerald-400 transition-colors">About the Lab</a>
-          <a href="/#research" class="hover:text-emerald-400 transition-colors">Research Reports</a>
-          <a href="/playbooks" class="hover:text-emerald-400 transition-colors">Automation Playbooks</a>
-          <a href="/tracker" class="hover:text-emerald-400 transition-colors">Software Index</a>
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+          {mainNav.map(item => (
+            <a href={item.href} class="hover:text-emerald-400 transition-colors">{item.label}</a>
+          ))}
+        </div>
+        <!-- Mobile Hamburger -->
+        <button id="mobile-menu-btn" class="md:hidden relative w-6 h-6 text-slate-400 hover:text-white transition-colors" aria-label="Open menu" aria-expanded="false">
+          <span class="hamburger-line absolute left-0 w-6 h-0.5 bg-current rounded transition-all duration-300" style="top: 4px;"></span>
+          <span class="hamburger-line absolute left-0 w-6 h-0.5 bg-current rounded transition-all duration-300" style="top: 11px;"></span>
+          <span class="hamburger-line absolute left-0 w-6 h-0.5 bg-current rounded transition-all duration-300" style="top: 18px;"></span>
+        </button>
+      </div>
+      <!-- Mobile Menu Panel -->
+      <div id="mobile-menu" class="md:hidden fixed inset-x-0 top-16 border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-lg z-40">
+        <div class="flex flex-col px-6 py-4 space-y-4 text-sm font-medium text-slate-400">
+          {mainNav.map(item => (
+            <a href={item.href} class="hover:text-emerald-400 transition-colors py-2">{item.label}</a>
+          ))}
         </div>
       </div>
     </nav>
@@ -50,15 +91,27 @@ const { title, image = '/pwa-512x512.svg' } = Astro.props;
     
     <!-- Professional Footer -->
     <footer class="border-t border-slate-800/80 bg-slate-950 py-12 px-6 mt-auto">
-      <div class="max-w-6xl mx-auto flex flex-col items-center text-center space-y-6">
+      <div class="max-w-6xl mx-auto flex flex-col items-center text-center space-y-8">
+
+        <!-- Newsletter Signup -->
+        <div class="w-full max-w-xl bg-slate-900/60 border border-slate-800 rounded-xl p-6 backdrop-blur-sm">
+          <h3 class="text-white font-serif text-lg mb-2">Stay in the Loop</h3>
+          <p class="text-slate-400 text-sm mb-4">Get new playbooks, tool reviews, and deal alerts. No spam, no fluff. Unsubscribe anytime.</p>
+          <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3">
+            <input type="email" id="newsletter-email" placeholder="you@lawfirm.com" required class="flex-1 px-4 py-2.5 rounded-md bg-slate-800 border border-slate-700 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
+            <button type="submit" class="px-6 py-2.5 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors whitespace-nowrap">Subscribe</button>
+          </form>
+          <p id="newsletter-msg" class="text-xs text-emerald-400 mt-2 hidden">Thanks for subscribing.</p>
+        </div>
+
         <div class="max-w-3xl text-xs text-slate-500 leading-relaxed">
           <p class="font-semibold text-slate-400 mb-2 uppercase tracking-wider">FTC Disclosure</p>
           <p>I am an independent researcher. Some links on this site are affiliate links, meaning I may earn a commission if you make a purchase, at no extra cost to you. This helps fund my deep-dive testing.</p>
         </div>
-        <div class="flex items-center justify-center gap-6 text-sm font-medium text-slate-400">
-          <a href="/about" class="hover:text-emerald-400 transition-colors">About Us</a>
-          <a href="/privacy" class="hover:text-emerald-400 transition-colors">Privacy Policy</a>
-          <a href="/terms" class="hover:text-emerald-400 transition-colors">Terms of Service</a>
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium text-slate-400">
+          {footerNav.map(item => (
+            <a href={item.href} class="hover:text-emerald-400 transition-colors">{item.label}</a>
+          ))}
         </div>
         <div class="flex flex-col items-center justify-center space-y-2 mt-4 border-t border-slate-800/80 pt-6">
           <p class="text-slate-400 text-sm font-serif italic tracking-wide">Directed by James | Lead Systems Architect</p>
@@ -68,5 +121,57 @@ const { title, image = '/pwa-512x512.svg' } = Astro.props;
         </div>
       </div>
     </footer>
+
+    <!-- Mobile Menu Toggle + Service Worker -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (btn && menu) {
+          btn.addEventListener('click', () => {
+            const isOpen = menu.classList.toggle('open');
+            btn.setAttribute('aria-expanded', String(isOpen));
+            btn.classList.toggle('active', isOpen);
+          });
+        }
+
+        const form = document.getElementById('newsletter-form');
+        const msg = document.getElementById('newsletter-msg');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value;
+            const stored = JSON.parse(localStorage.getItem('tas_subscribers') || '[]');
+            if (!stored.includes(email)) {
+              stored.push(email);
+              localStorage.setItem('tas_subscribers', JSON.stringify(stored));
+            }
+            form.reset();
+            if (msg) {
+              msg.textContent = 'You are on the list. We will be in touch.';
+              msg.classList.remove('hidden');
+            }
+          });
+        }
+
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js');
+        }
+
+        // Scroll-triggered reveal animations
+        const reveals = document.querySelectorAll('.reveal');
+        if (reveals.length > 0) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.15 });
+          reveals.forEach(el => observer.observe(el));
+        }
+      });
+    </script>
   </body>
 </html>

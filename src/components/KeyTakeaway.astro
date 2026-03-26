@@ -1,0 +1,48 @@
+---
+interface Props {
+  heading?: string;
+  variant?: 'verdict' | 'warning' | 'tip';
+}
+const { heading, variant = 'verdict' } = Astro.props;
+
+const styles = {
+  verdict: {
+    border: 'border-emerald-500/30',
+    bg: 'bg-emerald-950/20',
+    accent: 'bg-emerald-500',
+    icon: '⚖',
+    heading: 'text-emerald-400',
+    default: 'The Bottom Line',
+  },
+  warning: {
+    border: 'border-red-500/30',
+    bg: 'bg-red-950/20',
+    accent: 'bg-red-500',
+    icon: '⚠',
+    heading: 'text-red-400',
+    default: 'Risk Alert',
+  },
+  tip: {
+    border: 'border-amber-500/30',
+    bg: 'bg-amber-950/20',
+    accent: 'bg-amber-500',
+    icon: '💡',
+    heading: 'text-amber-400',
+    default: 'Quick Tip',
+  },
+};
+const s = styles[variant];
+const displayHeading = heading || s.default;
+---
+<div class={`my-8 rounded-xl border ${s.border} ${s.bg} overflow-hidden not-prose`}>
+  <div class={`h-1 ${s.accent}`}></div>
+  <div class="px-6 py-5">
+    <div class="flex items-center gap-2.5 mb-3">
+      <span class="text-lg">{s.icon}</span>
+      <span class={`text-sm font-semibold uppercase tracking-wider ${s.heading}`}>{displayHeading}</span>
+    </div>
+    <div class="text-slate-300 text-[15px] leading-relaxed [&>p]:mb-2 [&>p:last-child]:mb-0 [&>strong]:text-white [&>ul]:mt-2 [&>ul]:space-y-1 [&>ul>li]:text-slate-400 [&>ul>li]:text-sm">
+      <slot />
+    </div>
+  </div>
+</div>
