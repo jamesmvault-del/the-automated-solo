@@ -1,13 +1,10 @@
 name: Scheduled Content Publish
 
 on:
-  schedule:
-    - cron: "0 9 * * 1"
-    - cron: "0 9 * * 4"
   workflow_dispatch:
     inputs:
       content_type:
-        description: "Override: force a specific content type (tool, playbook, or research)"
+        description: "Override content type"
         required: false
         type: choice
         options:
@@ -16,6 +13,9 @@ on:
           - playbook
           - research
         default: auto
+  schedule:
+    - cron: "0 9 * * 1"
+    - cron: "0 9 * * 4"
 
 permissions:
   contents: write
