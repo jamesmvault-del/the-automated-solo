@@ -214,3 +214,16 @@ jobs:
 
             console.log(`Created issue #${issue.number}: ${issue.title}`);
             console.log(`URL: ${issue.html_url}`);
+
+            // Auto-assign to Copilot coding agent
+            try {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                assignees: ['copilot-swe-agent[bot]']
+              });
+              console.log('Assigned to Copilot coding agent');
+            } catch (e) {
+              console.log(`Could not auto-assign Copilot: ${e.message}. Assign manually from the issue page.`);
+            }
