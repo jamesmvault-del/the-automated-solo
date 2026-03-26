@@ -31,10 +31,10 @@ jobs:
         run: gh pr review "$PR_NUMBER" --approve --body "Auto-approved: build passed."
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
 
       - name: Merge PR
         run: gh pr merge "$PR_NUMBER" --squash --delete-branch
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
