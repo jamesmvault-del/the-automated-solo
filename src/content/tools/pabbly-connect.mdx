@@ -1,0 +1,59 @@
+---
+name: "Pabbly Connect"
+category: "Document Automation"
+useCase: "Connect your intake, scheduling, and billing tools without paying Zapier's monthly tax."
+standardPrice: "$20/mo"
+dealPrice: "$249 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "3 hrs/wk"
+image: "/images/pabbly-connect.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fpabbly-connect%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Workflow: Killing the Manual Copy-Paste Loop
+
+Every time a prospect books a TidyCal consultation, someone has to copy their name and email into the CRM, send a confirmation with intake instructions, and remember to follow up if they don't sign the retainer. If that someone is you, you are doing data entry. You went to law school to practice law, not to act as a data entry clerk.
+
+Pabbly Connect is the fix. It sits in the middle of all your tools and fires off actions automatically whenever something happens. Think Zapier, but you pay once instead of forever.
+
+In my testing, I built four workflows that cover the biggest manual loops in a solo practice. Here is what each one looks like in practice:
+
+1. **TidyCal books a new consultation → intake form goes out automatically.** I set this up in about 4 minutes. The trigger is a new TidyCal booking. Pabbly fires an email through Gmail with a link to my intake questionnaire and a note about the $150 consultation fee they already paid. No drafting, no clicking, no forgetting.
+2. **Contact form hits your website?** Within about 30 seconds, Pabbly has already added them to the SendFox email list and created a calendar event. Two actions, zero manual steps. In my testing this ran reliably across a few dozen test submissions.
+3. **Invoice paid in the billing tool → send a thank-you and update the contact record.** Clients get a personal-feeling email within seconds of payment clearing. I wrote the template once. Pabbly handles the rest every single time.
+4. Connecting anything that has a webhook. This is where Pabbly earns its price. If a tool has an API, you can wire it in. I tested connecting a custom intake form submission to three downstream apps at once. It took about 15 minutes to configure and has run without issue since.
+
+<Scorecard
+  summary="The UI is not as polished as Zapier and the debugging experience when a workflow misfires is clunky. But for a solo attorney building five or six workflows and then leaving them alone, Pabbly does exactly what it promises. The lifetime price versus what Zapier charges per month makes the value calculation almost embarrassingly easy."
+  scores={[
+    { label: "Ease of Setup", value: 7.5 },
+    { label: "App Integration Library", value: 8.0 },
+    { label: "Workflow Reliability", value: 8.5 },
+    { label: "Value vs. Zapier", value: 10.0 },
+  ]}
+/>
+
+## The Honest Gripes
+
+The interface is functional. It is not beautiful. Zapier has spent years polishing the "create a zap" experience into something that feels almost intuitive the first time. Pabbly's workflow builder feels more like configuring a spreadsheet. You get there, but expect to click around a bit before the mental model clicks.
+
+There are also fewer pre-built templates. Zapier has thousands of "popular Zaps" you can clone with one click. Pabbly has templates, but the library is thinner. You will be building from scratch more often.
+
+And when a workflow breaks, the error logs are not always clear about what went wrong. I had one multi-step workflow silently fail on step three because a field name changed in a connected app. Pabbly did not surface a great explanation. I found it by manually tracing the workflow.
+
+Here is the honest counterpoint though: you are a solo attorney. You are not managing 500 automated workflows. You are building five, maybe eight, and then you are done. Once they run, they keep running. The debugging friction matters a lot less when you only have to do it once every few months.
+
+Look, does it match Zapier feature-for-feature? No. But Zapier's lowest paid plan runs about $20 a month, which is $240 a year, compounding forever. Pabbly is a one-time $249 and connects over 1,000 apps including the tools most solo attorneys already use. The math is not complicated.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fpabbly-connect%2F"
+  productName="Pabbly Connect"
+  price="$249 Lifetime"
+/>
