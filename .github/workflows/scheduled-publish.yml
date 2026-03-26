@@ -209,8 +209,7 @@ jobs:
               repo: context.repo.repo,
               title: `[Publisher] Create ${typeLabels[contentType]} (${new Date().toISOString().split('T')[0]})`,
               body: body,
-              labels: ['content', `content-${contentType}`],
-              assignees: ['claude']
+              labels: ['content', `content-${contentType}`, 'copilot']
             });
 
             console.log(`Created issue #${issue.number}: ${issue.title}`);
