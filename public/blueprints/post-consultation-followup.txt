@@ -1,0 +1,119 @@
+POST-CONSULTATION FOLLOW-UP SEQUENCE
+The Automated Solo | theautomatedsolo.com
+=========================================
+
+OVERVIEW
+--------
+This file contains the exact email copy for a three-part follow-up sequence that
+runs automatically after every consultation you complete through TidyCal. Set it
+up once inside SendFox, hook it to Pabbly Connect, and it runs forever.
+
+To use this: paste each email into SendFox as a separate step in an automation.
+Set Email 1 to send immediately (or same day), Email 2 at 3 days, Email 3 at 10 days.
+
+In Pabbly Connect, create a workflow that triggers on new TidyCal bookings and adds
+the contact to your SendFox "Consultation Leads" list with the tag "post-consult".
+The automation fires automatically from there.
+
+Replace ALL placeholders throughout the emails before loading into SendFox:
+  {FIRST_NAME}      - contact's first name (pulled automatically by SendFox merge tag)
+  {PRACTICE_AREA}   - your specific area (e.g., "family law," "immigration," "estate planning")
+  {YOUR_NAME}       - your name as you want clients to see it
+  [YOUR EMAIL]      - your direct email address
+  [PHONE NUMBER]    - your direct phone number
+  [BOOKING LINK]    - your TidyCal booking link
+
+Also review the "getting your paperwork in order" language in Email 1 and replace it
+with the actual next step that applies to your practice area and case type.
+For example: "the next step is scheduling a document review," or "the next step is
+signing a fee agreement so I can open your file."
+
+=========================================
+
+EMAIL 1: Same Day (Send Within 2 Hours of Consultation)
+---------------------------------------------------------
+Subject: Quick note after our call today
+
+Hi {FIRST_NAME},
+
+Thanks for taking the time to talk today. I wanted to send a short note
+before the day gets away from me.
+
+Based on what you told me, here is where things stand: you have a real
+path forward. We covered the basics today, but if you want to move ahead,
+the next step is getting your paperwork in order so I can give you a firm
+answer on timeline and cost.
+
+You can reach me directly at [YOUR EMAIL]. No contact form, no intake staff.
+Just me.
+
+If you decide to move forward, reply here or book a follow-up at [BOOKING LINK].
+
+{YOUR_NAME}
+[PHONE NUMBER]
+
+
+---------------------------------------------------------
+
+EMAIL 2: 3 Days After Consultation
+-----------------------------------
+Subject: Still thinking it over?
+
+Hi {FIRST_NAME},
+
+I know {PRACTICE_AREA} issues can feel overwhelming. Most people spend a week
+paralyzed before doing anything, and then the situation gets harder to solve.
+
+I am not going to pressure you. But I will tell you that the questions you
+asked me are the same ones I hear from clients who end up in much better
+shape six months later, specifically because they moved sooner rather than later.
+
+If you have questions you forgot to ask, reply to this email. No charge for
+a five-minute clarification.
+
+{YOUR_NAME}
+
+
+---------------------------------------------------------
+
+EMAIL 3: 10 Days After Consultation
+--------------------------------------
+Subject: Last check-in from me
+
+Hi {FIRST_NAME},
+
+This is the last time I will reach out. I do not want to flood your inbox.
+
+If your situation has changed, or if you simply found a different path
+forward, I genuinely wish you luck. If you are still looking for someone
+to handle this, I am still available and my calendar is at [BOOKING LINK].
+
+One thing I hear from clients who waited: they wish they had started earlier.
+That is not a sales pitch. It is just pattern recognition from seeing a lot
+of these cases.
+
+Either way, take care of yourself.
+
+{YOUR_NAME}
+[PHONE NUMBER]
+
+
+=========================================
+
+PABBLY CONNECT SETUP NOTES
+---------------------------
+Trigger: TidyCal > New Booking
+Action 1: SendFox > Add/Update Contact (map Name and Email from TidyCal payload)
+Action 2: SendFox > Add Tag to Contact (tag value: "post-consult")
+Automation in SendFox: set list trigger to "when tag added" = "post-consult"
+
+Field mapping in Pabbly Connect:
+  - SendFox "First Name"  <- TidyCal booking "invitee_first_name"
+  - SendFox "Email"       <- TidyCal booking "invitee_email"
+  - SendFox "List ID"     <- your "Consultation Leads" list ID
+
+You can find the TidyCal webhook URL under: Settings > Integrations > Webhooks.
+Paste it into the Pabbly Connect TidyCal trigger module when setting up the workflow.
+
+=========================================
+END OF FILE

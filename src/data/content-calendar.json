@@ -10,8 +10,9 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 1,
+  "nextSlot": 2,
   "published": [
-    {"type": "tool", "title": "Pabbly Connect: Automate the Copy-Paste Loop", "slug": "pabbly-connect", "date": "2026-03-26"}
+    {"type": "tool", "title": "Pabbly Connect: Automate the Copy-Paste Loop", "slug": "pabbly-connect", "date": "2026-03-26"},
+    {"type": "playbook", "title": "The Follow-Up Machine: Never Lose a Consultation Lead Again", "slug": "follow-up-machine", "date": "2026-03-26"}
   ]
 }

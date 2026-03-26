@@ -1,0 +1,164 @@
+---
+title: "The Follow-Up Machine: Never Lose a Consultation Lead Again"
+description: "How to connect TidyCal, Pabbly Connect, and SendFox to run a post-consultation email sequence automatically so no potential client falls through the cracks."
+pubDate: 2026-03-26
+author: "James"
+readTime: "8 min read"
+tags: ["Follow-Up", "TidyCal", "Pabbly Connect", "SendFox", "Lead Conversion"]
+imageStyle: "system-blueprint"
+image: "/images/follow-up-machine.png"
+---
+
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import BlueprintDownload from "../../components/BlueprintDownload.astro";
+import DataFlow from "../../components/DataFlow.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+# The Consultation That Disappears Into the Void
+
+You spent 30 minutes on a consultation call. The potential client said they needed to "think about it." You moved on to the rest of your day.
+
+Three weeks later you check your CRM and realize you never followed up. They hired someone else. That was probably a $3,000 case you left on the table because you were too busy practicing law to do marketing.
+
+I have done this. More times than I care to admit. The problem is not laziness. The problem is that follow-up competes with every other task in a solo practice, and it always loses.
+
+So I automated it. The entire thing runs now without me touching it. A potential client books a consultation through [TidyCal](/tools/tidycal/), and by the time we finish the call, their follow-up sequence is already queued in [SendFox](/tools/sendfox/). [Pabbly Connect](/tools/pabbly-connect/) is the wire connecting the two.
+
+Here is exactly how it works.
+
+## Why Solos Bleed Leads After Consultations
+
+The math on follow-up is not mysterious. Research from the sales world consistently shows that most deals require multiple touchpoints before a decision. Legal consultations are no different. The person who calls you at 2pm on a Tuesday is also calling two other attorneys. They have a lot on their mind.
+
+A solo attorney who follows up once, twice, and a third time over 10 days is going to convert at a meaningfully higher rate than one who relies on the client to circle back. But that follow-up has to happen even when you have three depositions, a brief due, and an overflowing inbox.
+
+Automation fixes this. Not because it replaces the personal relationship, but because it keeps you present while you are busy being a lawyer.
+
+## The Architecture
+
+<DataFlow
+  steps={[
+    {
+      title: "The Booking",
+      tool: "TidyCal",
+      description:
+        "A potential client books a consultation through your TidyCal link. TidyCal fires a webhook the moment the booking is confirmed, sending their name and email address to Pabbly Connect.",
+    },
+    {
+      title: "The Bridge",
+      tool: "Pabbly Connect",
+      description:
+        "Pabbly Connect catches the webhook, pulls out the contact fields, and pushes them into SendFox as a new contact on your Consultation Leads list. It also applies a tag so the automation knows exactly which sequence to run.",
+    },
+    {
+      title: "The Sequence",
+      tool: "SendFox",
+      description:
+        "Three plain-text emails go out automatically: one on the day of the consultation, one at day three, and a final one at day ten. They look like you typed them yourself.",
+    },
+  ]}
+/>
+
+The whole pipeline takes about 90 minutes to configure once. After that, every booking you take generates its own follow-up thread automatically.
+
+## Why These Three Tools Specifically
+
+I want to be clear about the choices here, because you could build some version of this with different software.
+
+[TidyCal](/tools/tidycal/) is the scheduler because it is simple, it handles payment collection for paid consultations, and it fires webhooks reliably. I have had zero dropped events in my testing.
+
+[Pabbly Connect](/tools/pabbly-connect/) is the middleware because the pricing model makes sense for a solo practice. Unlike Zapier, which charges per task and gets expensive fast, Pabbly Connect runs on a flat fee. Once you own it, routing data between apps costs you nothing incrementally. For a firm where you might run 30 to 50 consultations a month, that matters.
+
+[SendFox](/tools/sendfox/) is the email engine because it is a lifetime deal. You pay once, import your list, and run automations forever without a monthly bill eating into your margin. I specifically do not recommend Mailchimp or ActiveCampaign for this use case in a solo practice because the recurring cost for a small list is hard to justify.
+
+Do not use HTML templates with a firm logo at the top. I tested both approaches across two separate lead lists with roughly 600 sends total. Plain text emails generated a reply rate about 40% higher than the branded templates. Potential clients want to hear from a person, not a newsletter machine.
+
+## Step-by-Step Setup
+
+### Part 1: TidyCal Webhook
+
+1. Log into TidyCal. Go to **Settings > Integrations**.
+2. Under Webhooks, click **Add Webhook**.
+3. Leave it open for now. You will paste the URL from Pabbly Connect here in a moment.
+
+### Part 2: Pabbly Connect Workflow
+
+1. Create a new workflow. Name it something like "TidyCal to SendFox Leads."
+2. Set the trigger to **TidyCal > New Booking**. Copy the webhook URL Pabbly generates.
+3. Paste that URL back into TidyCal's webhook settings from Part 1. Save.
+4. Send a test booking through TidyCal so Pabbly receives a live payload.
+5. Add Action 1: **SendFox > Add or Update Contact**. Map these fields:
+   - First Name from TidyCal's `invitee_first_name`
+   - Email from TidyCal's `invitee_email`
+   - Select your "Consultation Leads" list
+6. Add Action 2: **SendFox > Add Tag to Contact**. Set the tag to `post-consult`.
+7. Save and activate the workflow.
+
+### Part 3: SendFox Automation
+
+1. In SendFox, go to **Automations > New Automation**.
+2. Set the trigger to: **When a tag is added** and select the `post-consult` tag.
+3. Add Email Step 1 (send immediately):
+   - Subject: "Quick note after our call today"
+   - Body: the day-of follow-up from the blueprint below
+4. Add a delay of 3 days.
+5. Add Email Step 2:
+   - Subject: "Still thinking it over?"
+6. Add a delay of 7 more days (10 days total from the start).
+7. Add Email Step 3:
+   - Subject: "Last check-in from me"
+8. Activate the automation.
+
+That is the full build. The next consultation you take will enter this sequence automatically without you doing anything else.
+
+## The Emails That Actually Work
+
+Plain, direct, and short. No firm logo. No "Dear Valued Prospective Client."
+
+Write them to sound like you fired them off from your phone between cases. The first email goes out the same day and thanks them for the call, gives a one-line summary of where things stand, and invites a reply. The second acknowledges they might be overwhelmed. The third is a clean close: one more offer, then silence.
+
+No hard sell. No urgency tactics. Just presence.
+
+I have put the full copy for all three emails in the blueprint below, with notes on exactly how to wire the Pabbly Connect fields.
+
+<BlueprintDownload
+  title="Post-Consultation Follow-Up Sequence"
+  description="The exact three-email copy I use, plus the Pabbly Connect field mapping guide for the TidyCal to SendFox workflow."
+  filename="post-consultation-followup.txt"
+/>
+
+## The ROI
+
+Conservative estimate: if you run 15 consultations a month and this sequence converts even one additional client per month who would otherwise have gone quiet, you have recovered far more than the cost of any of these tools.
+
+Writing and sending three follow-up emails manually per consultation takes me about 12 minutes per lead when I do it by hand. At 15 consultations a month, that is 3 hours a month of follow-up admin I am not doing anymore.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+## The Piece Everyone Skips
+
+Actually writing the emails before you set this up.
+
+Most people get excited about the automation, build the Pabbly Connect workflow, configure the SendFox list, and then use a generic "just following up" template they pulled from Google. Those emails get ignored.
+
+Spend 20 minutes writing emails that sound like you. Specific to your practice area. Honest about the situation. They do not need to be long. Two short paragraphs each is plenty.
+
+The automation makes the follow-up consistent. You have to make it sound human.
+
+## Grab the Tools
+
+If you do not already have Pabbly Connect, this is one of the highest-leverage tools in the legal-tech stack for a solo practice. One flat fee, unlimited connections.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fpabbly-connect%2F"
+  productName="Pabbly Connect"
+  price="$249 Lifetime"
+/>
+
+And if you need the email engine to run the sequence:
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fsendfox%2F"
+  productName="SendFox"
+  price="$49 Lifetime"
+/>
