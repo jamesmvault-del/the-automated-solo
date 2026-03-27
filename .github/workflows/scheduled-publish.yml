@@ -236,9 +236,9 @@ jobs:
                 '4. Import and use: Scorecard, RoiCalculator, DealCTA.',
                 '5. Write in James\'s first-person voice. Be honest about limitations.',
                 '',
-                '### Step 3: Generate the Hero Image',
+                '### Step 3: Hero Image',
                 '',
-                'Run: `GEMINI_API_KEY=$GEMINI_API_KEY node scripts/generate-images.mjs --tool {slug}`'
+                '**Do NOT create a placeholder image file.** Just set `image: "/images/{slug}.png"` in the frontmatter. The hero image will be generated automatically by CI when you open the pull request.'
               ].join('\n'),
 
               playbook: [
@@ -262,9 +262,9 @@ jobs:
                 '4. Link to existing tool reviews using `/tools/{slug}/` paths.',
                 '5. Write in James\'s first-person voice.',
                 '',
-                '### Step 3: Generate the Hero Image',
+                '### Step 3: Hero Image',
                 '',
-                'Run: `GEMINI_API_KEY=$GEMINI_API_KEY node scripts/generate-images.mjs --playbook {slug}`'
+                '**Do NOT create a placeholder image file.** Just set `image: "/images/{slug}.png"` in the frontmatter. The hero image will be generated automatically by CI when you open the pull request.'
               ].join('\n'),
 
               research: [
@@ -287,15 +287,13 @@ jobs:
                 '4. Mark ALL vendor-reported figures with "(vendor-reported figure)" and date stamps.',
                 '5. Write in James\'s first-person voice.',
                 '',
-                '### Step 3: Generate the Hero Image',
+                '### Step 3: Hero Image',
                 '',
-                'Run: `GEMINI_API_KEY=$GEMINI_API_KEY node scripts/generate-images.mjs --research {slug}`'
+                '**Do NOT create a placeholder image file.** Just set `image: "/images/{slug}.png"` in the frontmatter. The hero image will be generated automatically by CI when you open the pull request.'
               ].join('\n')
             };
 
-            const imageNote = hasGeminiKey
-              ? '**Image generation:** The `GEMINI_API_KEY` secret is configured. Run the image generation command in Step 3.'
-              : '> **Note:** No `GEMINI_API_KEY` secret found. Skip image generation. James will generate the hero image locally after merge.';
+            const imageNote = '**Image generation:** Hero images are generated automatically by CI when the pull request is opened. Do NOT create placeholder image files.';
 
             const body = [
               `## Scheduled Content: ${typeLabels[contentType]}`,

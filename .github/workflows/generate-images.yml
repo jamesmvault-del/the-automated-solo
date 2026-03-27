@@ -2,7 +2,7 @@ name: Generate Hero Images
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, ready_for_review]
     branches:
       - master
 
@@ -11,9 +11,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  generate-images:
-    # Only Copilot branches; skip when this workflow itself pushes (loop guard)
-    if: startsWith(github.head_ref, 'copilot/') && github.actor != 'github-actions[bot]'
+  process-copilot-pr:
+    if: startsWith(github.head_ref, 'copilot/')
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +37,6 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            // Content PRs have at most a handful of MDX files; 100 is a safe upper bound.
             const { data: files } = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -59,7 +57,12 @@ jobs:
                 const slug = parts[3].replace('.mdx', '');
                 return { type: typeMap[folder], slug, imagePath: `public/images/${slug}.png` };
               })
-              .filter(({ imagePath }) => !fs.existsSync(imagePath));
+              .filter(({ imagePath }) => {
+                if (!fs.existsSync(imagePath)) return true;
+                // Copilot may create small placeholder images; real hero images are 300KB+
+                const stats = fs.statSync(imagePath);
+                return stats.size < 50000;
+              });
 
             console.log('Content files needing images:', JSON.stringify(items));
             core.setOutput('items', JSON.stringify(items));
@@ -112,3 +115,18 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: gh pr ready "$PR_NUMBER"
+
+      - name: Build site (validation gate)
+        run: npm run build
+
+      - name: Approve PR
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: gh pr review "$PR_NUMBER" --approve --body "Auto-approved: build passed."
+
+      - name: Merge PR
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: gh pr merge "$PR_NUMBER" --squash --delete-branch
