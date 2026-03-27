@@ -312,6 +312,7 @@ jobs:
               '',
               '## Non-Negotiable Rules',
               '',
+              '- **Voice perspective:** James is a legal-tech RESEARCHER who tests tools FOR solo attorneys. He does NOT run his own law practice. Write as someone who reviews and stress-tests tools, not as a practicing lawyer. Example: "I tested this for a week to see how it would hold up in a solo practice" NOT "I use this in my practice every day."',
               '- **NEVER use em-dash characters.** Use commas, colons, or separate sentences.',
               '- **NEVER fabricate statistics, benchmarks, or metrics.** Verifiable sources only, or frame as personal testing.',
               '- **NEVER publish placeholder text** like `[VERIFY]`, `[TODO]`, or `[PLACEHOLDER]`.',
