@@ -103,6 +103,7 @@ https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded product page}
 ```
 
 Example:
+
 ```
 https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Ftidycal%2F
 ```
@@ -145,11 +146,11 @@ Always increment the `CACHE_NAME` version string in `public/sw.js` whenever CSS,
 
 The automated image pipeline (`scripts/generate-images.mjs`) uses Gemini 2.5 Pro for prompt engineering and Imagen 4.0 Ultra for generation. All images are 16:9 hero thumbnails.
 
-| Content Type | `imageStyle` Value | Style |
-|---|---|---|
-| Tool Reviews | `tech-thumbnail` | Product-focused, bold, icon-driven. Features the tool name and a visual of what it does. Matched to reference images in the project root. |
+| Content Type     | `imageStyle` Value      | Style                                                                                                                                                                             |
+| ---------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tool Reviews     | `tech-thumbnail`        | Product-focused, bold, icon-driven. Features the tool name and a visual of what it does. Matched to reference images in the project root.                                         |
 | Research Reports | `emotional-photography` | Premium editorial covers. Dramatic cinematic lighting on abstract legal textures: courtroom marble, dark glass, brushed metal, data overlays. Bloomberg Law meets Wired magazine. |
-| Playbooks | `system-blueprint` | Same visual DNA as tool thumbnails but with conceptual automation icons (gears, pipelines, connected nodes) instead of product logos. Strategy guide mood. |
+| Playbooks        | `system-blueprint`      | Same visual DNA as tool thumbnails but with conceptual automation icons (gears, pipelines, connected nodes) instead of product logos. Strategy guide mood.                        |
 
 ---
 
@@ -260,16 +261,16 @@ The site is designed for low-touch autonomous operation. The Publisher agent han
 
 ### 9.2 Available Components
 
-| Component | Purpose | Used In |
-|---|---|---|
-| `Scorecard` | Lab testing scorecard with scored dimensions | Tool reviews |
-| `RoiCalculator` | Interactive ROI calculator | Tools, playbooks |
-| `DealCTA` | Affiliate call-to-action card with FTC disclosure | Tools, playbooks |
-| `ComparisonTable` | Side-by-side product comparison | Research |
-| `DataFlow` | Visual automation pipeline diagram | Playbooks |
-| `BlueprintDownload` | Free resource download card | Any content type |
-| `KeyTakeaway` | Highlighted takeaway box | Research |
-| `StatCallout` | Featured statistic display | Research |
+| Component           | Purpose                                           | Used In          |
+| ------------------- | ------------------------------------------------- | ---------------- |
+| `Scorecard`         | Lab testing scorecard with scored dimensions      | Tool reviews     |
+| `RoiCalculator`     | Interactive ROI calculator                        | Tools, playbooks |
+| `DealCTA`           | Affiliate call-to-action card with FTC disclosure | Tools, playbooks |
+| `ComparisonTable`   | Side-by-side product comparison                   | Research         |
+| `DataFlow`          | Visual automation pipeline diagram                | Playbooks        |
+| `BlueprintDownload` | Free resource download card                       | Any content type |
+| `KeyTakeaway`       | Highlighted takeaway box                          | Research         |
+| `StatCallout`       | Featured statistic display                        | Research         |
 
 ### 9.3 Content Locations
 

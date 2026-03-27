@@ -47,15 +47,15 @@ Before creating ANY new content, you must:
 3. **VERIFY THE PRODUCT EXISTS AND THE DEAL IS LIVE (HARD GATE).** This is the most critical step. You MUST complete ALL of the following before writing a single word of the review:
 
    a. **Fetch the actual AppSumo product page.** Use your web browsing tool to visit `https://appsumo.com/products/{product-slug}/` and confirm:
-      - The page loads (not a 404, not a redirect to the AppSumo homepage)
-      - The product name on the page matches what you intend to review
-      - A price or "Get" / "Buy" button is visible (the deal is active)
-   b. **Fetch the vendor's own website.** Confirm the product's official site loads and describes the same product. If the vendor site is dead, the product is dead. Do not review it.
-   c. **Record the verified URLs.** Before proceeding, write down:
-      - Confirmed AppSumo product URL (the one that loaded successfully)
-      - Confirmed vendor website URL
-      - Deal price as shown on the AppSumo page
-   d. **If any verification fails, STOP.** Pick a different tool and restart from step 1. Do NOT guess that a product exists. Do NOT construct a review based on search result snippets alone. Do NOT assume a URL is valid without fetching it.
+   - The page loads (not a 404, not a redirect to the AppSumo homepage)
+   - The product name on the page matches what you intend to review
+   - A price or "Get" / "Buy" button is visible (the deal is active)
+     b. **Fetch the vendor's own website.** Confirm the product's official site loads and describes the same product. If the vendor site is dead, the product is dead. Do not review it.
+     c. **Record the verified URLs.** Before proceeding, write down:
+   - Confirmed AppSumo product URL (the one that loaded successfully)
+   - Confirmed vendor website URL
+   - Deal price as shown on the AppSumo page
+     d. **If any verification fails, STOP.** Pick a different tool and restart from step 1. Do NOT guess that a product exists. Do NOT construct a review based on search result snippets alone. Do NOT assume a URL is valid without fetching it.
 
    **Why this matters:** Publishing a review for a product that does not exist on AppSumo destroys reader trust, creates broken affiliate links, and wastes the entire content pipeline. This has happened before and it is a failure state.
 
@@ -89,6 +89,7 @@ Before creating ANY new content, you must:
    - If it is already reviewed on the site (`src/content/tools/`), you may reference it.
    - If it is a well-known platform (Make.com, Zapier, Clio, Google Workspace), you may reference it.
    - If it is any other tool, you MUST fetch its product page (AppSumo or vendor site) and confirm it exists before writing it into the playbook. Do NOT reference products you have not verified.
+
 3. **Map the tool stack.** Which reviewed tools (or commonly available platforms) does this playbook use? Prefer tools already on the site to create internal cross-links.
 4. **Verify all tool references.** Every tool mentioned must either be reviewed on the site or be a well-known platform (Make.com, Zapier, Clio, etc.) that doesn't need a dedicated review.
 
