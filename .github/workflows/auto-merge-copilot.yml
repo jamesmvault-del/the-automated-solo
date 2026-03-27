@@ -2,7 +2,9 @@ name: Auto-Merge Copilot PRs
 
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review]
+    types: [ready_for_review, synchronize]
+    branches:
+      - master
 
 permissions:
   contents: write
@@ -10,7 +12,8 @@ permissions:
 
 jobs:
   auto-merge:
-    if: github.actor == 'copilot-swe-agent[bot]' || github.actor == 'github-actions[bot]'
+    # Run for any Copilot branch that is not a draft
+    if: startsWith(github.head_ref, 'copilot/') && !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
