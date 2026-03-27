@@ -59,9 +59,22 @@ Never publish `[VERIFY]`, `[TODO]`, `[PLACEHOLDER]`, or `[TBD]` to any file.
 
 All text, whether in an article, a downloadable checklist, or a component description, must pass AI detection tools. It must sound human, natural, and match James's writing patterns. See section 7 for the full style fingerprint.
 
-### 3.4 Active Deals Only
+### 3.4 Product Verification (HARD GATE)
 
-Verify that a product or Lifetime Deal is currently active before creating or updating any content about it. Never publish a review for an expired or discontinued deal. If a deal becomes inactive, the agent must:
+**NEVER publish content about a product without first verifying it exists.** This rule was created after an agent fabricated an entire tool review for a product that was not on AppSumo. It is the single most important verification step in the pipeline.
+
+Before writing ANY tool review, the agent MUST:
+
+1. **Fetch the AppSumo product page** using its web browsing tool. Visit `https://appsumo.com/products/{slug}/` and confirm the page loads with the correct product name and an active deal (price visible, Buy/Get button present).
+2. **Fetch the vendor's own website** and confirm the product is real and operational.
+3. **Record verified URLs and pricing** before proceeding to write.
+4. **If either page fails to load, shows a 404, or redirects to a homepage or search page, STOP.** Pick a different tool. Do not guess. Do not infer. Do not assume.
+
+This also applies to **playbooks and research**: every tool referenced must either (a) already be reviewed on the site, (b) be a well-known platform (Clio, Zapier, Make.com, Google Workspace), or (c) be verified via a live product page fetch.
+
+**Affiliate links must be built from verified URLs only.** Take the exact URL that loaded successfully, URL-encode it, and insert it into the deep link format. Never construct a link from a guessed slug.
+
+If a previously reviewed product becomes inactive, the agent must:
 
 1. Update the affiliate link to the AppSumo search fallback (see 4.2)
 2. If the product has moved to a different pricing model, update `dealPrice` and `dealType` in the frontmatter

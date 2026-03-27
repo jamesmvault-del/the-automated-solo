@@ -14,7 +14,8 @@ This repository powers **The Automated Solo** (theautomatedsolo.com), a premium 
 - **NEVER publish placeholder text** like `[VERIFY]`, `[TODO]`, or `[PLACEHOLDER]`.
 - **Voice:** All content articles (tools, playbooks, research) use James's first-person voice ("I tested," "my workflow"). Homepage/UI pages use brand voice ("we," "our").
 - **Active deals only.** Do not create tool reviews for expired or discontinued products.
-- **Affiliate links:** AppSumo deep link format is `https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded product page}`.
+- **PRODUCT VERIFICATION IS MANDATORY.** Before writing ANY tool review, you MUST use your web browsing tool to fetch the AppSumo product page AND the vendor's website. Confirm both load successfully. If either returns a 404 or redirects to a homepage, STOP and pick a different tool. This also applies to every tool referenced in playbooks.
+- **Affiliate links:** Build ONLY from verified URLs. Take the exact AppSumo URL you successfully loaded, URL-encode it, and insert into: `https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded VERIFIED product page}`. NEVER guess a product slug.
 
 ## AI Detection Prevention (Critical for SEO)
 

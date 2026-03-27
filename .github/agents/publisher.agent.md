@@ -44,7 +44,21 @@ Before creating ANY new content, you must:
 
 1. **Scout for tools.** Search AppSumo for legal-tech, productivity, and business tools with active deals. Browse categories relevant to solo attorneys: scheduling, document management, email marketing, CRM, billing, AI assistants, e-signatures.
 2. **Evaluate niche fit.** The tool MUST directly save billable hours for a solo attorney or small law firm (1-10 employees). Ask: "Would a solo practitioner running a general practice, family law, estate planning, personal injury, or criminal defense firm use this daily or weekly?" If no, skip it.
-3. **Verify the deal is active.** Check the AppSumo product page directly. If expired or discontinued, pick a different tool.
+3. **VERIFY THE PRODUCT EXISTS AND THE DEAL IS LIVE (HARD GATE).** This is the most critical step. You MUST complete ALL of the following before writing a single word of the review:
+
+   a. **Fetch the actual AppSumo product page.** Use your web browsing tool to visit `https://appsumo.com/products/{product-slug}/` and confirm:
+      - The page loads (not a 404, not a redirect to the AppSumo homepage)
+      - The product name on the page matches what you intend to review
+      - A price or "Get" / "Buy" button is visible (the deal is active)
+   b. **Fetch the vendor's own website.** Confirm the product's official site loads and describes the same product. If the vendor site is dead, the product is dead. Do not review it.
+   c. **Record the verified URLs.** Before proceeding, write down:
+      - Confirmed AppSumo product URL (the one that loaded successfully)
+      - Confirmed vendor website URL
+      - Deal price as shown on the AppSumo page
+   d. **If any verification fails, STOP.** Pick a different tool and restart from step 1. Do NOT guess that a product exists. Do NOT construct a review based on search result snippets alone. Do NOT assume a URL is valid without fetching it.
+
+   **Why this matters:** Publishing a review for a product that does not exist on AppSumo destroys reader trust, creates broken affiliate links, and wastes the entire content pipeline. This has happened before and it is a failure state.
+
 4. **Check for gaps.** Look at existing tool reviews and pick something that fills a category gap or complements the current stack. Avoid reviewing tools in categories that are already well-covered unless the new tool is significantly different.
 5. **Gather verifiable facts only.** Pull from:
    - The vendor's official product page (features, pricing)
@@ -54,13 +68,15 @@ Before creating ANY new content, you must:
 
    Do NOT fabricate benchmarks, user counts, or performance metrics. If data is not publicly available, either restructure the claim as editorial opinion ("In my testing, this was fast enough for daily use") or omit it entirely.
 
-6. **Build the affiliate link.** For AppSumo products, construct the deep link:
+6. **Build the affiliate link from the VERIFIED URL.** Take the exact AppSumo product URL you confirmed in step 3a and URL-encode it into the deep link format:
 
    ```
-   https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded product page}
+   https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded VERIFIED product page}
    ```
 
-   Example: `https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Ftool-name%2F`
+   Example: `https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Ftidycal%2F`
+
+   **NEVER construct an affiliate link from a guessed URL.** The encoded URL MUST be the exact page you successfully loaded in step 3a. If the URL you fetched was `https://appsumo.com/products/tidycal/`, then that exact string gets encoded. Do not substitute, guess, or infer product slugs.
 
    For SaaS/recurring products on other platforms, use the appropriate affiliate link format provided by James.
 
@@ -68,6 +84,11 @@ Before creating ANY new content, you must:
 
 1. **Identify the automation gap.** Look at what tools are already reviewed on the site and what workflows they enable. Search for common pain points solo attorneys discuss online: "How do I automate [X]?" questions on Reddit, legal forums, bar association tech committees.
 2. **Prioritize high-impact workflows.** Focus on processes that waste the most billable hours: intake, billing, document assembly, follow-ups, deadline tracking.
+
+   **CRITICAL: Every tool referenced in a playbook must be a real, verified product.** Before including ANY tool in a playbook workflow:
+   - If it is already reviewed on the site (`src/content/tools/`), you may reference it.
+   - If it is a well-known platform (Make.com, Zapier, Clio, Google Workspace), you may reference it.
+   - If it is any other tool, you MUST fetch its product page (AppSumo or vendor site) and confirm it exists before writing it into the playbook. Do NOT reference products you have not verified.
 3. **Map the tool stack.** Which reviewed tools (or commonly available platforms) does this playbook use? Prefer tools already on the site to create internal cross-links.
 4. **Verify all tool references.** Every tool mentioned must either be reviewed on the site or be a well-known platform (Make.com, Zapier, Clio, etc.) that doesn't need a dedicated review.
 
