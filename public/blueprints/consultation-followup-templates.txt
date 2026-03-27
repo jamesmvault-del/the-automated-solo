@@ -1,0 +1,154 @@
+THE CONSULTATION-TO-CASE PIPELINE
+Post-Consultation Follow-Up Templates for Solo Attorneys
+Tested in a solo practice. Use these in Typedesk or any email client.
+=========================================================================
+
+HOW TO USE THIS FILE
+-------------------
+Each template below maps to one stage of the post-consultation pipeline.
+Copy the body text directly into Typedesk as a new template, assign
+the shortcode listed at the top of each block, and configure the
+dynamic variable fields. When you trigger the shortcode, Typedesk will
+prompt you for the bracketed items before pasting.
+
+Pair these with a Pabbly Connect workflow that fires the correct
+shortcode context automatically after a TidyCal consultation ends.
+See the full setup guide at theautomatedsolo.com/playbooks/consultation-to-case-pipeline/
+
+=========================================================================
+
+
+TEMPLATE 1: INITIAL CONSULTATION FOLLOW-UP
+Shortcode: //followup-initial
+Trigger: Within 4 minutes of an "Initial Consultation" TidyCal booking ending
+---
+
+Subject: Following up from our call today
+
+Hi [CLIENT_FIRST_NAME],
+
+Thank you for taking the time to speak with me today about your [PRACTICE_AREA] matter. I wanted to follow up quickly while the details were fresh.
+
+Based on what you shared, I believe there is a clear path forward. I'll send over a formal engagement letter within the next [TIMEFRAME, e.g., 24 hours] that outlines the scope of work, my fee structure, and the next steps.
+
+In the meantime, if you have any documents you mentioned during our call (contracts, notices, correspondence), please scan or photograph them and reply to this email. Getting those in front of me early speeds up the process considerably.
+
+I look forward to working with you.
+
+[YOUR_NAME]
+[YOUR_FIRM_NAME]
+[YOUR_PHONE]
+
+---
+NOTE: This email should arrive within 4 minutes of the call ending.
+Speed is a conversion signal. Clients read a fast follow-up as proof
+you take their matter seriously. Plain text and personal. No newsletter
+footer, no marketing copy, no firm logo at the top.
+
+
+=========================================================================
+
+
+TEMPLATE 2: RETAINER AGREEMENT REQUEST
+Shortcode: //retainer-ready
+Trigger: After you've confirmed internally that you're taking the case
+---
+
+Subject: Engagement letter for [CLIENT_FIRST_NAME] [CLIENT_LAST_NAME]
+
+Hi [CLIENT_FIRST_NAME],
+
+Attached you'll find the engagement letter for your [PRACTICE_AREA] matter. The agreement covers:
+
+- Scope of representation: [BRIEF_SCOPE]
+- Initial retainer: $[RETAINER_AMOUNT]
+- Hourly rate (if applicable): $[HOURLY_RATE]/hour
+
+Please review, sign electronically using the DocuSign link in the document, and return the signed copy along with the initial retainer payment. You can pay via [PAYMENT_METHOD, e.g., credit card link, wire transfer instructions].
+
+Once I receive both, I will open your file and we can move forward.
+
+If any of the terms need clarification, reply to this email or call me directly at [YOUR_PHONE].
+
+[YOUR_NAME]
+[YOUR_FIRM_NAME]
+
+---
+NOTE: I use this template after the initial follow-up goes out and I've
+decided to take the case. The sequence is: Template 1 within 4 minutes,
+Template 2 within 24 hours. That two-step cadence closes the loop cleanly.
+
+
+=========================================================================
+
+
+TEMPLATE 3: NOT-RETAINED NURTURE (Six-Month Check-In)
+Shortcode: //not-retained-nurture
+Trigger: 180 days after a consultation that did not convert to a retained case
+---
+
+Subject: Checking in — [CLIENT_FIRST_NAME]
+
+Hi [CLIENT_FIRST_NAME],
+
+It's been a few months since we spoke about your [PRACTICE_AREA] situation. I wanted to check in.
+
+Sometimes these matters resolve on their own. Sometimes they get more complicated. Either way, if you ever need counsel, my calendar is still open.
+
+You can book a follow-up call here: [YOUR_TIDYCAL_LINK]
+
+No pressure. Just keeping the door open.
+
+[YOUR_NAME]
+[YOUR_FIRM_NAME]
+
+---
+NOTE: Keep this one short. Why? Prospects who did not retain you owe
+you nothing. A pushy nurture email will get you marked as spam. This
+version is low-friction and genuinely useful. If their situation
+changed, they'll click. If it didn't, no harm done.
+
+
+=========================================================================
+
+
+TEMPLATE 4: POST-CONSULTATION INTAKE REMINDER
+Shortcode: //intake-reminder
+Trigger: 48 hours after Template 1 fires, if no intake docs have been received
+---
+
+Subject: Quick reminder — documents for your matter
+
+Hi [CLIENT_FIRST_NAME],
+
+Just a quick note. If you were able to pull together those [DOCUMENT_TYPE, e.g., contracts, notices, any relevant correspondence], please reply to this email or drop them in the secure upload link below:
+
+[YOUR_SECURE_UPLOAD_LINK]
+
+Getting these earlier rather than later gives me more time to review before we begin. If you're having trouble locating them, let me know and we can discuss alternatives.
+
+[YOUR_NAME]
+
+---
+NOTE: Do not send this if the client has already submitted documents.
+In Pabbly Connect, add a conditional filter that checks a tag or field
+in your CRM before firing this reminder. One unnecessary reminder
+is fine. Two is friction. Three is a reason to choose a different attorney.
+
+
+=========================================================================
+
+CUSTOMIZATION NOTES
+-------------------
+Replace ALL bracketed fields with your actual practice-specific information
+before loading into Typedesk. A template with "[YOUR_NAME]" still in it
+is worse than no template at all.
+
+For Typedesk dynamic fields, use curly braces instead of brackets when
+configuring inside the tool itself: {CLIENT_FIRST_NAME}, {RETAINER_AMOUNT},
+etc. The bracket format here is for readability in this plain-text file.
+
+Questions? See the full playbook at:
+theautomatedsolo.com/playbooks/consultation-to-case-pipeline/
+
+=========================================================================

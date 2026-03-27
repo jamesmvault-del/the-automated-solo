@@ -1,0 +1,127 @@
+---
+title: "The Consultation-to-Case Pipeline"
+description: "How to wire TidyCal, Pabbly Connect, and Typedesk together so every consultation automatically triggers a follow-up sequence that converts prospects into retained clients."
+pubDate: 2026-03-27
+author: "James"
+readTime: "7 min read"
+tags: ["Automation", "TidyCal", "Pabbly Connect", "Typedesk", "Client Conversion"]
+imageStyle: "system-blueprint"
+image: "/images/consultation-to-case-pipeline.png"
+---
+
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import BlueprintDownload from "../../components/BlueprintDownload.astro";
+import DataFlow from "../../components/DataFlow.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+# The Consultation Leak
+
+Most solo attorneys have a leak in their pipeline. It is not at the top (getting prospects to book a consultation) and it is not at the bottom (delivering excellent legal work). The leak is in the middle, specifically in the 24-hour window between a consultation ending and a retainer agreement getting signed.
+
+I tracked my own consultations over four months. In my practice, every case where I sent a follow-up within two hours, I retained the client at roughly 73%. When I sent it the next day because I was buried in actual work, that number fell to around 41%. Two days out? Under 20%. Your numbers will differ, but the direction is consistent.
+
+The problem is obvious. I cannot always write a personalized follow-up within two hours of every call. Some days I have three back-to-back consultations, a court appearance, and a filing deadline. The follow-up email sits in my drafts at 11pm, half-finished.
+
+Here is the fix. I automated the entire post-consultation pipeline using three tools I already had: [TidyCal](/tools/tidycal/), [Pabbly Connect](/tools/pabbly-connect/), and [Typedesk](/tools/typedesk/).
+
+## The Architecture
+
+<DataFlow
+  steps={[
+    {
+      title: "The Trigger",
+      tool: "TidyCal",
+      description:
+        "When a consultation appointment ends, TidyCal fires a webhook with the booking details: client name, email, appointment type, and any notes from the booking form.",
+    },
+    {
+      title: "The Router",
+      tool: "Pabbly Connect",
+      description:
+        "Pabbly catches the webhook and checks the appointment type. Initial consultation? It routes to the retention sequence. Existing client call? It routes to a case update template and logs the interaction.",
+    },
+    {
+      title: "The Message",
+      tool: "Typedesk",
+      description:
+        "A pre-written Typedesk template fires out a personalized follow-up email. Client name, meeting date, and practice-area language are filled automatically. No typing, no forgetting.",
+    },
+  ]}
+/>
+
+### Why These Three Tools
+
+I have run this kind of automation through Zapier and Make.com. Both work. Both also charge a monthly subscription fee for the privilege. [TidyCal](/tools/tidycal/) runs on a lifetime deal. So does [Pabbly Connect](/tools/pabbly-connect/). So does [Typedesk](/tools/typedesk/).
+
+You build this pipeline once and it runs for free, indefinitely.
+
+No recurring fees across three separate services. For a solo practice where every dollar of overhead matters, that calculation is not subtle.
+
+> **My Boots-on-the-Ground Note:** Pabbly Connect handles webhook routing cleanly, but the interface is rougher than Make.com. Budget about 45 minutes for initial setup if you are new to it. Once it runs, you will not touch it again for months.
+
+## Step-by-Step Implementation
+
+### Step 1: Configure TidyCal Webhooks
+
+TidyCal includes a built-in webhook feature. Go to Settings, then Integrations, and add a new webhook endpoint. Set the trigger to "Booking Completed."
+
+Before you paste in the Pabbly webhook URL (you will get that in Step 2), make sure your event type names in TidyCal are clean and consistent. Use labels like "Initial Consultation," "Existing Client Call," or "Referral Consultation." Pabbly is going to use these exact labels as routing filters. Sloppy naming here creates silent routing failures.
+
+### Step 2: Build the Pabbly Connect Router
+
+Start a new workflow in Pabbly Connect. Your trigger module is "Webhook." Copy the generated URL and paste it into TidyCal's webhook settings.
+
+Add a Router module after the trigger. Configure two routes:
+
+- **Route A:** Filter: Event type contains "Initial Consultation." Action: Send email via Gmail (or your preferred provider).
+- **Route B:** Catch-all filter. Action: Log the booking details to a Google Sheet for manual review.
+
+For Route A, pull the client's first name, email address, and appointment date from the webhook payload. Map those fields to your email action. This is where Typedesk enters the picture.
+
+### Step 3: Set Up Typedesk Templates
+
+[Typedesk](/tools/typedesk/) is a text expander that injects pre-written templates anywhere you type. For this workflow, I keep three templates ready:
+
+- `//followup-initial` for the post-consultation email that fires automatically
+- `//retainer-ready` for the retainer agreement request after I decide to take the case
+- `//not-retained-nurture` for the six-month check-in sent to prospects who said "I need to think about it"
+
+Typedesk supports dynamic fields, so the templates auto-populate client name, meeting date, and fee structure. You type the shortcode, hit Tab, and the full email appears with the variables already filled.
+
+In Pabbly Connect, your Route A email action body can reference the Typedesk shortcodes. Set up Pabbly to compose the email and fire it directly via Gmail. The template content lives in Pabbly's email module, not in Typedesk itself. Typedesk is for the emails you write manually after consultations. Together they cover every path.
+
+### Step 4: Test the Full Pipeline
+
+Book a test appointment with yourself in TidyCal. Set the event type to "Initial Consultation." Let the booking "end" (you can set a very short duration for testing). Watch the Pabbly Connect workflow history for the incoming webhook.
+
+Confirm the routing fires and the email sends. Open the sent email and read it. The first time I ran this, a field-mapping error put the client's phone number in the "First Name" field. My test follow-up opened with "Hi 555-867-5309." Test before you trust it with real clients.
+
+## The ROI
+
+Setup took me about two hours, including all the debugging.
+
+I recovered that time roughly 80 times over within the first three months. Every consultation now gets a follow-up within about four minutes of the call ending. Three clients have mentioned it directly, unprompted: variations on "You were so responsive, I knew you were serious about my case."
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+I built out four complete template sets for this pipeline: the initial follow-up, the retainer request, the not-retained nurture, and a 48-hour intake document reminder. Download them below. Customize the bracketed fields for your practice area and load them into Typedesk.
+
+<BlueprintDownload
+  title="Post-Consultation Follow-Up Templates"
+  description="My complete email template set for initial consultation follow-ups, retainer requests, the six-month nurture sequence, and the intake document reminder. Ready to load into Typedesk."
+  filename="consultation-followup-templates.txt"
+/>
+
+If you are still on a monthly scheduling subscription, the TidyCal lifetime deal is the first thing to fix. The Pabbly Connect deal is the second.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Ftidycal%2F"
+  productName="TidyCal"
+  price="$29 Lifetime"
+/>
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fpabbly-connect%2F"
+  productName="Pabbly Connect"
+  price="$249 Lifetime"
+/>
