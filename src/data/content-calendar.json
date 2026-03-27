@@ -10,9 +10,6 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 2,
-  "published": [
-    {"type": "tool", "title": "Pabbly Connect: Automate the Copy-Paste Loop", "slug": "pabbly-connect", "date": "2026-03-26"},
-    {"type": "playbook", "title": "The Retainer Conversion Machine", "slug": "retainer-conversion-machine", "date": "2026-03-27"}
-  ]
+  "nextSlot": 0,
+  "published": []
 }
