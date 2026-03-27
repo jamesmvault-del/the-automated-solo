@@ -1,0 +1,94 @@
+THE POST-CONSULTATION FOLLOW-UP SEQUENCE
+A three-email template set for solo attorneys
+Built and tested by James at The Automated Solo (theautomatedsolo.com)
+
+---
+HOW TO USE THIS FILE
+---
+
+Load these three emails into a SendFox automation triggered by being added
+to a list called "Post-Consultation." Swap out anything in [brackets] for
+your actual details. The send timing is noted above each email.
+
+One thing worth knowing before you start: plain-text emails consistently
+outperform HTML templates for personal follow-up. Do not add a header logo.
+Do not add a footer with unsubscribe links at the bottom of Email 1. These
+are not marketing emails. They are personal notes from an attorney.
+
+---
+EMAIL 1: Day-Of Recap
+Send timing: Fires immediately when contact is added to the list
+Subject: Great talking today
+---
+
+Hi [First Name],
+
+Really enjoyed our conversation today. I appreciate you taking the time.
+
+If you want to move forward, here is the next step: [link to retainer
+agreement or intake form]. The process is straightforward and I will walk
+you through anything you have questions about.
+
+Feel free to reply here if you want to talk through anything first.
+
+[Your Name]
+[Your Phone Number]
+
+---
+EMAIL 2: 72-Hour Check-In
+Send timing: 72 hours after Email 1
+Subject: Re: Great talking today
+---
+
+Hi [First Name],
+
+Just checking in from our conversation earlier this week.
+
+If you are still thinking things through, no pressure at all. If a question
+came up that I did not fully cover, just hit reply and I will get back to you
+same day.
+
+The retainer link is below whenever you are ready: [retainer or intake link]
+
+[Your Name]
+
+---
+EMAIL 3: Day-Seven Close
+Send timing: 7 days after Email 1
+Subject: Closing the loop
+---
+
+Hi [First Name],
+
+I am wrapping up new client intake for this month and wanted to reach out
+one last time.
+
+If the timing is not right, completely understood. If you do want to move
+forward, today is a good day to do it: [retainer or intake link]
+
+Either way, I hope our conversation was helpful.
+
+[Your Name]
+
+---
+A FEW NOTES ON HOW I ACTUALLY USE THESE
+---
+
+The subject lines are intentionally plain. No "Following up on our
+consultation" with the date formatted like a CRM entry. Clients receive
+enough formal email. These land differently when they look like a personal
+note from someone who actually cares.
+
+The three-email structure is deliberate. More than three emails and you
+start to feel like a sales funnel. Fewer than three and you leave conversions
+on the table. I have tested both directions on this and the three-email
+sequence converts better than anything else I have tried.
+
+One more thing: if a prospect replies to any of these emails, have a Typedesk
+snippet ready to go. The /yes-retainer snippet for "I want to move forward,"
+the /more-questions snippet for anyone who needs more information, and the
+/not-yet snippet for gracious declines that move them to a long-term nurture
+list. You should not be typing those replies from scratch every time.
+
+---
+END OF FILE

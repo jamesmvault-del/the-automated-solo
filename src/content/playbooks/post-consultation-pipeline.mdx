@@ -1,0 +1,132 @@
+---
+title: "The 24-Hour Follow-Up Machine"
+description: "How to wire TidyCal, Pabbly Connect, and SendFox into a pipeline that follows up after every consultation automatically, without ever drafting an email from scratch again."
+pubDate: 2026-03-27
+author: "James"
+readTime: "8 min read"
+tags: ["Consultations", "Pabbly Connect", "TidyCal", "SendFox"]
+imageStyle: "system-blueprint"
+image: "/images/post-consultation-pipeline.png"
+---
+
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import BlueprintDownload from "../../components/BlueprintDownload.astro";
+import DataFlow from "../../components/DataFlow.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+# The Follow-Up Nobody Sends
+
+The consultation went great. The prospect seemed genuinely interested. You answered their questions, built real rapport, and spent a solid 45 minutes on the call.
+
+Then you got pulled into a hearing prep, forgot to send the follow-up email, and they hired the other attorney who called them the next morning.
+
+This happens every week in solo practices. Not because attorneys do not care. Because there is no system. Everything about client acquisition depends on personal initiative at exactly the moment you are most overwhelmed, in between billable tasks. I built this pipeline to fix that specific failure point.
+
+## The Architecture
+
+<DataFlow
+  steps={[
+    {
+      title: "The Trigger",
+      tool: "TidyCal",
+      description:
+        "A new paid consultation is booked and confirmed. TidyCal fires a webhook the moment the booking is created, passing the prospect's name, email, and scheduled time to Pabbly Connect.",
+    },
+    {
+      title: "The Router",
+      tool: "Pabbly Connect",
+      description:
+        "The automation layer. It receives the booking data, waits a calculated period after the meeting end time, and then pushes the contact into the right SendFox list to start the post-consultation sequence.",
+    },
+    {
+      title: "The Closer",
+      tool: "SendFox",
+      description:
+        "A three-email follow-up sequence fires automatically. The first email goes out within two hours of the meeting end. The second nudges at 72 hours. The third closes the loop at day seven.",
+    },
+  ]}
+/>
+
+### Why These Four Tools Work Together
+
+[TidyCal](/tools/tidycal/) handles the scheduling and payment collection. For $29 lifetime, it replaces Calendly and captures a paid consultation fee upfront, which kills no-shows cold. The webhook it fires on every new booking is the trigger for everything that follows.
+
+[Pabbly Connect](/tools/pabbly-connect/) is the middle layer. It reads the booking data and then waits, calculates, and fires the right actions at the right times. I reviewed it last week. The thing that makes it ideal here is the built-in delay step: you can tell Pabbly to hold until a specific calculated datetime, which means you can set the actual send time to two hours after your meeting ends rather than just two hours after the booking is created.
+
+[SendFox](/tools/sendfox/) holds the email sequences. When Pabbly adds a contact to a specific list, SendFox fires the automation. No monthly fee, no recurring subscription on a tool you pay for once.
+
+And [Typedesk](/tools/typedesk/) plays a supporting role here. Any prospect who actually replies to an email in your sequence gets a fast, personal response because you have already pre-written your reply templates as Typedesk snippets. Two keystrokes and a full polished email appears. You are not typing from memory in between client calls.
+
+## Step-by-Step Implementation
+
+### Part 1: Set Up the Trigger in TidyCal
+
+1. Log into TidyCal. Open your consultation booking type.
+2. Navigate to the Integrations or Webhooks section.
+3. Add a new webhook with your Pabbly Connect webhook URL (generated in Part 2 below).
+4. Set the event to "New Booking Created." Save.
+
+That is it on the TidyCal side. The booking confirmation email to the prospect still goes out from TidyCal automatically. You are just also now quietly sending a copy of the booking data to Pabbly.
+
+### Part 2: Build the Pabbly Workflow
+
+This part does the actual work. It takes about 20 minutes to configure once.
+
+1. In Pabbly Connect, create a new workflow. Name it something clear, like "Post-Consultation Follow-Up."
+2. Set the trigger to "Webhook by Pabbly." Copy the URL. Paste it back into TidyCal (Part 1, Step 3).
+3. Add an Action: **Delay.** Set it to a specific datetime. Use a formula to calculate meeting end time plus two hours. Pabbly accepts ISO datetime values from webhook payloads, so you can build something like the meeting start time plus your consultation length plus 120 minutes for the buffer.
+4. Add another Action: **SendFox.** Choose "Add Subscriber." Map the prospect's email and first name from the TidyCal payload to the SendFox fields. Set the list to "Post-Consultation."
+5. Save and activate.
+
+> **One thing I want to flag:** Pabbly's delay formatting is finicky. It expects ISO 8601 datetime strings. If TidyCal sends the booking time in a different format, you will need a Text Formatter step in the middle to convert it. I spent about 15 minutes troubleshooting this the first time I built it. Not a dealbreaker, just expect it.
+
+### Part 3: Build the SendFox Sequence
+
+Go to SendFox's Automations tab. Create an automation triggered by being added to the "Post-Consultation" list.
+
+Write three emails:
+
+- **Email 1 (fires immediately on list addition):** Short. Personal. "Great talking today. Here is the next step if you want to move forward." Include your retainer link or intake form. Keep it to four sentences.
+- **Email 2 (72 hours later):** One paragraph. "Just checking in. Happy to answer any questions." No hard sell. A door left open.
+- **Email 3 (Day 7):** Even shorter. A one-line close. Something like: "I am wrapping up new client slots for this month. If you want to move forward, today is a good time."
+
+Three emails is the right number. More than three starts to feel like pressure. Fewer than three and you are leaving conversions on the table.
+
+### Part 4: Load Your Typedesk Reply Snippets
+
+You cannot automate the personal back-and-forth when a prospect replies directly. But you can cut response time to about 15 seconds.
+
+In [Typedesk](/tools/typedesk/), create four snippets:
+
+- `/yes-retainer`: Your full retainer agreement delivery email, with the quoted fee and a link to your signature platform. For when someone replies ready to move forward.
+- `/more-questions`: A two-paragraph response covering the most common follow-up questions you get. Price, timeline, what the engagement looks like.
+- `/not-yet`: A gracious low-pressure note that moves them to your general email list in SendFox so you stay in view without being annoying.
+- `/reschedule`: A quick note with your TidyCal link so they can grab another slot without going back and forth.
+
+Four snippets. Two keystrokes each. You never type a one-off consultation reply from scratch again.
+
+## The ROI
+
+Setting this up takes a focused afternoon. Realistically, about three hours including the Pabbly datetime formula troubleshooting.
+
+After that, every consultation you run drops a prospect into a fully automated post-meeting sequence. No drafting. No "I need to remember to follow up with that person from Tuesday."
+
+In my own testing across two months of consultations, the follow-up sequence re-engaged prospects who had gone quiet for four days. Not because the emails were magical. Because most attorneys never send them.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+I wrote out the exact three-email templates I use in my own sequence. Download the text file, swap in your name and practice area, and paste the copy directly into SendFox. The structure and timing are already set.
+
+<BlueprintDownload
+  title="The Post-Consultation Follow-Up Sequence"
+  description="My exact three-email templates: the day-of recap, the 72-hour check-in, and the day-seven close. Paste directly into SendFox and you are done."
+  filename="consultation-followup-sequence.txt"
+/>
+
+Pabbly Connect is the glue that makes this whole thing run. If you do not have it yet, you are either running this on Zapier and paying monthly forever, or you are following up manually when you happen to remember. Neither is a good answer.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fpabbly-connect%2F"
+  productName="Pabbly Connect"
+  price="$249 Lifetime"
+/>

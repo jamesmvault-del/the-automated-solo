@@ -10,8 +10,9 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 1,
+  "nextSlot": 2,
   "published": [
-    {"type": "tool", "title": "Pabbly Connect: Automate the Copy-Paste Loop", "slug": "pabbly-connect", "date": "2026-03-26"}
+    {"type": "tool", "title": "Pabbly Connect: Automate the Copy-Paste Loop", "slug": "pabbly-connect", "date": "2026-03-26"},
+    {"type": "playbook", "title": "The 24-Hour Follow-Up Machine", "slug": "post-consultation-pipeline", "date": "2026-03-27"}
   ]
 }
