@@ -20,6 +20,7 @@ on:
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   create-content-issue:
@@ -28,7 +29,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Clean up stale Copilot branches and failed issues
+      - name: Clean up stale Copilot state
+        id: cleanup
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
@@ -36,13 +38,56 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            // 1. Delete stale copilot/* branches
+            // 1. Check for active Copilot PRs (open PRs from copilot/* branches)
+            const { data: openPRs } = await github.rest.pulls.list({
+              owner, repo, state: 'open', per_page: 100
+            });
+            const activeCopilotPRs = openPRs.filter(pr =>
+              pr.head.ref.startsWith('copilot/') && !pr.draft
+            );
+            const draftCopilotPRs = openPRs.filter(pr =>
+              pr.head.ref.startsWith('copilot/') && pr.draft
+            );
+
+            if (activeCopilotPRs.length > 0) {
+              console.log(`Active Copilot PRs found: ${activeCopilotPRs.map(pr => `#${pr.number} (${pr.head.ref})`).join(', ')}`);
+              console.log('Copilot is currently working. Skipping new issue creation.');
+              core.setOutput('skip', 'true');
+              return;
+            }
+
+            // 2. Close draft copilot PRs that are stale (no updates in 30+ minutes)
+            for (const pr of draftCopilotPRs) {
+              const updatedAt = new Date(pr.updated_at);
+              const ageMinutes = (Date.now() - updatedAt.getTime()) / 60000;
+              if (ageMinutes > 30) {
+                try {
+                  await github.rest.pulls.update({
+                    owner, repo, pull_number: pr.number, state: 'closed'
+                  });
+                  console.log(`Closed stale draft PR #${pr.number}: ${pr.title} (${Math.round(ageMinutes)} min old)`);
+                } catch (e) {
+                  console.log(`Could not close PR #${pr.number}: ${e.message}`);
+                }
+              } else {
+                console.log(`Draft PR #${pr.number} is still recent (${Math.round(ageMinutes)} min). Copilot may still be working.`);
+                core.setOutput('skip', 'true');
+                return;
+              }
+            }
+
+            // 3. Delete stale copilot/* branches (only those without open PRs)
             const { data: branches } = await github.rest.repos.listBranches({
               owner, repo, per_page: 100
             });
             const copilotBranches = branches.filter(b => b.name.startsWith('copilot/'));
+            const openPRBranches = new Set(openPRs.map(pr => pr.head.ref));
 
             for (const branch of copilotBranches) {
+              if (openPRBranches.has(branch.name)) {
+                console.log(`Skipping ${branch.name}: has open PR`);
+                continue;
+              }
               try {
                 await github.rest.git.deleteRef({
                   owner, repo, ref: `heads/${branch.name}`
@@ -57,12 +102,13 @@ jobs:
               console.log('No stale copilot/* branches found');
             }
 
-            // 2. Close stale content issues that Copilot failed to start
+            // 4. Close stale content issues that Copilot failed to start
             const { data: openIssues } = await github.rest.issues.listForRepo({
               owner, repo, state: 'open', labels: 'copilot', per_page: 50
             });
 
             for (const issue of openIssues) {
+              if (issue.pull_request) continue;
               const { data: comments } = await github.rest.issues.listComments({
                 owner, repo, issue_number: issue.number, per_page: 10
               });
@@ -85,7 +131,29 @@ jobs:
               }
             }
 
+            // 5. Check for repository rulesets that might block Copilot
+            try {
+              const { data: rulesets } = await github.rest.repos.getRepoRulesets({
+                owner, repo, per_page: 100
+              });
+              if (rulesets.length > 0) {
+                console.log(`⚠️ Repository has ${rulesets.length} ruleset(s):`);
+                for (const rs of rulesets) {
+                  console.log(`  - "${rs.name}" (${rs.enforcement}, target: ${rs.target})`);
+                }
+                console.log('If Copilot fails to start, add it as a bypass actor in these rulesets.');
+                console.log('Go to: Settings → Rules → Rulesets → [ruleset name] → Bypass list → Add "Copilot"');
+              } else {
+                console.log('No repository rulesets found');
+              }
+            } catch (e) {
+              console.log(`Could not check rulesets: ${e.message}`);
+            }
+
+            core.setOutput('skip', 'false');
+
       - name: Determine content type from rotation
+        if: steps.cleanup.outputs.skip != 'true'
         id: rotation
         uses: actions/github-script@v7
         with:
@@ -125,6 +193,7 @@ jobs:
             core.setOutput('recent_published', recentPublished || 'none yet');
 
       - name: Create issue for Copilot
+        if: steps.cleanup.outputs.skip != 'true'
         id: create-issue
         uses: actions/github-script@v7
         with:
@@ -277,6 +346,7 @@ jobs:
             core.setOutput('issue_number', issue.number);
 
       - name: Assign Copilot to issue
+        if: steps.cleanup.outputs.skip != 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
@@ -294,10 +364,14 @@ jobs:
             const assignees = (result.data.assignees || []).map(a => a.login);
             console.log(`Assignees after call: ${JSON.stringify(assignees)}`);
 
-            if (assignees.some(a => a.includes('copilot'))) {
-              console.log('Copilot successfully assigned!');
+            const copilotAssigned = assignees.some(a => a.toLowerCase().includes('copilot'));
+
+            if (copilotAssigned) {
+              console.log('Copilot successfully assigned via API!');
             } else {
-              console.log('Assignment API returned OK but Copilot not in list. Trying comment trigger...');
+              console.log('Assignment API returned OK but Copilot not in assignee list.');
+              console.log('Waiting 5 seconds before posting @copilot comment as fallback...');
+              await new Promise(resolve => setTimeout(resolve, 5000));
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -306,3 +380,10 @@ jobs:
               });
               console.log('Posted @copilot comment as fallback trigger');
             }
+
+            console.log('');
+            console.log('If Copilot responds with "repository ruleset violation" error:');
+            console.log('1. Go to Settings > Rules > Rulesets');
+            console.log('2. Edit each ruleset that targets branches');
+            console.log('3. Add "Copilot" to the bypass list');
+            console.log('See: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository#granting-bypass-permissions-for-your-branch-or-tag-ruleset');
