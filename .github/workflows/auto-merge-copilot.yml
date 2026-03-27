@@ -31,13 +31,15 @@ jobs:
         run: npm run build
 
       - name: Approve PR
-        run: gh pr review "$PR_NUMBER" --approve --body "Auto-approved: build passed."
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh pr review "$PR_NUMBER" --approve --body "Auto-approved build passed."
 
       - name: Merge PR
-        run: gh pr merge "$PR_NUMBER" --squash --delete-branch
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh pr merge "$PR_NUMBER" --squash --delete-branch

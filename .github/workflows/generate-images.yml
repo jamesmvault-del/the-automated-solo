@@ -114,7 +114,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr ready "$PR_NUMBER"
+        run: |
+          gh pr ready "$PR_NUMBER"
 
       - name: Build site (validation gate)
         run: npm run build
@@ -123,10 +124,12 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: gh pr review "$PR_NUMBER" --approve --body "Auto-approved: build passed."
+        run: |
+          gh pr review "$PR_NUMBER" --approve --body "Auto-approved build passed."
 
       - name: Merge PR
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: gh pr merge "$PR_NUMBER" --squash --delete-branch
+        run: |
+          gh pr merge "$PR_NUMBER" --squash --delete-branch
