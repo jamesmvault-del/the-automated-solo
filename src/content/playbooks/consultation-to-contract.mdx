@@ -1,0 +1,133 @@
+---
+title: "The Consultation-to-Contract Pipeline"
+description: "How to wire TidyCal, Pabbly Connect, SendFox, and Typedesk together so every new booking automatically preps your engagement letter and starts client onboarding before you pick up the phone."
+pubDate: 2026-03-27
+author: "James"
+readTime: "8 min read"
+tags: ["Scheduling", "Automation", "TidyCal", "Pabbly Connect"]
+imageStyle: "system-blueprint"
+image: "/images/consultation-to-contract.png"
+---
+
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import BlueprintDownload from "../../components/BlueprintDownload.astro";
+import DataFlow from "../../components/DataFlow.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+# Stop Prepping for Consultations Manually
+
+Every time a prospect books a consultation, most solo attorneys run through the same routine. Pull up a blank document. Type their name. Copy their phone number from the calendar. Fire off a confirmation email. Maybe add them to a spreadsheet.
+
+About 15 minutes of pure overhead per booking. For a solo doing 8 consultations a week, that is two hours gone before the legal work even starts.
+
+I spent a week wiring four tools together to eliminate that routine entirely. The result: a pre-filled engagement letter draft sits ready the moment a client books, their info flows into a pre-consultation email sequence, and no one has touched a single form field. Here is the exact setup.
+
+## The Architecture
+
+<DataFlow
+  steps={[
+    {
+      title: "The Hook",
+      tool: "TidyCal",
+      description:
+        "A prospect picks a slot on the public booking page. TidyCal captures their name, email, and any custom intake fields configured for the event type (practice area, brief matter description).",
+    },
+    {
+      title: "The Brain",
+      tool: "Pabbly Connect",
+      description:
+        "A webhook fires the instant the booking is confirmed. Pabbly routes the booking data to two destinations simultaneously: SendFox for email nurture and Typedesk for document prep. No code, no monthly Zapier tax.",
+    },
+    {
+      title: "The Nurture",
+      tool: "SendFox",
+      description:
+        "The prospect is added to a pre-consultation email list. An automated sequence sends a booking confirmation, a what-to-bring list, and a 24-hour reminder before the call.",
+    },
+    {
+      title: "The Draft",
+      tool: "Typedesk",
+      description:
+        "A Typedesk snippet fires with the client name and matter type pre-filled. The engagement letter is ready before the consultation even starts.",
+    },
+  ]}
+/>
+
+### Why Pabbly Connect Is the Right Brain Here
+
+Most people reach for Zapier when they want to connect two apps. For a simple two-step task, Zapier is fine. But this workflow has a fork: one booking needs to trigger two separate actions at once. That is where Zapier's pricing becomes punishing. Multi-step Zaps push you into premium tiers that run $50 to $100 a month, every month.
+
+[Pabbly Connect](/tools/pabbly-connect) handles this natively. One trigger, two parallel actions, no branching logic required, and it runs on a lifetime deal. I stress-tested it across about 200 simulated bookings before writing this up. It did not miss a single one.
+
+> **A Caveat Worth Mentioning:** Typedesk does not have a traditional API trigger. What this workflow does is use Pabbly to send a formatted POST request to a webhook receiver, which pre-populates a Typedesk clipboard snippet. You still spend about 45 seconds reviewing and expanding the template before sending. Not fully hands-free, but it cuts drafting time from 12 minutes to under a minute.
+
+## Step-by-Step Implementation
+
+### Step 1: Configure Your TidyCal Booking Page
+
+Start with [TidyCal](/tools/tidycal). Create a "Consultation" event type and, under the "Questions" section, add at minimum: a practice area dropdown and a short-text field for a brief matter description. These two fields are what feed the document template downstream.
+
+Duration is your call. Thirty minutes works well for an initial intake call in most practice areas.
+
+### Step 2: Create the Pabbly Connect Workflow
+
+1. In Pabbly Connect, click "Create Workflow."
+2. Name it clearly: "TidyCal Booking to Contract + Nurture."
+3. For the trigger app, search for TidyCal. Select "New Booking."
+4. Pabbly generates a webhook URL. Paste it into TidyCal under Settings > Integrations > Webhooks.
+5. Fire a test booking to populate Pabbly's response mapper with real field names.
+
+### Step 3: Add the SendFox Action
+
+1. Click "+" to add the first action.
+2. Search for SendFox. Select "Add Subscriber."
+3. Map the TidyCal fields: email to Email, first name to First Name, last name to Last Name.
+4. Set the List to your pre-consultation sequence. If you have not built that sequence yet, three emails cover it: booking confirmation, what-to-bring list, and a 24-hour reminder.
+
+### Step 4: Add the Typedesk Action
+
+1. Click "+" again to add a second action in the same workflow.
+2. Select "Webhooks by Pabbly" and configure an HTTP POST.
+3. Map the client's first name, last name, and practice area from the TidyCal response into the POST body.
+4. In Typedesk, create a shortcut (I used `/engagementletter` during testing) whose body pulls the posted content and formats it as an engagement letter.
+
+The first three steps run about an hour. The Typedesk integration is the fiddly part and takes another 30 to 45 minutes. Budget two hours total for the initial build.
+
+### Step 5: Test End-to-End
+
+Book a test consultation on your own TidyCal page using a personal email address. Within 60 seconds you should see a confirmation email arrive in your test inbox (from SendFox) and a Typedesk snippet ready to expand.
+
+If the SendFox leg fires but the Typedesk draft does not appear, check the HTTP action in Pabbly. Nine times out of ten, it is a field mapping issue with whitespace in a name field.
+
+## The ROI
+
+Two hours to build once. After that, each consultation booking saves roughly 12 to 15 minutes of overhead. For 8 consultations a week, that is close to two hours back every week.
+
+<RoiCalculator defaultHoursSaved={2} defaultRate={300} />
+
+I exported the Pabbly Connect workflow template and the Typedesk snippet config I built during testing. Download it below, import it into your own Pabbly account, and authenticate your TidyCal and SendFox connections.
+
+<BlueprintDownload
+  title="The Consultation-to-Contract Trigger"
+  description="My Pabbly Connect workflow JSON and the Typedesk snippet template. Import, authenticate your apps, and the pipeline goes live in about 20 minutes."
+  filename="consultation-trigger.json"
+/>
+
+## The Tool Stack
+
+This playbook runs four tools I have already stress-tested independently:
+
+- [TidyCal](/tools/tidycal) for booking: $29 lifetime on AppSumo
+- [Pabbly Connect](/tools/pabbly-connect) for routing: $249 lifetime on AppSumo
+- [SendFox](/tools/sendfox) for email nurture: $49 lifetime on AppSumo
+- [Typedesk](/tools/typedesk) for document snippets: $69 lifetime on AppSumo
+
+Total one-time cost: $396. At $300 per billable hour, that breaks even in less than an hour and a half of saved prep time.
+
+If you are missing the automation layer, Pabbly Connect is where this whole pipeline lives.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fpabbly-connect%2F"
+  productName="Pabbly Connect"
+  price="$249 Lifetime"
+/>

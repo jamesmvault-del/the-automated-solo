@@ -1,0 +1,79 @@
+{
+  "_meta": {
+    "tool": "Pabbly Connect",
+    "workflow_name": "TidyCal Booking to Contract + Nurture",
+    "description": "When a new TidyCal booking is confirmed, this workflow simultaneously adds the prospect to a SendFox pre-consultation email sequence and prepares a Typedesk engagement letter snippet. Import this into your Pabbly Connect account, then authenticate your TidyCal, SendFox, and HTTP connections.",
+    "version": "1.0",
+    "created_by": "The Automated Solo (theautomatedsolo.com)",
+    "instructions": [
+      "1. In Pabbly Connect, click 'Import Workflow' and paste this JSON.",
+      "2. The trigger is TidyCal 'New Booking'. Pabbly will generate a new webhook URL. Paste it into TidyCal under Settings > Integrations > Webhooks.",
+      "3. Fire a test booking to populate the field mapper with real field names.",
+      "4. In the SendFox action, set the 'List' field to your pre-consultation sequence list ID.",
+      "5. In the HTTP action, update the endpoint URL to your Typedesk webhook receiver or clipboard bridge.",
+      "6. Save and enable the workflow.",
+      "NOTE: Field names in {{double_braces}} are Pabbly variable references. Do not edit them unless you rename the fields in your TidyCal form."
+    ]
+  },
+  "workflow": {
+    "name": "TidyCal Booking to Contract + Nurture",
+    "status": "active",
+    "trigger": {
+      "app": "TidyCal",
+      "event": "New Booking",
+      "webhook_placeholder": "REPLACE_WITH_PABBLY_WEBHOOK_URL",
+      "fields_captured": [
+        "invitee_first_name",
+        "invitee_last_name",
+        "invitee_email",
+        "event_type_name",
+        "questions.practice_area",
+        "questions.matter_description",
+        "scheduled_at"
+      ]
+    },
+    "actions": [
+      {
+        "order": 1,
+        "app": "SendFox",
+        "event": "Add Subscriber",
+        "description": "Adds the prospect to your pre-consultation email sequence the moment they book.",
+        "mapping": {
+          "email": "{{invitee_email}}",
+          "first_name": "{{invitee_first_name}}",
+          "last_name": "{{invitee_last_name}}",
+          "list_id": "REPLACE_WITH_YOUR_SENDFOX_LIST_ID",
+          "tags": ["pre-consultation", "{{questions.practice_area}}"]
+        }
+      },
+      {
+        "order": 2,
+        "app": "HTTP by Pabbly",
+        "event": "POST Request",
+        "description": "Sends formatted client data to your Typedesk webhook receiver so the engagement letter snippet is pre-loaded and ready to expand.",
+        "config": {
+          "url": "REPLACE_WITH_TYPEDESK_WEBHOOK_OR_CLIPBOARD_BRIDGE_URL",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": {
+            "snippet_trigger": "/engagementletter",
+            "client_first_name": "{{invitee_first_name}}",
+            "client_last_name": "{{invitee_last_name}}",
+            "client_email": "{{invitee_email}}",
+            "practice_area": "{{questions.practice_area}}",
+            "matter_description": "{{questions.matter_description}}",
+            "consultation_date": "{{scheduled_at}}"
+          }
+        }
+      }
+    ]
+  },
+  "typedesk_snippet_template": {
+    "shortcut": "/engagementletter",
+    "title": "Engagement Letter - Pre-filled from TidyCal",
+    "instructions": "In Typedesk, create a new snippet with the shortcut '/engagementletter'. Paste the body text below. When Pabbly fires after a booking, the snippet content is queued. Type /engagementletter in any text field to expand it with the client details. Replace all bracketed placeholders with your own information before activating.",
+    "body": "Dear {{client_first_name}} {{client_last_name}},\n\nThank you for scheduling your consultation on {{consultation_date}}.\n\nThis letter confirms the terms of our engagement for legal services related to your {{practice_area}} matter.\n\nScope of Services:\nWe will advise you regarding: {{matter_description}}. Our services under this agreement are limited to the matters described herein.\n\nFee Arrangement:\nMy hourly rate is $300, billed in 0.1-hour increments. A retainer of $1,500 is required to begin work and will be held in trust, drawn down as services are rendered. Adjust this rate and retainer to match your own fee schedule before sending.\n\nConfidentiality:\nAll information you share with this office is protected by the attorney-client privilege and will be kept strictly confidential.\n\nNext Steps:\nTo confirm this engagement, please sign and return a copy of this letter along with the agreed retainer. Work on your matter will begin upon receipt.\n\nIf you have any questions before our consultation, please reach me at [YOUR PHONE NUMBER] or [YOUR EMAIL].\n\nSincerely,\n\n[YOUR FULL NAME]\n[YOUR FIRM NAME]\n[YOUR STATE BAR NUMBER]\n[YOUR ADDRESS]"
+  }
+}
