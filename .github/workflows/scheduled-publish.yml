@@ -70,6 +70,9 @@ jobs:
                   console.log(`Could not close PR #${pr.number}: ${e.message}`);
                 }
               } else {
+                // Any recent draft from a copilot/* branch means the agent is likely
+                // mid-session. Creating another issue would either fail or cause
+                // the agent to context-switch, so we wait for the next scheduled run.
                 console.log(`Draft PR #${pr.number} is still recent (${Math.round(ageMinutes)} min). Copilot may still be working.`);
                 core.setOutput('skip', 'true');
                 return;
@@ -364,7 +367,9 @@ jobs:
             const assignees = (result.data.assignees || []).map(a => a.login);
             console.log(`Assignees after call: ${JSON.stringify(assignees)}`);
 
-            const copilotAssigned = assignees.some(a => a.toLowerCase().includes('copilot'));
+            const copilotAssigned = assignees.some(a =>
+              a.toLowerCase() === 'copilot' || a.toLowerCase() === 'copilot-swe-agent[bot]'
+            );
 
             if (copilotAssigned) {
               console.log('Copilot successfully assigned via API!');
