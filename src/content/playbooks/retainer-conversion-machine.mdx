@@ -67,10 +67,10 @@ That said, there is a catch worth knowing before you start. Pabbly's scheduler m
 ### Phase 2: Build the Pabbly Scenario
 
 1. Create a new scenario in Pabbly Connect. Start with a Webhook trigger module and copy the URL into TidyCal above.
-2. **Prep email path:** Add a Delay module configured to fire 30 minutes before the appointment start time. Use the appointment timestamp from the TidyCal webhook payload to calculate the offset. Then add a Gmail or SMTP module to send the prep note. If you use [Typedesk](/tools/typedesk/) for text snippets, store the prep email template there so you can update it from one place without touching the Pabbly scenario.
+2. **Prep email path:** Add a Delay module configured to fire 30 minutes before the appointment start time. Use the appointment timestamp from the TidyCal webhook payload to calculate the offset. Then add a Gmail or SMTP module to send the prep note. If you use [Typedesk](/tools/typedesk/) for text snippets, store the prep email template there. One place to update it, no reason to touch the Pabbly scenario later.
 3. **Retainer path:** Add a second Delay module set to fire 2 hours after the appointment end time. Then add a SendFox module to add the contact to your "Post-Consultation" list.
 
-A few things that bit me during testing: the TidyCal payload gives you the appointment start time in UTC, not local time. Double-check your timezone settings inside Pabbly before you assume the timing is right. And test with at least three dummy bookings across different times of day before you trust it with real clients.
+A few things that bit me during testing. The TidyCal payload gives you the appointment start time in UTC, not local time. Double-check your timezone settings inside Pabbly before you assume the timing is right. Test with at least three dummy bookings across different times of day before you trust it with real clients.
 
 ### Phase 3: Build the SendFox Sequence
 
