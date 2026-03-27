@@ -226,7 +226,7 @@ jobs:
                 `2. **Already reviewed (do NOT duplicate):** ${existingTools}`,
                 '3. **MANDATORY PRODUCT VERIFICATION (HARD GATE).** Before writing ANYTHING, you MUST:',
                 '   a. **Fetch the AppSumo product page** (`https://appsumo.com/products/{slug}/`) using your web tool. Confirm the page loads, shows the product name, and has an active deal (price visible, Buy/Get button present).',
-                '   b. **Fetch the vendor\\'s own website** and confirm the product exists and is operational.',
+                "   b. **Fetch the vendor's own website** and confirm the product exists and is operational.",
                 '   c. Record the verified AppSumo URL, vendor URL, and deal price.',
                 '   d. **If ANY verification fails, STOP. Pick a different tool. Do NOT guess that a product exists.** Publishing a review for a nonexistent product is a critical failure.',
                 '4. **Verify niche fit.** Ask: "Would a solo practitioner running a general practice, family law, estate planning, or personal injury firm use this weekly?" If no, pick another.',
