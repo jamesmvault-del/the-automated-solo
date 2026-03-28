@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: write
 
 jobs:
   check-deals:
@@ -43,6 +44,7 @@ jobs:
         if: steps.check.outputs.exit_code == '1'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const fs = require('fs');
             let results;
@@ -75,11 +77,13 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: existing.number,
-                body: `## Daily Check Update (${new Date().toISOString().split('T')[0]})
-
-            Still detecting ${issues.length} deal issue(s):
-
-            ${issues.map(i => `- **${i.name}** (\`${i.file}\`): ${i.status} - ${i.reason}`).join('\n')}`
+                body: [
+                  `## Daily Check Update (${new Date().toISOString().split('T')[0]})`,
+                  '',
+                  `Still detecting ${issues.length} deal issue(s):`,
+                  '',
+                  ...issues.map(i => `- **${i.name}** (\`${i.file}\`): ${i.status} - ${i.reason}`)
+                ].join('\n')
               });
 
               console.log(`Updated existing issue #${existing.number}`);
@@ -91,42 +95,44 @@ jobs:
               return `| ${i.name} | \`${i.file}\` | ${i.status} | ${i.reason} |`;
             }).join('\n');
 
-            const body = `## Deal Health Alert
-
-            The daily deal monitor detected **${issues.length} issue(s)** with listed tools.
-
-            | Tool | File | Status | Details |
-            |------|------|--------|---------|
-            ${issueRows}
-
-            ## Required Actions
-
-            For each affected tool:
-
-            1. **If status is \`expired\`** (redirected to search): Update the \`affiliateLink\` in the tool's MDX frontmatter to use the AppSumo search fallback:
-               \`\`\`
-               https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fsoftware-search%2F%3Fquery%3D{tool-name}
-               \`\`\`
-               Also update \`dealPrice\` and \`dealType\` if the pricing model has changed.
-
-            2. **If status is \`dead\`** (HTTP error or timeout): Investigate whether the product still exists. If discontinued, flag the tool for removal from the index.
-
-            3. After all updates, increment \`CACHE_NAME\` in \`public/sw.js\`.
-
-            ## Reference
-
-            - Full check results: ${results.totalTools} tools checked, ${results.healthy} healthy, ${results.issues} with issues
-            - Checked at: ${results.checkedAt}
-
-            See \`AGENTS.md\` for affiliate link format rules and \`.github/agents/publisher.agent.md\` for the deal health check protocol.`;
+            const body = [
+              '## Deal Health Alert',
+              '',
+              `The daily deal monitor detected **${issues.length} issue(s)** with listed tools.`,
+              '',
+              '| Tool | File | Status | Details |',
+              '|------|------|--------|---------|',
+              issueRows,
+              '',
+              '## Required Actions',
+              '',
+              'For each affected tool:',
+              '',
+              '1. **If status is `expired`** (redirected to search): Update the `affiliateLink` in the tool\'s MDX frontmatter to use the AppSumo search fallback:',
+              '   ```',
+              '   https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fsoftware-search%2F%3Fquery%3D{tool-name}',
+              '   ```',
+              '   Also update `dealPrice` and `dealType` if the pricing model has changed.',
+              '',
+              '2. **If status is `dead`** (HTTP error or timeout): Investigate whether the product still exists. If discontinued, delete the `.mdx` file from `src/content/tools/`, the hero image from `public/images/`, and remove it from `content-calendar.json`.',
+              '',
+              '3. After all updates, increment `CACHE_NAME` in `public/sw.js`.',
+              '',
+              '## Reference',
+              '',
+              `- Full check results: ${results.totalTools} tools checked, ${results.healthy} healthy, ${results.issues} with issues`,
+              `- Checked at: ${results.checkedAt}`,
+              '',
+              'See `AGENTS.md` for affiliate link format rules and `.github/agents/publisher.agent.md` for the deal health check protocol.'
+            ].join('\n');
 
             const { data: issue } = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `[Deal Monitor] ${issues.length} deal(s) need attention`,
               body: body,
-              labels: ['deal-monitor', 'urgent'],
-              assignees: ['claude']
+              labels: ['deal-monitor', 'copilot'],
+              assignees: ['copilot']
             });
 
             console.log(`Created issue #${issue.number}: ${issue.title}`);
