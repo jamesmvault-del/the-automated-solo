@@ -15,6 +15,7 @@ A premium PWA authority site for solo attorney automation. The site publishes to
 - **Monetization:** AppSumo lifetime deal referrals, recurring SaaS affiliate partnerships (Clio, MyCase, Spellbook)
 - **Stack:** Astro 6, Tailwind CSS 4, MDX, Cloudflare Pages
 - **Content pipeline:** Publisher agent creates articles on a Mon/Thu rotation schedule via GitHub Actions
+- **Niche config:** All niche-specific values (audience, categories, author, affiliate format) live in `src/data/site-config.json`. To adapt this system for a different niche, edit that file. The workflow and agent instructions read from it automatically.
 
 ---
 
@@ -66,9 +67,10 @@ All text, whether in an article, a downloadable checklist, or a component descri
 Before writing ANY tool review, the agent MUST:
 
 1. **Fetch the AppSumo product page** using its web browsing tool. Visit `https://appsumo.com/products/{slug}/` and confirm the page loads with the correct product name and an active deal (price visible, Buy/Get button present).
-2. **Fetch the vendor's own website** and confirm the product is real and operational.
-3. **Record verified URLs and pricing** before proceeding to write.
-4. **If either page fails to load, shows a 404, or redirects to a homepage or search page, STOP.** Pick a different tool. Do not guess. Do not infer. Do not assume.
+2. **Check the deal is purchasable.** If the page says "Sold out", "Notify me when it returns", "Coming soon", or has no purchase button, the deal is NOT active. STOP and pick a different tool. A product page that exists but cannot be purchased is the same as a dead link for our readers.
+3. **Fetch the vendor's own website** and confirm the product is real and operational.
+4. **Record verified URLs and pricing** before proceeding to write.
+5. **If any verification fails, STOP.** Pick a different tool. Do not guess. Do not infer. Do not assume.
 
 This also applies to **playbooks and research**: every tool referenced must either (a) already be reviewed on the site, (b) be a well-known platform (Clio, Zapier, Make.com, Google Workspace), or (c) be verified via a live product page fetch.
 
