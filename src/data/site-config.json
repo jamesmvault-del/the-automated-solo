@@ -14,12 +14,41 @@
     "audience": "US-based solo practitioners and boutique law firms (1-10 employees)",
     "audienceShort": "solo attorneys",
     "hook": "buying back billable time",
-    "subNiches": ["family law", "estate planning", "personal injury", "criminal defense", "general practice"],
+    "subNiches": [
+      "family law",
+      "estate planning",
+      "personal injury",
+      "criminal defense",
+      "general practice"
+    ],
     "nicheFitQuestion": "Would a solo practitioner running a general practice, family law, estate planning, or personal injury firm use this weekly?",
-    "painPoints": ["intake", "billing", "document assembly", "follow-ups", "deadline tracking", "scheduling", "client communication"],
+    "painPoints": [
+      "intake",
+      "billing",
+      "document assembly",
+      "follow-ups",
+      "deadline tracking",
+      "scheduling",
+      "client communication"
+    ],
     "seoAnchorPhrase": "solo attorney",
-    "seoVariations": ["solo attorney", "solo practitioner", "small law firm", "one-person firm", "solo practice"],
-    "appSumoCategories": ["Intake & Scheduling", "Drafting", "Marketing", "Case Management", "Billing", "Document Automation", "Legal Research", "Communication"]
+    "seoVariations": [
+      "solo attorney",
+      "solo practitioner",
+      "small law firm",
+      "one-person firm",
+      "solo practice"
+    ],
+    "appSumoCategories": [
+      "Intake & Scheduling",
+      "Drafting",
+      "Marketing",
+      "Case Management",
+      "Billing",
+      "Document Automation",
+      "Legal Research",
+      "Communication"
+    ]
   },
   "author": {
     "name": "James",
@@ -40,7 +69,23 @@
       "playbook": 1200,
       "research": 1500
     },
-    "toolCategories": ["Intake & Scheduling", "Drafting", "Marketing", "Case Management", "Billing", "Document Automation", "Legal Research", "Communication"],
-    "trustedPlatforms": ["Make.com", "Zapier", "Clio", "Google Workspace", "Microsoft 365", "Calendly"]
+    "toolCategories": [
+      "Intake & Scheduling",
+      "Drafting",
+      "Marketing",
+      "Case Management",
+      "Billing",
+      "Document Automation",
+      "Legal Research",
+      "Communication"
+    ],
+    "trustedPlatforms": [
+      "Make.com",
+      "Zapier",
+      "Clio",
+      "Google Workspace",
+      "Microsoft 365",
+      "Calendly"
+    ]
   }
 }
