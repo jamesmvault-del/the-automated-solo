@@ -198,7 +198,7 @@ Check `public/blueprints/` before creating. Do not duplicate:
 
 - `intake-clio.json`: Clio intake automation blueprint
 - `referral-templates.txt`: Referral email templates
-- `automation-readiness-checklist.txt`: General automation readiness checklist
+- `automation-readiness-checklist.pdf`: General automation readiness checklist (auto-generated at build time by `scripts/generate-checklist-pdf.mjs`)
 
 If an existing resource fits a new article, reuse it with the `BlueprintDownload` component instead of creating a duplicate.
 

@@ -427,7 +427,7 @@ Check `public/blueprints/` before creating a new resource. Do not duplicate what
 
 - `intake-clio.json`: Clio intake automation blueprint
 - `referral-templates.txt`: Referral email templates
-- `automation-readiness-checklist.txt`: General automation readiness checklist
+- `automation-readiness-checklist.pdf`: General automation readiness checklist (auto-generated at build time, do not edit manually)
 
 If an existing resource is relevant to a new article, reference it with the BlueprintDownload component instead of creating a duplicate.
 
