@@ -180,6 +180,8 @@ Body structure:
 6. **RoiCalculator** - Tailored to this playbook's time savings.
 7. **DealCTA** - For the primary tool used in the playbook.
 
+**MINIMUM WORD COUNT: 1200 words of article prose** (not counting frontmatter, component tags, or code). Playbooks must be detailed enough that a solo attorney can follow them without outside help. If you finish under 1200 words, expand the step-by-step implementation with edge cases, troubleshooting tips, or alternative configurations.
+
 ### Research Report Template
 
 Create at `src/content/research/{slug}.mdx`:
@@ -198,6 +200,8 @@ image: "/images/{slug}.png"
 ```
 
 Use `ComparisonTable`, `StatCallout`, and `KeyTakeaway` components as appropriate.
+
+**MINIMUM WORD COUNT: 1500 words of article prose** (not counting frontmatter, component tags, or code). Research reports must have enough depth and original analysis to rank for competitive queries. If you finish under 1500 words, add more data points, expand comparisons, or include an additional section covering implications for specific practice areas.
 
 ## Phase 5: Copy Review (AI Detection Proofread)
 
