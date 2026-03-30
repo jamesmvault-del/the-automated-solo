@@ -10,8 +10,6 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 1,
-  "published": [
-    {"type": "tool", "title": "GetTerms: Stop Leaving Your Firm's Website Out of Compliance", "slug": "getterms", "date": "2026-03-30"}
-  ]
+  "nextSlot": 0,
+  "published": []
 }
