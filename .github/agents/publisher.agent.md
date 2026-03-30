@@ -242,7 +242,19 @@ Verify these James-specific patterns appear in the article:
 2. **No `[VERIFY]`, `[TODO]`, `[PLACEHOLDER]`, or `[TBD]` markers remain.**
 3. **The affiliate link is correctly formatted** and points to the right product page using the deep link format.
 
-If any pass surfaces a violation, fix it immediately, then re-run that pass to confirm the fix didn't introduce a new problem.
+### Pass 5: Source Cross-Check (Post-Write Verification)
+
+This pass exists because the agent can misremember or conflate details from pages it fetched earlier. After writing the full article, go back to the source and verify.
+
+1. **Re-fetch the primary product page** (AppSumo, vendor site, or platform page depending on content type). Do not rely on what you remember from the pre-write research. Fetch the page again now.
+2. **Compare every number in your article against the live page.** Check pricing tiers, plan names, feature limits (document caps, user counts, storage), and included integrations. If your article says "100 documents per month" but the product page says "Unlimited," fix it. If your article cites a price that does not match the current listing, fix it.
+3. **Read 5-10 user reviews on the product page.** Look for recurring complaints or limitations mentioned by multiple reviewers. If two or more reviewers flag the same issue (e.g., mobile signing problems, misleading team access, slow support) and your article does not mention it, add it to the limitations section. You do not need to catalog every complaint, only patterns that would affect a solo attorney's purchase decision.
+4. **For playbooks and research:** re-verify that every external tool referenced is still available and that the workflow steps match the current product UI. If a tool has changed its interface or removed a feature you described, update the steps.
+5. **Cross-check your ROI math.** Re-read your ROI/savings section. Do the numbers add up? Does "40 documents at 8 minutes each" actually equal the total you claimed? Arithmetic errors destroy credibility with attorneys.
+
+If this pass surfaces a factual error, fix it, then re-run Pass 4 (Factual Integrity) to confirm the fix is clean.
+
+If any other pass surfaces a violation, fix it immediately, then re-run that pass to confirm the fix didn't introduce a new problem.
 
 ## Phase 6: Image Generation
 
@@ -262,7 +274,8 @@ After running the image generation command:
 
 1. **Check the exit code.** The script exits with code 1 if image generation failed for a targeted slug. If you see a non-zero exit code, do NOT proceed.
 2. **Verify the file exists.** Confirm that `public/images/{slug}.png` was actually created on disk. Run `ls public/images/{slug}.png` or equivalent.
-3. **If image generation fails:**
+3. **Verify the file is not corrupt or wrong.** Check that the file size is at least 50 KB. A valid hero image is typically 200 KB to 2 MB. If the file is under 50 KB, it is likely a placeholder, error page screenshot, or failed generation. Delete it and retry with `--force`. If you have image viewing capability, open the file and confirm it visually relates to the product or topic, not an unrelated brand logo or generic placeholder.
+4. **If image generation fails:**
    - The script retries automatically once (5-second delay between attempts).
    - If both attempts fail, the script exits with code 1 and prints `HARD STOP`.
    - **Do NOT commit, build, or open a PR without a hero image.** An article without an image looks unprofessional and hurts SEO (missing og:image, no visual in search results).

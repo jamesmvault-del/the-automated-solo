@@ -88,6 +88,8 @@ The Publisher agent has full authority to remove dead products without waiting f
 
 Our readers are attorneys. Misleading data destroys trust permanently and could expose the site to legal liability. Never fabricate metrics to fill a template or make content look more authoritative.
 
+After writing any content, the agent must re-fetch the primary product or source page and compare every number in the article (pricing, plan limits, feature caps) against the live listing. The agent must also read user reviews on the product page and incorporate recurring complaints that would affect a solo attorney's purchase decision. See Phase 5, Pass 5 of `.github/agents/publisher.agent.md` for the full cross-check procedure.
+
 ### 3.6 Geographic Neutrality
 
 Do not mention James's physical location. Focus on the US legal-tech market.
