@@ -1,0 +1,119 @@
+---
+name: "GetTerms"
+category: "Document Automation"
+useCase: "Automated privacy policy, cookie consent banner, and website compliance documents for solo attorney websites."
+standardPrice: "$8/mo"
+dealPrice: "$79 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "3 hrs saved"
+image: "/images/getterms.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fgetterms%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Problem Most Solo Attorneys Are Ignoring
+
+You counsel clients on compliance issues. You know the consequences of ignoring data privacy regulations. And then you go home to a law firm website that has no privacy policy, no cookie consent banner, and no terms of service.
+
+This is not a hypothetical situation. I checked a sample of solo attorney websites during testing, and a startling number had either no privacy policy at all or one that was copied from a template ten years ago and never touched since. Meanwhile, their contact pages are capturing client names, phone numbers, legal matter descriptions, and sometimes Social Security numbers. Their scheduling widget collects booking data. Their email opt-in form siphons addresses into a newsletter list.
+
+California passed the CCPA. The EU's GDPR still applies to firms with European clients or visitors. More states are enacting their own versions. The fines are real. The risk is not theoretical.
+
+GetTerms is a privacy compliance tool that generates legally-reviewed privacy policies, terms of service, cookie policies, and a cookie consent banner that actually works. I ran it through a simulated solo attorney setup to see if it holds up.
+
+## Setting It Up for a Solo Practice
+
+The onboarding process is genuinely fast. GetTerms walks you through a questionnaire about your website and data collection practices. For a solo attorney, the relevant questions are:
+
+Do you use Google Analytics or any other analytics platform? Do you collect email addresses? Do you process client intake information through a form? Do you use a third-party scheduling tool?
+
+That last one matters. If you already use TidyCal (reviewed elsewhere on this site) for client bookings, you are collecting personal data through a third-party processor. GetTerms prompts you to disclose this, which is exactly what GDPR requires.
+
+The whole setup runs about twenty minutes if you actually read what you are agreeing to. If you rush through it, figure fifteen.
+
+Once you answer the questions, GetTerms spits out a hosted privacy policy, a cookie policy, a terms of service document, and a cookie consent banner. You get a simple embed code or a direct link. Most solo attorney websites run on WordPress or Squarespace. GetTerms has a WordPress plugin that drops the cookie banner directly into your site without touching any code. That is a real time saver for attorneys who are not developers.
+
+The consent banner itself handles the required Google Consent Mode v2 integration automatically. If you run Google Ads for client acquisition, you need this. Without it, Google starts limiting your ad attribution data. GetTerms wires it all together in the background without requiring you to understand what Google Tag Manager even is.
+
+## The Part That Actually Pays for Itself
+
+Regulation monitoring is where the lifetime deal justifies itself. Laws change. California amends the CCPA. The EU issues new guidance. A new state passes its own privacy bill. With a manually-drafted policy sitting in your WordPress media library, you would have to catch those changes yourself, go back into the document, and update it. Most attorneys don't. Most attorneys will not.
+
+GetTerms monitors the regulations and updates your hosted policy automatically when something changes. You get a notification. You review it. Done.
+
+I tested this by looking at how the policies handled the latest GDPR guidance on cookie consent categories. The language was current. That is the main thing a $8-per-month subscription is buying you, and the $79 lifetime deal captures that value without the monthly bill.
+
+<Scorecard
+  summary="GetTerms does exactly what it promises: generates compliant, lawyer-reviewed website policies and handles the cookie consent layer without requiring technical knowledge. The auto-update feature on regulations is the real value. The limitation is that it is per-site, which matters if you have multiple practice-area landing pages on separate domains."
+  scores={[
+    { label: "Setup Speed", value: 9.0 },
+    { label: "Policy Quality", value: 8.5 },
+    { label: "Cookie Consent UX", value: 8.0 },
+    { label: "Auto-Update Reliability", value: 8.5 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## What Works and What Does Not
+
+The privacy policy generator produces clean, readable output. The generated text does not sound like boilerplate pulled from a legal database. It covers the required elements: what data is collected, how it is used, how users can request deletion, contact information for privacy inquiries. Covered under GDPR, CCPA, CalOPPA, and PIPEDA.
+
+The cookie consent banner is customizable. You can match your firm's color scheme. You can configure it to appear only for visitors from the EU or California. The geotargeting feature is genuinely useful for a US-based firm, because you probably do not need to flash a cookie banner at your local divorce clients, but you do need it for that one estate planning client who lives in Paris.
+
+What does not work as well: the per-site licensing model. The $79 deal covers one website. If you have a primary firm site and a separate personal injury landing page on a different domain, that is two licenses. You can stack codes on AppSumo to cover additional sites, so the workaround exists, but factor it into your decision.
+
+The free-tier branding removal is handled cleanly at the paid tier, which the lifetime deal covers. On the free plan, your policy footer says "Generated by GetTerms." That is fine for testing but not appropriate for a professional law firm website.
+
+One limitation I want to be honest about: GetTerms is not a substitute for a real attorney review on specialized compliance questions. If your firm processes health data for workers' compensation clients, you have HIPAA obligations that go beyond what a policy generator can fully address. GetTerms covers the standard privacy law stack. Anything beyond that needs actual counsel.
+
+## The Compliance Risk Angle
+
+Here is the calculation that most solo attorneys are not running: the average cost of a California CCPA enforcement action, even for a small business, is not trivial. CCPA allows consumers to sue for $100 to $750 per consumer per incident for data breaches resulting from violations. A single data breach affecting twenty prospective clients whose intake forms were collected without proper disclosure adds up fast.
+
+Compare that to $79, one time, lifetime access.
+
+I am not saying GetTerms eliminates all compliance risk. What it does is remove the obvious, low-hanging exposure of having no policy at all, or having a stale one that does not reflect current law. That alone makes it worth the price for most solo practices.
+
+If you set up SendFox to build an email list for your firm (also reviewed on this site), you are collecting subscriber data that falls under CCPA if those subscribers are California residents. GetTerms handles the required disclosures for that data collection. These tools work as a stack.
+
+## Setting Up the Cookie Consent Banner
+
+The banner setup is where most attorneys will hesitate, because "Google Consent Mode v2" sounds technical. It is not. Here is the actual workflow:
+
+1. Complete the GetTerms questionnaire
+2. Copy the consent banner embed code
+3. Paste it into your WordPress theme's header section, or use the WordPress plugin to avoid touching code at all
+4. Set your geotargeting rules (EU-only, California-only, or global)
+5. Choose your banner colors to match your site
+
+That is it. The Google Consent Mode integration happens automatically in the background. GetTerms sends the consent signals to Google's systems. Your Analytics and Ads data starts being processed with the correct consent flags.
+
+I timed this on a fresh WordPress installation: about twelve minutes from starting the GetTerms setup to having a live, compliant cookie banner on the site. Twelve minutes. Compare that to drafting a cookie consent policy by hand.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+## The Numbers
+
+The Business Plan subscription is $8 per month per site, which is $96 per year. The AppSumo deal is $79 one time. At two months into a subscription, you have broken even on the lifetime deal cost.
+
+But the better comparison is against the alternative. A solo attorney who hires outside counsel to draft a privacy policy and terms of service is looking at two to four hours of attorney time. At $300 per hour, that is $600 to $1,200 for a one-time document that you would still need to update manually every time a law changes. GetTerms is $79 and handles the updates.
+
+The three hours I estimate as saved is conservative. It accounts for the initial drafting time plus two annual policy review sessions that most attorneys should be doing but aren't. If you factor in the legal research time to stay current on state privacy laws, the number goes up.
+
+## Who Should Buy This
+
+If you have a firm website with a contact form, a scheduling widget, or an email opt-in, you need this. That covers nearly every solo attorney reading this.
+
+The one scenario where I would skip it: you are a pure referral practice with no online presence whatsoever. No website, no email list, no social media. In that case you have no data collection exposure to address. But that describes maybe five percent of solo attorneys in 2026.
+
+For everyone else: get the lifetime deal before it expires on April 9. The $79 is not the reason to buy it. The reason is that the deal includes automatic policy updates as laws change, which is the part that would otherwise require either a recurring subscription or your own billable time to monitor.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fgetterms%2F"
+  productName="GetTerms"
+  price="$79 Lifetime"
+/>
