@@ -1,4 +1,4 @@
-name: Auto-Merge Copilot PRs
+name: Auto-Merge Copilot PRs (Non-Content)
 
 on:
   pull_request:
@@ -12,35 +12,70 @@ permissions:
 
 jobs:
   auto-merge:
-    # Backup merge path: fires when a Copilot PR is marked ready for review
+    # Only auto-merge Copilot PRs that do NOT contain new content files.
+    # Content PRs go through the Reviewer agent via content-review.yml instead.
     if: startsWith(github.head_ref, 'copilot/') && !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Check for new content files
+        id: check_content
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+
+            const hasContent = files.some(f =>
+              f.status === 'added' &&
+              /^src\/content\/(tools|playbooks|research)\/.+\.mdx$/.test(f.filename)
+            );
+
+            if (hasContent) {
+              console.log('PR contains new content. Skipping auto-merge (Reviewer agent will handle).');
+              core.setOutput('skip', 'true');
+            } else {
+              console.log('No new content files. Safe to auto-merge.');
+              core.setOutput('skip', 'false');
+            }
 
       - name: Setup Node.js
+        if: steps.check_content.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Install dependencies
+        if: steps.check_content.outputs.skip != 'true'
         run: npm ci
 
       - name: Build site (validation gate)
+        if: steps.check_content.outputs.skip != 'true'
         run: npm run build
 
       - name: Clean build artifacts before merge
+        if: steps.check_content.outputs.skip != 'true'
         run: git checkout -- .
 
       - name: Approve PR
+        if: steps.check_content.outputs.skip != 'true'
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          gh pr review "$PR_NUMBER" --approve --body "Auto-approved build passed."
+          gh pr review "$PR_NUMBER" --approve --body "Auto-approved build passed (non-content PR)."
 
       - name: Merge PR
+        if: steps.check_content.outputs.skip != 'true'
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}

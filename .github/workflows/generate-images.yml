@@ -120,19 +120,12 @@ jobs:
       - name: Build site (validation gate)
         run: npm run build
 
-      - name: Clean build artifacts before merge
+      - name: Clean build artifacts
         run: git checkout -- .
 
-      - name: Approve PR
+      - name: Label PR for review
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          gh pr review "$PR_NUMBER" --approve --body "Auto-approved build passed."
-
-      - name: Merge PR
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          gh pr merge "$PR_NUMBER" --squash --delete-branch
+          gh pr edit "$PR_NUMBER" --add-label "review-ready"

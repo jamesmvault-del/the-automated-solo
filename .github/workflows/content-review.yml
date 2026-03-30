@@ -1,0 +1,162 @@
+name: Content Review Gate
+
+on:
+  pull_request:
+    types: [labeled]
+    branches:
+      - master
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  create-review-issue:
+    if: >-
+      startsWith(github.head_ref, 'copilot/') &&
+      github.event.label.name == 'review-ready'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Detect content file in PR
+        id: detect
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+
+            const contentFile = files.find(f =>
+              f.status === 'added' &&
+              /^src\/content\/(tools|playbooks|research)\/.+\.mdx$/.test(f.filename)
+            );
+
+            if (!contentFile) {
+              console.log('No new content file found in PR. Skipping review.');
+              core.setOutput('skip', 'true');
+              return;
+            }
+
+            const parts = contentFile.filename.split('/');
+            const folder = parts[2]; // tools, playbooks, or research
+            const slug = parts[3].replace('.mdx', '');
+            const typeMap = { tools: 'tool review', playbooks: 'playbook', research: 'research report' };
+
+            core.setOutput('skip', 'false');
+            core.setOutput('content_file', contentFile.filename);
+            core.setOutput('content_type', typeMap[folder]);
+            core.setOutput('slug', slug);
+
+            console.log(`Found: ${typeMap[folder]} at ${contentFile.filename}`);
+
+      - name: Create review issue for Copilot
+        if: steps.detect.outputs.skip != 'true'
+        id: create-issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const cfg = JSON.parse(fs.readFileSync('src/data/site-config.json', 'utf8'));
+
+            const prNumber = context.payload.pull_request.number;
+            const prBranch = context.payload.pull_request.head.ref;
+            const contentFile = '${{ steps.detect.outputs.content_file }}';
+            const contentType = '${{ steps.detect.outputs.content_type }}';
+            const slug = '${{ steps.detect.outputs.slug }}';
+            const n = cfg.niche;
+            const m = cfg.monetization;
+
+            const body = [
+              '## Fact-Check Assignment',
+              '',
+              `**PR:** #${prNumber} (branch: \`${prBranch}\`)`,
+              `**Content file:** \`${contentFile}\``,
+              `**Content type:** ${contentType}`,
+              `**Slug:** ${slug}`,
+              '',
+              '## Instructions',
+              '',
+              'You are the **Reviewer** agent. Your job is to independently fact-check the content in this PR before it goes live.',
+              '',
+              '### What to do:',
+              '',
+              `1. **Check out the PR branch** (\`${prBranch}\`) and read the content file at \`${contentFile}\`.`,
+              '2. **Read your full instructions** in `.github/agents/reviewer.agent.md`. Follow every step.',
+              '3. **Read** `src/data/site-config.json` for niche context and `AGENTS.md` for absolute rules.',
+              `4. **Fetch the live product/source page** on ${m.primaryPlatform} and the vendor website.`,
+              '5. **Extract every plan tier, price, and quantitative limit** from the live listing.',
+              '6. **Read the 10 most recent user reviews** on the product page.',
+              '7. **Compare field-by-field** against the article. Check pricing, feature limits, user complaints, ROI math, and internal links.',
+              '8. **Fix any errors** directly in the content file. Commit your changes to the PR branch.',
+              '9. **If the article passes** (or after corrections), run `npm run build`, then approve and merge the PR.',
+              '10. **If the product is dead/expired/scam**, close the PR with a comment explaining why.',
+              '',
+              '## Critical Rules',
+              '',
+              '- You are NOT a writer. Do not rewrite for style. Only fix factual errors.',
+              '- Every correction must come from the live source page you fetched. Never guess.',
+              '- Be conservative with ROI numbers. Use the lower bound if ambiguous.',
+              '- No em-dash characters anywhere.',
+              '- No placeholder text (`[VERIFY]`, `[TODO]`, etc.).',
+              '',
+              `**Merge command:** \`gh pr merge ${prNumber} --squash --delete-branch\``,
+              '',
+              `After merging, close this issue.`,
+            ].join('\n');
+
+            const { data: issue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Reviewer] Fact-check: ${slug} (PR #${prNumber})`,
+              body: body,
+              labels: ['review', 'copilot']
+            });
+
+            console.log(`Created review issue #${issue.number}`);
+            core.setOutput('issue_number', issue.number);
+
+      - name: Assign Copilot to review issue
+        if: steps.detect.outputs.skip != 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const issueNumber = parseInt('${{ steps.create-issue.outputs.issue_number }}');
+
+            const result = await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              assignees: ['copilot-swe-agent[bot]']
+            });
+
+            const assignees = (result.data.assignees || []).map(a => a.login);
+            console.log(`Assignees: ${JSON.stringify(assignees)}`);
+
+            const copilotAssigned = assignees.some(a =>
+              a.toLowerCase() === 'copilot' || a.toLowerCase() === 'copilot-swe-agent[bot]'
+            );
+
+            if (copilotAssigned) {
+              console.log('Copilot assigned to review issue.');
+            } else {
+              console.log('Copilot not in assignee list. Posting @copilot fallback...');
+              await new Promise(resolve => setTimeout(resolve, 5000));
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: '@copilot'
+              });
+              console.log('Posted @copilot comment as fallback.');
+            }

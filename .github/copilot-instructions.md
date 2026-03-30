@@ -6,7 +6,8 @@ This repository powers **The Automated Solo** (theautomatedsolo.com), a premium 
 
 1. Read `AGENTS.md` in the project root. It contains all brand guidelines, voice rules, and non-negotiable operational constraints.
 2. Read `.github/agents/publisher.agent.md` for content templates, schemas, and the 7-phase workflow.
-3. Read `src/data/site-config.json` for niche-specific values (audience, categories, author, affiliate format). All niche-specific references should come from this config.
+3. Read `.github/agents/reviewer.agent.md` if you are assigned a `[Reviewer]` issue. Follow the Reviewer workflow, not the Publisher workflow.
+4. Read `src/data/site-config.json` for niche-specific values (audience, categories, author, affiliate format). All niche-specific references should come from this config.
 
 ## Critical Rules (Always Enforced)
 

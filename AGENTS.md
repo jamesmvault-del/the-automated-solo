@@ -14,7 +14,7 @@ A premium PWA authority site for solo attorney automation. The site publishes to
 - **Perspective:** A "boots on the ground" research approach. James tests the tools, finds the bugs, and shares the shortcuts.
 - **Monetization:** AppSumo lifetime deal referrals, recurring SaaS affiliate partnerships (Clio, MyCase, Spellbook)
 - **Stack:** Astro 6, Tailwind CSS 4, MDX, Cloudflare Pages
-- **Content pipeline:** Publisher agent creates articles on a Mon/Thu rotation schedule via GitHub Actions
+- **Content pipeline:** Publisher agent creates articles on a Mon/Thu rotation schedule via GitHub Actions. A separate Reviewer agent independently fact-checks every article before it merges.
 - **Niche config:** All niche-specific values (audience, categories, author, affiliate format) live in `src/data/site-config.json`. To adapt this system for a different niche, edit that file. The workflow and agent instructions read from it automatically.
 
 ---
@@ -262,6 +262,22 @@ The site is designed for low-touch autonomous operation. The Publisher agent han
 - The rotation cycle in `src/data/content-calendar.json` determines the content type: `["tool", "playbook", "tool", "playbook", "research"]`
 - **You choose the topic.** The rotation only tells you the type. Research, evaluate, and select the best specific topic autonomously.
 - Full workflow details are in `.github/agents/publisher.agent.md`
+
+### 9.1.1 Two-Agent Pipeline
+
+The content pipeline uses two separate agents to ensure factual accuracy:
+
+1. **Publisher agent** (`.github/agents/publisher.agent.md`): Writes the article, opens a PR. Does NOT merge.
+2. **Reviewer agent** (`.github/agents/reviewer.agent.md`): Independently fact-checks the article against live source pages. Fixes errors directly. Merges the PR only after verification passes.
+
+The Publisher and Reviewer are separate agents with separate instructions. The Publisher writes; the Reviewer verifies. This separation exists because a writer fact-checking their own work has proven unreliable across multiple test cycles.
+
+**Flow:**
+1. `scheduled-publish.yml` creates an issue assigned to Copilot (Publisher agent writes the article)
+2. Publisher opens a PR with the article
+3. `generate-images.yml` generates hero images, validates the build, and labels the PR `review-ready`
+4. `content-review.yml` triggers on the `review-ready` label, creates a review issue assigned to Copilot (Reviewer agent)
+5. Reviewer checks out the PR branch, fetches the live product page, cross-checks every claim, fixes errors, and merges
 
 ### 9.2 Available Components
 
