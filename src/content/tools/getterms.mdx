@@ -1,0 +1,108 @@
+---
+name: "GetTerms"
+category: "Document Automation"
+useCase: "Automated privacy policy and cookie consent compliance for law firm websites."
+standardPrice: "$8/mo"
+dealPrice: "$79 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "1 hr/wk"
+image: "/images/getterms.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fgetterms%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Compliance Gap Nobody Warns Solo Attorneys About
+
+You spent three years in law school. You passed the bar. You built a practice. And somewhere along the way, you put up a website with a contact form, maybe an intake questionnaire, and a generic "Privacy Policy" you copied from some random blog post in 2019.
+
+That copied policy almost certainly does not comply with CCPA, GDPR, or the dozen other data privacy laws that have gone into effect since then. And for a solo attorney, that is not a theoretical problem. Every client who fills out your contact form is submitting personal data. If you are in California or serving California residents, CCPA applies. If you have any EU visitors at all, GDPR applies. The FTC has been increasingly active about this in the legal services space.
+
+I spent about a week testing GetTerms to see how it performs for a solo practice setup. The short version: it handles the boring but critical compliance layer your website needs, and $79 one-time beats $10 to $30 per month from competitors like Termly or iubenda for the lifetime of your practice.
+
+## What GetTerms Actually Does
+
+GetTerms is not just a document generator. There are two separate systems in play, and it is worth understanding both before you buy.
+
+The first is the policy generator. You answer a short questionnaire about your website and your practice (what data you collect, how you use it, what third-party services you run). GetTerms outputs a Privacy Policy, Terms of Service, Cookie Policy, Return Policy, and Acceptable Use Policy. These are not static PDF files you host somewhere and forget. They are hosted on GetTerms's servers, linked from your site, and can be updated through your dashboard whenever the law changes or your practice evolves.
+
+The second is the Consent Management Platform, or CMP. This is the active piece. GetTerms scans your site for cookies, categorizes them (strictly necessary, analytics, marketing), and deploys a cookie consent banner. When a visitor hits your site, they see the banner and choose what to accept. GetTerms logs those consent decisions for your records. Google Consent Mode v2 integration is included, which matters if you are running any Google Analytics or Google Ads on your site.
+
+## The Setup: 15 Minutes from Zero to Compliant
+
+I walked through the setup as if I were configuring it for a small estate planning firm. Here is the honest walkthrough:
+
+**Step 1:** Create an account, add your website domain. The interface is clean. Nothing confusing.
+
+**Step 2:** Run the policy questionnaire. It asked about the types of personal data I collect (name, email, phone, case details), how long I retain it, and what third-party services I use (Google Analytics, Calendly, Stripe for payment if applicable). The whole thing took about 8 minutes.
+
+**Step 3:** Review the generated policies. The Privacy Policy came out at roughly 1,200 words, written in plain language. It correctly flagged the relevant laws based on my answers: CCPA, GDPR, PIPEDA for any Canadian clients. I edited two fields where I wanted more specific language around attorney-client privilege and confidentiality. The editor is basic but functional.
+
+**Step 4:** Embed the cookie banner. GetTerms gives you a JavaScript snippet to paste into your site header, a WordPress plugin if you are on WordPress, and options for Webflow, Shopify, and custom HTML sites. The banner went live on my test site in under two minutes.
+
+**Step 5:** Verify Google Consent Mode v2. This is the piece that trips people up. GetTerms is a certified Google Consent Mode partner. The integration signals consent status to your Google tags, which affects how Google Analytics processes data in cookieless mode. Most smaller compliance tools do not handle this correctly.
+
+Total time from account creation to a compliant, functioning setup: about 14 minutes.
+
+## What Works
+
+The policy generation is solid. I have looked at comparable outputs from Termly and iubenda, and GetTerms policies are roughly equivalent in terms of coverage. The critical difference is the consent logging. GetTerms keeps a timestamped record of every visitor's consent decision. If you ever face a complaint or audit, that log is your documentation.
+
+Geo-tagging is a genuinely useful feature. You can configure the banner to show different consent options depending on where the visitor is located. European visitors see the full GDPR-style consent prompt. US visitors get the simpler CCPA opt-out disclosure. This is not just cosmetic. Showing a GDPR banner to a US visitor who has never heard of cookies unnecessarily complicates your intake experience. Geo-targeting keeps it clean.
+
+The auto-language detection is functional for a practice that attracts non-English-speaking clients. The banner and policies display in over 10 languages including Spanish, French, German, Italian, and Portuguese, without manually creating separate versions for each.
+
+One thing I did not expect to like: the Google Consent Mode v2 integration actually works. I tested it against a site running GA4. The consent signals passed correctly. A lot of cheap compliance tools claim this feature and then fail the technical implementation. GetTerms passed.
+
+## What Does Not Work
+
+The policy templates have limits. GetTerms is built for general businesses, not exclusively for legal practices. There is no specific template language around attorney-client confidentiality, professional responsibility rules, or bar-specific notice requirements. I had to add custom paragraphs for those. The editor is workable but not elegant: it is a standard rich text field, not a contract-grade drafting environment. If you want precise legal language in every clause, you are going to spend some time editing.
+
+The Tier 1 deal on AppSumo covers 3 websites. For a solo attorney who only has one website, that is fine. If you ever build out a second domain (say, a separate personal injury funnel site), you have room. But if you are managing a firm with a dozen microsites, you need a higher tier.
+
+US state-specific compliance is improving but incomplete. GetTerms covers CCPA well. Colorado CPA, Virginia CDPA, and Texas TDPSA are in progress according to the roadmap. For now, if you practice in Colorado and your website is active, you may need to add some custom language until those templates mature.
+
+Browser extension support for blocking third-party scripts until consent is given only works reliably on standard web stacks. If you are running a custom CRM integration or embedded intake form that loads external scripts on your site, test the blocking behavior carefully before going live.
+
+## How This Connects to Your Intake Workflow
+
+If you have already worked through the [automated client intake playbook](/playbooks/automate-client-intake), your digital intake process is collecting client data at scale. That is exactly the scenario that triggers CCPA and GDPR obligations. An intake form that captures name, email, phone number, and case type is collecting personal information. Under CCPA, you need to disclose what you collect, how you use it, and how clients can request deletion. Under GDPR, you need explicit consent before most processing.
+
+GetTerms handles both the disclosure documents and the consent mechanism. It is the compliance layer underneath your intake automation stack, not a replacement for it. Running intake automation without website compliance is like using a great lock on a door with no hinges. The whole system needs to be in place.
+
+## The ROI Analysis
+
+GetTerms business plan pricing runs $8 per month per website. Over three years, that is $288 for one site. The AppSumo deal is $79 one-time. You break even in about 10 months and then run for free indefinitely.
+
+That math is straightforward. But there is a second number to think about. CCPA fines start at $2,663 per unintentional violation and go up to $7,988 per intentional one (inflation-adjusted amounts effective January 1, 2025). A solo practitioner receiving 50 intake inquiries per month from California with no compliant policy in place is not a theoretical exposure. It is a real one. You are not going to be fined $375,000 over a missing privacy policy, but a formal complaint to the California Attorney General's office is a headache no solo attorney needs while billing 30 active cases.
+
+The $79 eliminates that headache entirely.
+
+<Scorecard
+  summary="GetTerms does the boring compliance job competently and quietly. The policy templates need some manual editing for legal-specific language, but the cookie consent infrastructure and Google Consent Mode integration are genuinely solid. Worth every dollar of the lifetime deal."
+  scores={[
+    { label: "Policy Coverage", value: 8.0 },
+    { label: "Cookie Consent Engine", value: 9.0 },
+    { label: "Setup Speed", value: 9.5 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## The Verdict
+
+Every solo attorney with a website needs this. Not eventually. Now. The compliance gap between what most law firm sites actually have and what CCPA and GDPR require is real, and it gets worse every year as more states pass their own privacy laws.
+
+Does GetTerms replace a bar-compliant privacy notice drafted specifically for your jurisdiction by a privacy law colleague? No. If you are handling high volumes of sensitive health data or operating in a highly regulated state, get that reviewed separately. But for the standard solo practice website collecting contact form submissions and running Google Analytics? GetTerms covers it in 15 minutes for $79 one-time.
+
+Compare that to $8 to $30 per month from Termly, iubenda, or Cookiebot indefinitely. The lifetime deal math is obvious.
+
+<RoiCalculator defaultHoursSaved={1} defaultRate={300} />
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fgetterms%2F"
+  productName="GetTerms"
+  price="$79 Lifetime"
+/>
