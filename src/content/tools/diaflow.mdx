@@ -29,7 +29,7 @@ I spent about a week testing Diaflow against the kind of tasks that consume unre
 
 The fastest win I found was a client intake pipeline. Here is how the build went:
 
-The trigger is a webhook. When a prospect fills out your intake form (Typedesk-generated fields pushed through a form tool, or even a raw Jotform), Diaflow catches the payload. No code. You paste the webhook URL into your form tool.
+The trigger is a webhook. When a prospect fills out your intake form (Jotform, Tally, or any tool that supports webhooks), Diaflow catches the payload. No code. You paste the webhook URL into your form tool.
 
 From there, the workflow branches. I built a step that passes the intake data to an OpenAI node with a system prompt I wrote in about 15 minutes. The prompt instructs it to produce a one-page intake summary, pull out the key facts, and flag any immediate conflict-check keywords. In my testing, the summary came back in about 8 seconds. Clean, formatted, and dumped directly into a Diaflow Document (their built-in doc layer) with the client's name in the title.
 
