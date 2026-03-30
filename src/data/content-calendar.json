@@ -10,6 +10,8 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 0,
-  "published": []
+  "nextSlot": 1,
+  "published": [
+    {"type": "tool", "title": "Diaflow: Build AI Workflows for Your Law Firm Without Writing Code", "slug": "diaflow", "date": "2026-03-30"}
+  ]
 }
