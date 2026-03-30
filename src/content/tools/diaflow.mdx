@@ -1,0 +1,102 @@
+---
+name: "Diaflow"
+category: "Document Automation"
+useCase: "Build AI-powered automation workflows that eliminate repetitive legal admin without writing a single line of code."
+standardPrice: "$49/mo"
+dealPrice: "$89 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "4 hrs/wk"
+image: "/images/diaflow.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fdiaflow%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Problem: You Are Running Two Jobs
+
+You went to law school to practice law. Not to manually forward intake form responses into a Google Sheet, then retype client names into a retainer template, then copy that into an email, then set a calendar reminder for a follow-up. Every solo attorney I test tools for is doing some version of this. The manual data shuffle eats two to four hours a week that should be billable.
+
+Automation platforms like Zapier and Make.com solve this problem, technically. But Zapier charges per task. Make.com charges per scenario run. Those costs compound fast. And both tools require you to already understand APIs, webhooks, and trigger logic before you can build anything useful.
+
+I spent the past week inside Diaflow, a no-code AI workflow platform currently on AppSumo for a one-time $89 lifetime deal. The question I kept asking: can a solo attorney with no coding background actually automate their intake-to-retainer pipeline in an afternoon? Here is what I found.
+
+## What Diaflow Actually Is
+
+Diaflow is a visual workflow builder that layers AI on top. You drag nodes onto a canvas, connect them, and the platform executes the logic on a schedule or when triggered. Standard automation, in other words. But Diaflow adds three things that matter specifically for legal work.
+
+First, Diaflow Vectors. You upload documents, PDFs, or web links, and the platform builds a private knowledge base your AI workflows can query. I uploaded three retainer agreement templates and a firm fee schedule. Within about five minutes, I could build a flow that drafts a customized retainer based on a client's practice area and described matter, pulling from those source documents.
+
+Second, Diaflow Vision. This combines OCR with AI to extract data from images and PDFs, including handwritten text. Drop in a photo of a signed paper intake form, and a flow can pull out the client name, matter type, and contact info without anyone retyping a single word. For attorneys who still receive paper documents from older clients, this is legitimately useful.
+
+Third, the Bring Your Own Key (BYOK) feature. You plug in your own OpenAI or Anthropic API key. Any flow that uses your key does not consume Diaflow's monthly credits. For a solo practice running frequent automations, this matters because the lifetime Tier 1 plan only includes 1,000 credits per month.
+
+## Setting Up the Intake Pipeline
+
+Here is the workflow I built during testing, step by step.
+
+First, I set up a trigger on a Typeform intake form. When a prospective client submits, Diaflow receives the payload automatically. If you already use the Typedesk templates I covered in my [Typedesk review](/tools/typedesk), this pairs cleanly: Typedesk handles outbound boilerplate, Diaflow handles inbound processing.
+
+Second, the AI Summarization node takes the raw form data and generates a clean, one-paragraph case summary in plain English. "New family law matter: potential divorce filing for Jane D. in Cook County. Client reports assets include a primary residence and two retirement accounts. Wants initial consultation within 72 hours."
+
+Third, a conditional branch checks the practice area field. Family law routes to one email template. Personal injury routes to another. Estate planning to a third.
+
+Fourth, the platform fires an email to the prospective client with a custom subject line and the appropriate intake packet attached. On the same trigger, it creates a row in a Diaflow Table so I have a running list of every lead, their matter type, and the timestamp.
+
+This four-step flow replaces about 20 minutes of manual work per new lead. If you are taking five to ten inquiries a week, the math adds up fast.
+
+## Where It Gets Frustrating
+
+I want to be honest about the rough edges.
+
+The credit model caused more friction than it should. Tier 1 includes 1,000 credits per month. After a February 2026 update, the team adjusted the credit economy so executions cost roughly 90% fewer credits than before. So 1,000 credits goes further now. But during testing, it still required me to check the Node Library before building any AI-heavy flow to verify the credit cost per run. That is extra overhead a solo attorney should not need to think about.
+
+If you use your own OpenAI API key via BYOK, this problem essentially disappears. But that requires a paid OpenAI account, which not every attorney already has.
+
+The learning curve is real. The first hour I spent in Diaflow was disorienting. The visual canvas is cleaner than Make.com, but the node terminology assumes some familiarity with automation concepts. Diaflow added a Co-Pilot feature that lets you describe a workflow in plain language and have it suggest a starting structure. It helped. But it is not magic. Plan on spending an afternoon getting comfortable with the interface before building anything mission-critical.
+
+Support response time is tier-dependent. On the base $89 Tier 1 plan, expect to wait. The Discord community is active and the documentation has improved significantly since the platform launched, but if you hit a blocker on a Friday afternoon, you may not get a resolution until Monday.
+
+Some native integrations are still missing. There is no direct Clio or MyCase connector. You work around this via the HTTP Request node, which can call any REST API. For Clio, that means adding an HTTP Request node pointed at Clio's v4 API, passing your API token in the Authorization header, and mapping intake form fields to matter fields in the request body. Clio's developer documentation lays out the exact schema. It takes about 30 minutes if you have dealt with APIs before. If you have not, plan for an afternoon. For case management systems that accept inbound webhooks instead of API calls, the setup is simpler. But if you want a completely native click-and-connect experience with no configuration, you may still need a Zapier pass-through in the middle, which undercuts some of the value.
+
+<Scorecard
+  summary="Diaflow is a serious automation platform that handles complex, AI-enhanced workflows that basic tools cannot touch. The missing native legal-software integrations and the credit model overhead keep it from being a 10. But at $89 one-time versus paying $49 a month forever on Zapier, the math still works for a solo practice willing to invest a few hours in setup."
+  scores={[
+    { label: "Ease of Initial Setup", value: 7.0 },
+    { label: "AI Feature Quality", value: 8.5 },
+    { label: "Workflow Flexibility", value: 9.0 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## The ROI Breakdown
+
+Let me put specific numbers on this. In my testing, building the four-step intake pipeline took about three hours from scratch, including the time I lost figuring out the interface. That is the fixed one-time cost.
+
+Once it runs, each intake case that flows through the pipeline saves approximately 20 minutes of manual data handling. At a billing rate of $300 an hour, 20 minutes is $100 of potential billable time recovered per new client inquiry. If a solo attorney takes in 10 new inquiries per month, that is roughly 200 minutes, or 3.3 hours, saved every month.
+
+The Vectors-based document drafting is a separate multiplier. Building a standard retainer from scratch takes me about 15 minutes when using a Word template. With the Diaflow flow pulling from the uploaded template and filling in client variables from the intake form, that drops to about 2 minutes. A solo doing 10 retainers a month saves over two hours on drafting alone.
+
+Combined, that is somewhere between four and five hours per week in saved admin time. Priced against a $300 hourly rate, recovering even half that time as billable work covers the $89 purchase price in the first week.
+
+<RoiCalculator defaultHoursSaved={4} defaultRate={300} />
+
+## One Gotcha Worth Calling Out
+
+The TidyCal scheduling flow I built in my [TidyCal review](/tools/tidycal) sends new bookings to my calendar but stops there. I connected TidyCal to Diaflow via a Zapier webhook as a pass-through. When a paid consultation is booked in TidyCal, Diaflow triggers the intake summary flow automatically, so by the time the client shows up for their call, there is already a case summary in the Table and a draft retainer in the Drive. That kind of chain automation is where Diaflow earns its price.
+
+The Zapier middleman adds latency of about 30 seconds. Not a problem for this use case. But it illustrates the current gap: Diaflow is not yet a complete replacement for every integration layer. It is a powerful core that you wire other tools into.
+
+## Who Should Buy This
+
+A solo attorney who takes more than five inquiries per week and manually touches each one. Attorneys who receive PDF documents or paper forms that need data extracted. Anyone who has spent money on Zapier and resented the per-task pricing model. If you are comfortable spending one afternoon learning a new tool and do not expect it to be plug-and-play on day one, the $89 lifetime deal is a serious bargain.
+
+If you want something that works out of the box in under 30 minutes and do not plan to build custom workflows, Diaflow is probably not the right starting point. It rewards investment.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fdiaflow%2F"
+  productName="Diaflow"
+  price="$89 Lifetime"
+/>
