@@ -244,15 +244,68 @@ Verify these James-specific patterns appear in the article:
 
 ### Pass 5: Source Cross-Check (Post-Write Verification)
 
-This pass exists because the agent can misremember or conflate details from pages it fetched earlier. After writing the full article, go back to the source and verify.
+This pass exists because you WILL misremember details from pages you fetched earlier. You will confuse one plan tier's limits with another. You will round a number or invent a detail that felt right while writing. This has happened on every review so far. The fix is mechanical: re-fetch, extract, compare field by field.
 
-1. **Re-fetch the primary product page** (AppSumo, vendor site, or platform page depending on content type). Do not rely on what you remember from the pre-write research. Fetch the page again now.
-2. **Compare every number in your article against the live page.** Check pricing tiers, plan names, feature limits (document caps, user counts, storage), and included integrations. If your article says "100 documents per month" but the product page says "Unlimited," fix it. If your article cites a price that does not match the current listing, fix it.
-3. **Read 5-10 user reviews on the product page.** Look for recurring complaints or limitations mentioned by multiple reviewers. If two or more reviewers flag the same issue (e.g., mobile signing problems, misleading team access, slow support) and your article does not mention it, add it to the limitations section. You do not need to catalog every complaint, only patterns that would affect a solo attorney's purchase decision.
-4. **For playbooks and research:** re-verify that every external tool referenced is still available and that the workflow steps match the current product UI. If a tool has changed its interface or removed a feature you described, update the steps.
-5. **Cross-check your ROI math.** Re-read your ROI/savings section. Do the numbers add up? Does "40 documents at 8 minutes each" actually equal the total you claimed? Arithmetic errors destroy credibility with attorneys.
+**This pass is not optional. Do not skip it. Do not skim it.**
 
-If this pass surfaces a factual error, fix it, then re-run Pass 4 (Factual Integrity) to confirm the fix is clean.
+#### Step 1: Re-fetch the primary source
+
+Fetch the AppSumo product page (or vendor/platform page for non-AppSumo products) using your web tool RIGHT NOW. Do not rely on what you fetched earlier. Context windows are long and your memory of page details degrades. Fetch it fresh.
+
+#### Step 2: Build a verification table
+
+From the LIVE page you just fetched, extract every one of these fields. Then find the corresponding claim in your article. Write them side by side. If a field does not apply to this product, skip it.
+
+**For tool reviews, extract from the product page:**
+
+- Plan names and prices for each tier
+- What the deal includes (number of sites, seats, documents, storage, API calls, or whatever unit the product uses)
+- Key feature limits per plan tier (caps, quotas, restrictions)
+- What is NOT included (features locked to higher tiers, features that require add-ons)
+- Whether it is an AppSumo Original, AppSumo Select, or third-party listing
+- The compare-at / standard price shown on the page
+
+For EACH extracted field, locate the sentence in your article that references it. If your article says something different from the live page, fix the article. Common mistakes to watch for:
+
+- Confusing one plan tier's limits with another (e.g., writing the Tier 1 limit as if it applies to all tiers, or using Tier 2 limits when reviewing Tier 1)
+- Saying "per site" when the plan includes multiple sites
+- Saying "unlimited" when there is actually a cap, or vice versa
+- Using a monthly subscription price that does not match the vendor's current pricing page
+
+If you cannot find a claim on the live page to verify a number you wrote, that number is suspect. Either find a source or reframe it as "In my testing" language.
+
+#### Step 3: Read user reviews
+
+Read the 10 most recent user reviews on the product page. For each review rated 3 stars or below, note the complaint. After reading all of them, check:
+
+- Do two or more reviewers mention the same limitation? If yes, your article MUST mention it in the limitations section. Not mentioning a pattern complaint that shows up in multiple reviews is a factual omission.
+- Does any reviewer report that a feature described on the product page does not actually work as advertised? If yes, note it as a limitation or caveat.
+- Does any reviewer describe a gotcha that would specifically affect a solo attorney (e.g., team member access limitations, missing integrations with legal tools, slow support response times)? If yes, mention it.
+
+You do not need to catalog every minor gripe. Focus on patterns and deal-breakers for the target audience.
+
+#### Step 4: Cross-check ROI math
+
+Re-read your ROI and savings section with a calculator. Verify every arithmetic chain:
+
+- If you say "40 documents at 8 minutes each is 320 minutes," confirm 40 x 8 = 320.
+- If you say "that is over 5 hours," confirm 320 / 60 = 5.33.
+- If you compare subscription cost over N years, confirm the multiplication.
+- If you cite a break-even point, confirm the division.
+
+Attorneys will check your math. Get it right.
+
+#### Step 5: Playbook and research verification
+
+For playbooks and research only:
+
+- Re-verify that every external tool referenced is still available and the deal is still active (or the tool is a well-known platform).
+- Confirm that any workflow steps match the current product UI. If a tool has moved a button or renamed a feature, update the steps.
+- Check that tool-to-tool integrations you describe actually exist (e.g., "connects to Zapier" must be confirmed on the product page or integrations directory).
+
+#### What to do when this pass finds an error
+
+Fix it in the article. Then re-run Pass 4 (Factual Integrity) on the corrected section to make sure the fix did not introduce a new problem. If multiple errors are found, fix all of them, then re-run Pass 4 once.
 
 If any other pass surfaces a violation, fix it immediately, then re-run that pass to confirm the fix didn't introduce a new problem.
 
