@@ -23,13 +23,9 @@ You will be given an issue that references a PR number, a branch name, and the p
 
 ## Step 0: Access the PR Content
 
-The article you need to review exists ONLY on the Publisher's PR branch, not on the default branch. You MUST check it out first:
+The article exists on the Publisher's PR branch. Read the content file at the path given in the issue body. You will be working from your own branch. Any corrections you make and commit will be submitted as your own PR, which CI will merge automatically and close the original Publisher PR.
 
-```bash
-gh pr checkout <PR_NUMBER>
-```
-
-This switches you to the PR branch where the article exists. Now you can read and edit the content file directly. All changes you commit here will update the existing PR.
+**Important:** Title your PR starting with `[Reviewer]` so the CI pipeline knows this is a review correction, not a new article. Example: `[Reviewer] Fact-check corrections: GetTerms tool review`
 
 ## Step 1: Identify the Content
 
@@ -70,38 +66,45 @@ Read `src/data/site-config.json` to get the `monetization.primaryPlatform` and `
 Build a checklist comparing every factual claim in the article against the source data you extracted. Check each of these:
 
 ### Pricing and Plans
+
 - [ ] `dealPrice` in frontmatter matches the live listing price for the reviewed tier
 - [ ] `standardPrice` in frontmatter matches the compare-at price or vendor subscription price
 - [ ] Every price mentioned in the article body matches the live listing
 - [ ] The plan tier being reviewed is correctly identified (Tier 1, Tier 2, etc.)
 
 ### Feature Limits
+
 - [ ] Every quantitative limit in the article (users, sites, documents, credits, storage, flows, etc.) matches the live listing for the CORRECT tier
 - [ ] Features described as "included" are actually included in the reviewed tier
 - [ ] Features described as "not included" or "missing" are actually absent from the reviewed tier
 - [ ] No feature from a higher tier is attributed to the reviewed tier
 
 ### Product Identity
+
 - [ ] The product is described correctly (AppSumo Original, AppSumo Select, or third-party)
 - [ ] The `affiliateLink` resolves to the correct product page
 - [ ] The `category` makes sense for what the product does
 
 ### User Review Cross-Check
+
 - [ ] Any complaint appearing in 2+ user reviews rated 3 stars or below is mentioned in the article's limitations section
 - [ ] The article does not promote a feature that multiple reviewers report as broken or non-functional
 - [ ] Support response time claims in the article are not contradicted by a pattern of reviewer complaints
 
 ### ROI and Math
+
 - [ ] Every arithmetic chain in the ROI section is correct (multiply, divide, totals)
 - [ ] The `roiEstimate` in frontmatter is supported by the math in the article body
 - [ ] The `defaultHoursSaved` in the RoiCalculator component matches the article's demonstrated savings
 - [ ] Time comparisons (before vs. after) use realistic baselines
 
 ### Internal References
+
 - [ ] Every internal link (e.g., `/tools/tidycal/`, `/playbooks/automate-client-intake/`) points to a file that exists in `src/content/`
 - [ ] Cross-referenced tools are described accurately
 
 ### Compliance
+
 - [ ] No em-dash characters anywhere in the file
 - [ ] No `[VERIFY]`, `[TODO]`, `[PLACEHOLDER]`, or `[TBD]` markers
 - [ ] No banned AI phrases (check against the list in `AGENTS.md` section 7.2)
@@ -112,24 +115,29 @@ Build a checklist comparing every factual claim in the article against the sourc
 ### If you find errors:
 
 For **factual errors** (wrong price, wrong limit, wrong feature attribution, missing limitation from user reviews):
+
 - Fix them directly in the content file on the PR branch. You have edit permission.
 - Use exact data from the source page. Do not guess or interpolate.
 - Maintain the existing writing voice and style. Do not rewrite sections that are factually correct.
 
 For **ROI mismatches** (frontmatter roiEstimate or calculator defaults don't match article body):
+
 - Adjust the frontmatter and component props to match what the article body demonstrates.
 - Do NOT inflate numbers. Use the lower bound if there's ambiguity.
 
 For **missing user review complaints** (pattern complaints not mentioned):
+
 - Add a brief, honest mention in the existing limitations section. Match the article's voice.
 - Keep it to 1-3 sentences per missing complaint. Do not over-expand.
 
 For **broken internal links**:
+
 - Fix the link or remove the reference if the target doesn't exist.
 
 ### If the product has fundamental problems:
 
 If you discover during verification that:
+
 - The deal is sold out or expired (no buy button)
 - The product page 404s or redirects
 - Multiple recent reviews (3+) report the product is non-functional or a scam
@@ -140,29 +148,18 @@ Then **do NOT merge**. Close the PR with a comment explaining why, and note that
 
 After making any corrections:
 
-1. Commit your changes to the PR branch:
-   ```bash
-   git add -A
-   git commit -m "review: fact-check corrections for <slug>"
-   git push
-   ```
-2. Run `npm run build` to confirm zero errors.
-3. Increment `CACHE_NAME` in `public/sw.js` if the Publisher didn't already.
-4. Clean build artifacts: `git checkout -- .`
+1. Run `npm run build` to confirm zero errors.
+2. Increment `CACHE_NAME` in `public/sw.js` if the Publisher didn't already.
+3. Commit all your changes. Your PR title MUST start with `[Reviewer]`.
 
-## Step 6: Merge
+## Step 6: Submit for Merge
 
-If the article passes review (or after corrections are committed and pushed):
+When your PR is marked ready for review, CI will automatically:
+1. Validate the build
+2. Merge your Reviewer PR
+3. Close the original Publisher PR
 
-1. Approve the PR:
-   ```bash
-   gh pr review <PR_NUMBER> --approve --body "Reviewer: fact-check passed."
-   ```
-2. Merge with squash:
-   ```bash
-   gh pr merge <PR_NUMBER> --squash --delete-branch
-   ```
-3. Close the review issue you were assigned to.
+You do NOT need to merge manually. Just make sure your corrections are committed and the PR is marked ready for review.
 
 # Rules
 

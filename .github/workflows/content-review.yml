@@ -15,9 +15,9 @@ jobs:
   create-review-issue:
     if: >-
       startsWith(github.head_ref, 'copilot/') &&
-      github.event.label.name == 'review-ready'
+      github.event.label.name == 'review-ready' &&
+      !startsWith(github.event.pull_request.title, '[Reviewer]')
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v4
@@ -79,7 +79,7 @@ jobs:
             const body = [
               '## Fact-Check Assignment',
               '',
-              `**PR:** #${prNumber} (branch: \`${prBranch}\`)`,
+              `**Original Publisher PR:** #${prNumber} (branch: \`${prBranch}\`)`,
               `**Content file:** \`${contentFile}\``,
               `**Content type:** ${contentType}`,
               `**Slug:** ${slug}`,
@@ -88,30 +88,34 @@ jobs:
               '',
               'You are the **Reviewer** agent. Your job is to independently fact-check the content in this PR before it goes live.',
               '',
+              '### How this works:',
+              '',
+              'The Publisher already wrote the article on a separate branch. You will read it, verify every claim, and make corrections. Your work will be committed on YOUR OWN branch (which Copilot creates automatically). When your PR is ready, CI merges it and closes the original Publisher PR.',
+              '',
               '### What to do:',
               '',
-              `1. **Check out the PR branch** (\`${prBranch}\`) and read the content file at \`${contentFile}\`.`,
+              `1. **Read the content file** at \`${contentFile}\` (it exists on your branch, copied from the Publisher PR).`,
               '2. **Read your full instructions** in `.github/agents/reviewer.agent.md`. Follow every step.',
               '3. **Read** `src/data/site-config.json` for niche context and `AGENTS.md` for absolute rules.',
               `4. **Fetch the live product/source page** on ${m.primaryPlatform} and the vendor website.`,
               '5. **Extract every plan tier, price, and quantitative limit** from the live listing.',
               '6. **Read the 10 most recent user reviews** on the product page.',
               '7. **Compare field-by-field** against the article. Check pricing, feature limits, user complaints, ROI math, and internal links.',
-              '8. **Fix any errors** directly in the content file. Commit your changes to the PR branch.',
-              '9. **If the article passes** (or after corrections), run `npm run build`, then approve and merge the PR.',
-              '10. **If the product is dead/expired/scam**, close the PR with a comment explaining why.',
+              '8. **Fix any errors** directly in the content file. Commit your changes.',
+              '9. **Run `npm run build`** to confirm zero errors.',
+              '10. **Mark your PR as ready for review.** CI will merge it automatically.',
               '',
               '## Critical Rules',
               '',
+              '- **Your PR title MUST start with `[Reviewer]`** so CI knows this is a review, not new content.',
               '- You are NOT a writer. Do not rewrite for style. Only fix factual errors.',
               '- Every correction must come from the live source page you fetched. Never guess.',
               '- Be conservative with ROI numbers. Use the lower bound if ambiguous.',
               '- No em-dash characters anywhere.',
               '- No placeholder text (`[VERIFY]`, `[TODO]`, etc.).',
+              '- If the product is dead/sold out/scam, close this issue with a comment explaining why. Do NOT create a PR.',
               '',
-              `**Merge command:** \`gh pr merge ${prNumber} --squash --delete-branch\``,
-              '',
-              `After merging, close this issue.`,
+              `After your PR is merged, close this issue.`,
             ].join('\n');
 
             const { data: issue } = await github.rest.issues.create({

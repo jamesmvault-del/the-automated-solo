@@ -129,7 +129,18 @@ jobs:
       - name: Clean build artifacts
         run: git checkout -- .
 
-      - name: Label PR for review
+      - name: Determine PR type
+        id: pr_type
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.pull_request.title || '';
+            const isReviewer = title.startsWith('[Reviewer]');
+            core.setOutput('is_reviewer', isReviewer ? 'true' : 'false');
+            console.log(`PR #${context.payload.pull_request.number}: "${title}" → ${isReviewer ? 'Reviewer' : 'Publisher'}`);
+
+      - name: Label PR for review (Publisher only)
+        if: steps.pr_type.outputs.is_reviewer != 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
@@ -141,3 +152,82 @@ jobs:
               labels: ['review-ready']
             });
             console.log('Added review-ready label to PR #' + context.payload.pull_request.number);
+
+      - name: Merge Reviewer PR and close Publisher PR
+        if: steps.pr_type.outputs.is_reviewer == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = context.payload.pull_request.number;
+
+            // Approve the Reviewer PR
+            await github.rest.pulls.createReview({
+              owner, repo,
+              pull_number: prNumber,
+              event: 'APPROVE',
+              body: 'Reviewer PR: build passed, auto-merging.'
+            });
+
+            // Merge with squash
+            await github.rest.pulls.merge({
+              owner, repo,
+              pull_number: prNumber,
+              merge_method: 'squash'
+            });
+            console.log('Merged Reviewer PR #' + prNumber);
+
+            // Delete the Reviewer branch
+            try {
+              await github.rest.git.deleteRef({
+                owner, repo,
+                ref: 'heads/' + context.payload.pull_request.head.ref
+              });
+            } catch (e) {
+              console.log('Branch cleanup: ' + e.message);
+            }
+
+            // Close the original Publisher PR (same content file, different branch)
+            const { data: prFiles } = await github.rest.pulls.listFiles({
+              owner, repo,
+              pull_number: prNumber,
+              per_page: 100
+            });
+            const contentFiles = prFiles
+              .filter(f => /^src\/content\/(tools|playbooks|research)\/.+\.mdx$/.test(f.filename))
+              .map(f => f.filename);
+
+            if (contentFiles.length > 0) {
+              const { data: openPRs } = await github.rest.pulls.list({
+                owner, repo, state: 'open', per_page: 100
+              });
+
+              for (const pr of openPRs) {
+                if (pr.number === prNumber) continue;
+                if (!pr.head.ref.startsWith('copilot/')) continue;
+
+                try {
+                  const { data: files } = await github.rest.pulls.listFiles({
+                    owner, repo, pull_number: pr.number, per_page: 100
+                  });
+                  const overlaps = files.some(f => contentFiles.includes(f.filename));
+                  if (overlaps) {
+                    await github.rest.pulls.update({
+                      owner, repo, pull_number: pr.number, state: 'closed'
+                    });
+                    console.log('Closed superseded Publisher PR #' + pr.number);
+                    try {
+                      await github.rest.git.deleteRef({
+                        owner, repo, ref: 'heads/' + pr.head.ref
+                      });
+                    } catch (e) {
+                      console.log('Branch cleanup for #' + pr.number + ': ' + e.message);
+                    }
+                  }
+                } catch (e) {
+                  console.log('Error checking PR #' + pr.number + ': ' + e.message);
+                }
+              }
+            }
