@@ -1,5 +1,49 @@
 import fs from "fs/promises";
 import path from "path";
+import sharp from "sharp";
+
+/**
+ * Validate that a generated image is not blank, solid-color, or too dark.
+ * Returns { valid: boolean, reason?: string }
+ */
+async function validateImage(filePath) {
+  try {
+    const { channels, isOpaque } = await sharp(filePath).stats();
+    // channels[0] = red, [1] = green, [2] = blue
+    const avgBrightness =
+      (channels[0].mean + channels[1].mean + channels[2].mean) / 3;
+    const avgStdDev =
+      (channels[0].stdev + channels[1].stdev + channels[2].stdev) / 3;
+
+    // Reject near-black images (average brightness < 15 out of 255)
+    if (avgBrightness < 15) {
+      return {
+        valid: false,
+        reason: `Image is too dark (avg brightness: ${avgBrightness.toFixed(1)}/255)`,
+      };
+    }
+
+    // Reject near-white images (average brightness > 250)
+    if (avgBrightness > 250) {
+      return {
+        valid: false,
+        reason: `Image is too bright/white (avg brightness: ${avgBrightness.toFixed(1)}/255)`,
+      };
+    }
+
+    // Reject solid-color images (very low standard deviation across channels)
+    if (avgStdDev < 5) {
+      return {
+        valid: false,
+        reason: `Image appears to be a solid color (avg stdev: ${avgStdDev.toFixed(1)})`,
+      };
+    }
+
+    return { valid: true };
+  } catch (e) {
+    return { valid: false, reason: `Cannot read image: ${e.message}` };
+  }
+}
 
 async function fetchProductContext(url) {
   if (!url) return "";
@@ -300,7 +344,7 @@ async function buildPrompt(category, title, content, imageStyle, apiKey) {
   return `Premium minimalist hero image for "${cleanTitle}", dark slate background, emerald accents, editorial legal-tech aesthetic, 16:9`;
 }
 
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 5000;
 
 export async function generateGeminiImage(prompt, apiKey, fileName) {
@@ -349,7 +393,16 @@ export async function generateGeminiImage(prompt, apiKey, fileName) {
       const targetPath = path.join(process.cwd(), "public", "images", fileName);
       await fs.writeFile(targetPath, buffer);
 
-      console.log(`✅ Success! Image saved to: /images/${fileName}`);
+      // Validate the image is not blank, solid-color, or too dark/bright
+      const validation = await validateImage(targetPath);
+      if (!validation.valid) {
+        console.error(`⚠️ Image validation failed: ${validation.reason}`);
+        // Delete the bad image so it doesn't get committed
+        await fs.unlink(targetPath).catch(() => {});
+        throw new Error(`Image validation failed: ${validation.reason}`);
+      }
+
+      console.log(`✅ Success! Image saved and validated: /images/${fileName}`);
       return `/images/${fileName}`;
     } catch (err) {
       console.error(`❌ Attempt ${attempt} failed: ${err.message}`);

@@ -41,6 +41,10 @@ Read `src/data/site-config.json` to get the `monetization.primaryPlatform` and `
 
 1. **Fetch the product page** on the primary platform (e.g., AppSumo). Use the URL from the frontmatter `affiliateLink` to determine the product slug, then fetch the actual product page.
 
+1b. **Extract the "Alternative to" field** from the AppSumo page (in the "At-a-glance" section). If the article does not compare the tool to at least one of the listed alternatives by name, that is an error. Add a brief, honest comparison (2-3 sentences) in the article's deep-dive or limitations section. Match the existing writing voice. Also check user reviews: if reviewers repeatedly compare to a specific competitor not listed in "Alternative to," that competitor should also be addressed.
+
+1c. **Freshness check for beta and roadmap claims.** Scan the article for any feature described as "beta," "early access," "coming soon," or "upcoming." For each one, check whether the current product page still uses that qualifier. If the feature is now generally available (no "beta" label on the live page), fix the article to reflect current status. Stale beta claims make the review look outdated.
+
 2. **Check the three deal-breaker limits.** These are the only plan limits that change a solo attorney's purchase decision. For each one, find the value on the live product page and compare it to what the article says:
 
    | Limit                       | Live Page Value   | Article States                          |
@@ -62,9 +66,10 @@ Read `src/data/site-config.json` to get the `monetization.primaryPlatform` and `
    - For EACH review, note: star rating, one-sentence summary of their main point.
    - After listing all 10, identify any complaint that appears in 2 or more reviews. These are "pattern complaints."
    - Pattern complaints MUST appear in the article's limitations section. If they don't, that's an error you must fix.
+   - **Proportionality rule:** If a complaint appears in 4 or more of the 10 reviews, it is the dominant user experience issue. The article must dedicate at least a full paragraph to it, not just a passing mention. If the article only gives it one sentence while the complaint appears in nearly every review, expand the coverage. Include specific observations (e.g., "multiple reviewers compared latency unfavorably to [competitor]"). A one-sentence mention of a universal complaint signals the article is downplaying a real problem.
    - Also note if 2+ reviewers are requesting a feature (e.g., mobile app, subtasks). If 3+ reviewers request the same thing, mention it as a current gap.
 
-6. **Check the compare-at / standard price.** The `standardPrice` in frontmatter should match EITHER the AppSumo compare-at price OR the vendor's monthly subscription. Note which one it matches and flag if it matches neither.
+6. **Check the compare-at / standard price.** The `standardPrice` in frontmatter should match EITHER the AppSumo compare-at price (the crossed-out "was" price) OR the vendor's monthly subscription price from their pricing page. If the vendor's pricing page won't load, use the AppSumo compare-at price as the authoritative source. If the article's `standardPrice` matches NEITHER the AppSumo compare-at price NOR the vendor pricing page, it is likely fabricated or outdated. Fix it to match whichever source is available. Common mistake: the Publisher guesses a monthly price from memory instead of reading it from the live page.
 
 ### For Playbooks:
 
@@ -101,6 +106,8 @@ Build a checklist comparing every factual claim in the article against the sourc
 - [ ] The product is described correctly (AppSumo Original, AppSumo Select, or third-party)
 - [ ] The `affiliateLink` resolves to the correct product page
 - [ ] The `category` makes sense for what the product does
+- [ ] The article compares the tool to at least one competitor listed in the AppSumo "Alternative to" field
+- [ ] Any feature described as "beta" or "coming soon" still carries that label on the current live product page
 
 ### User Review Cross-Check (Reference your review list from Step 2)
 

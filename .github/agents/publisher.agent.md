@@ -63,7 +63,9 @@ Before creating ANY new content, you must:
    **Why this matters:** Publishing a review for a product that does not exist on AppSumo destroys reader trust, creates broken affiliate links, and wastes the entire content pipeline. This has happened before and it is a failure state.
 
 4. **Check for gaps.** Look at existing tool reviews and pick something that fills a category gap or complements the current stack. Avoid reviewing tools in categories that are already well-covered unless the new tool is significantly different.
-5. **Gather verifiable facts only.** Pull from:
+5. **Extract the "Alternative to" field from the AppSumo product page.** This field names the tool's direct competitors. Your article MUST compare the tool to at least one of these named alternatives by name, even if briefly. Readers arrive having already compared these products. Ignoring the named competitor makes the review feel disconnected from the real purchasing decision. If users in the reviews keep comparing the tool to a specific competitor, that competitor MUST also be addressed.
+6. **Derive the `standardPrice` correctly.** The `standardPrice` in frontmatter MUST come from one of two verified sources: (a) the vendor's current pricing page (monthly subscription price), or (b) the AppSumo compare-at price shown on the product page. If the vendor's pricing page won't load or doesn't show clear pricing, take the AppSumo compare-at price (the crossed-out "was" price) and note it as the annual equivalent. NEVER guess a standard price from memory, search snippets, or general knowledge. If you cannot verify it from either source, omit `standardPrice` from frontmatter entirely.
+7. **Gather verifiable facts only.** Pull from:
    - The vendor's official product page (features, pricing)
    - The vendor's published security/privacy documentation
    - AppSumo product page (deal price, deal type, reviews)
@@ -71,7 +73,7 @@ Before creating ANY new content, you must:
 
    Do NOT fabricate benchmarks, user counts, or performance metrics. If data is not publicly available, either restructure the claim as editorial opinion ("In my testing, this was fast enough for daily use") or omit it entirely.
 
-6. **Build the affiliate link from the VERIFIED URL.** Take the exact AppSumo product URL you confirmed in step 3a and URL-encode it into the deep link format:
+8. **Build the affiliate link from the VERIFIED URL.** Take the exact AppSumo product URL you confirmed in step 3a and URL-encode it into the deep link format:
 
    ```
    https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded VERIFIED product page}
@@ -241,6 +243,7 @@ Verify these James-specific patterns appear in the article:
 1. **Every statistic has a source or personal-testing framing.** Scan for numbers, percentages, and dollar amounts. Each must be traceable to a vendor page, public doc, or preceded by "In my testing" / "When I ran this."
 2. **No `[VERIFY]`, `[TODO]`, `[PLACEHOLDER]`, or `[TBD]` markers remain.**
 3. **The affiliate link is correctly formatted** and points to the right product page using the deep link format.
+4. **Personal-testing claims use natural precision.** Scan for phrases like "under two percent error rate" or "99% accuracy." These imply systematic measurement. Unless the article explains the measurement method ("I dictated 50 paragraphs and counted misheard words"), rewrite with natural language: "rarely misheard a legal term," "got maybe one or two wrong per full page of dictation." Suspiciously precise numbers without methodology are a credibility risk with an attorney audience.
 
 ### Pass 5: Source Cross-Check (Post-Write Verification)
 
@@ -251,6 +254,10 @@ This pass exists because you WILL misremember details from pages you fetched ear
 #### Step 1: Re-fetch the primary source
 
 Fetch the AppSumo product page (or vendor/platform page for non-AppSumo products) using your web tool RIGHT NOW. Do not rely on what you fetched earlier. Context windows are long and your memory of page details degrades. Fetch it fresh.
+
+#### Step 1b: Freshness check for beta and roadmap claims
+
+If your article describes any feature as "beta," "early access," "coming soon," or "upcoming," re-verify that claim against the CURRENT live page you just fetched. Products ship updates weekly. If the live page now shows the feature as generally available (no "beta" qualifier), update your article immediately. Publishing stale "beta" language when a feature is already released makes the review look outdated on day one.
 
 #### Step 2: Build a verification table
 
@@ -288,6 +295,8 @@ Read the 10 most recent user reviews on the product page. Read ALL of them, not 
 - Does any reviewer report that a feature described on the product page does not actually work as advertised? If yes, note it as a limitation or caveat.
 - Does any reviewer describe a gotcha that would specifically affect the target audience (e.g., team member access limitations, missing integrations with common tools, slow support response times)? If yes, mention it.
 - If 3 or more reviewers request the same feature (e.g., "need a mobile app"), mention it as a current gap even if no one is complaining about its absence.
+
+**Proportionality rule:** If a pattern complaint appears in 4 or more of the 10 reviews, it is the dominant user experience issue. Your article must dedicate at least a full paragraph to this complaint, not a single passing sentence. Include specific observations from the reviews (e.g., "multiple users compared the latency unfavorably to [competitor]"). A one-sentence mention of a universal complaint signals to readers that you either did not read the reviews or are downplaying a real problem.
 
 You do not need to catalog every minor gripe. Focus on patterns and deal-breakers for the target audience.
 
@@ -332,12 +341,12 @@ Use the `--force` flag to regenerate an existing image if needed.
 
 After running the image generation command:
 
-1. **Check the exit code.** The script exits with code 1 if image generation failed for a targeted slug. If you see a non-zero exit code, do NOT proceed.
+1. **Check the exit code.** The script exits with code 1 if image generation failed for a targeted slug. The script now performs automated pixel validation (brightness, contrast, solid-color detection) and will reject blank, all-dark, or solid-color images automatically. If you see a non-zero exit code, do NOT proceed.
 2. **Verify the file exists.** Confirm that `public/images/{slug}.png` was actually created on disk. Run `ls public/images/{slug}.png` or equivalent.
-3. **Verify the file is not corrupt or wrong.** Check that the file size is at least 50 KB. A valid hero image is typically 200 KB to 2 MB. If the file is under 50 KB, it is likely a placeholder, error page screenshot, or failed generation. Delete it and retry with `--force`. If you have image viewing capability, open the file and confirm it visually relates to the product or topic, not an unrelated brand logo or generic placeholder.
+3. **Verify the file is not corrupt or wrong.** Check that the file size is at least 50 KB. A valid hero image is typically 200 KB to 2 MB. If the file is under 50 KB, it is likely a placeholder, error page screenshot, or failed generation. Delete it and retry with `--force`.
 4. **If image generation fails:**
-   - The script retries automatically once (5-second delay between attempts).
-   - If both attempts fail, the script exits with code 1 and prints `HARD STOP`.
+   - The script retries automatically up to 3 times (5-second delay between attempts). It also validates each attempt for visual quality before accepting it.
+   - If all attempts fail, the script exits with code 1 and prints `HARD STOP`.
    - **Do NOT commit, build, or open a PR without a hero image.** An article without an image looks unprofessional and hurts SEO (missing og:image, no visual in search results).
    - Instead, leave a comment on the issue: "Image generation failed (Gemini API unavailable). Article is draft-ready at `src/content/{type}/{slug}.mdx`. Image must be generated before merge."
    - Do NOT set the frontmatter `image` to an empty string or placeholder URL.

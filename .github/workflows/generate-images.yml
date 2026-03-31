@@ -125,6 +125,36 @@ jobs:
             `, { id: context.payload.pull_request.node_id });
             console.log('Marked PR #' + context.payload.pull_request.number + ' as ready for review');
 
+      - name: Detect content files for lint
+        id: lint_files
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+            const mdxFiles = files
+              .filter(f => ['added', 'modified'].includes(f.status) &&
+                /^src\/content\/(tools|playbooks|research)\/.+\.mdx$/.test(f.filename))
+              .map(f => f.filename);
+            console.log('Content files to lint:', mdxFiles);
+            core.setOutput('files', mdxFiles.join(' '));
+            core.setOutput('has_files', mdxFiles.length > 0 ? 'true' : 'false');
+
+      - name: Content lint (automated quality gate)
+        if: steps.lint_files.outputs.has_files == 'true'
+        env:
+          LINT_FILES: ${{ steps.lint_files.outputs.files }}
+        run: |
+          ARGS=""
+          for f in $LINT_FILES; do
+            ARGS="$ARGS --file $f"
+          done
+          node scripts/content-lint.mjs $ARGS
+
       - name: Build site (validation gate)
         run: npm run build
 

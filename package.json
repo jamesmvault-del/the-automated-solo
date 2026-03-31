@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "prebuild": "node scripts/generate-checklist-pdf.mjs",
     "build": "astro build",
+    "lint:content": "node scripts/content-lint.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -20,5 +21,8 @@
     "astro": "^6.0.8",
     "pdfkit": "^0.18.0",
     "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }
