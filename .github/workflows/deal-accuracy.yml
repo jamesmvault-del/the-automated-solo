@@ -1,0 +1,142 @@
+name: Weekly Deal Accuracy Audit
+
+on:
+  schedule:
+    # Every Monday at 8:00 AM UTC (after the daily health check at 7 AM)
+    - cron: "0 8 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  accuracy-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Collect tool inventory and create audit issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            // Read site config for niche context
+            const siteConfig = JSON.parse(fs.readFileSync('src/data/site-config.json', 'utf8'));
+            const platform = siteConfig.monetization.primaryPlatform;
+            const audienceShort = siteConfig.niche.audienceShort;
+
+            // Collect all tool MDX files
+            const toolsDir = 'src/content/tools';
+            const files = fs.readdirSync(toolsDir).filter(f => f.endsWith('.mdx'));
+
+            if (files.length === 0) {
+              console.log('No tool reviews found. Skipping audit.');
+              return;
+            }
+
+            // Extract frontmatter from each tool
+            const tools = [];
+            for (const file of files) {
+              const content = fs.readFileSync(path.join(toolsDir, file), 'utf8');
+              const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+              if (!fmMatch) continue;
+
+              const fm = {};
+              for (const line of fmMatch[1].split(/\r?\n/)) {
+                const idx = line.indexOf(':');
+                if (idx === -1) continue;
+                const key = line.slice(0, idx).trim();
+                let val = line.slice(idx + 1).trim();
+                if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                  val = val.slice(1, -1);
+                }
+                fm[key] = val;
+              }
+
+              tools.push({
+                file,
+                slug: file.replace('.mdx', ''),
+                name: fm.name || file,
+                dealPrice: fm.dealPrice || 'unknown',
+                affiliateLink: fm.affiliateLink || 'missing'
+              });
+            }
+
+            // Check for open audit issue to avoid duplicates
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'deal-accuracy',
+              state: 'open'
+            });
+
+            if (existing.length > 0) {
+              console.log(`Open audit issue already exists (#${existing[0].number}). Skipping.`);
+              return;
+            }
+
+            // Build tool inventory table
+            const toolRows = tools.map(t =>
+              `| ${t.name} | \`src/content/tools/${t.file}\` | ${t.dealPrice} |`
+            ).join('\n');
+
+            const body = [
+              '## Weekly Deal Accuracy Audit',
+              '',
+              `Automated audit of **${tools.length} published tool reviews** to verify pricing and deal-breaker limits are still accurate.`,
+              '',
+              '### Tool Inventory',
+              '',
+              '| Tool | File | Current dealPrice |',
+              '|------|------|-------------------|',
+              toolRows,
+              '',
+              '## Instructions',
+              '',
+              'Read `AGENTS.md` and `src/data/site-config.json` for context. Then for **each tool above**:',
+              '',
+              `1. **Fetch the ${platform} product page** using the \`affiliateLink\` in the tool's frontmatter to determine the product URL.`,
+              '2. **Check these fields against the article:**',
+              '',
+              '   | Field | What to verify |',
+              '   |-------|---------------|',
+              `   | **Deal price** | Does \`dealPrice\` in frontmatter match the live listing? |`,
+              `   | **User/seat cap** | Is the plan's user limit mentioned in the article? |`,
+              `   | **Contact/lead cap** | Is the plan's contact/record limit mentioned in the article? |`,
+              `   | **Storage** | If the plan has storage under 10GB, is it mentioned? |`,
+              `   | **Deal status** | Is the deal still purchasable (not sold out/expired)? |`,
+              '',
+              '3. **If any field has changed or is missing from the article**, fix it:',
+              `   - Update \`dealPrice\` and \`standardPrice\` in frontmatter if pricing changed.`,
+              '   - Add missing deal-breaker limits to the article\'s limitations section (1-2 sentences, match the existing voice).',
+              '   - If a deal is expired/sold out, update the affiliate link to the search fallback (see `AGENTS.md` section 4.2).',
+              '   - If a product is completely discontinued, delete the `.mdx` file and hero image.',
+              '',
+              '4. **After all corrections:**',
+              '   - Increment `CACHE_NAME` in `public/sw.js`.',
+              '   - Run `npm run build` to confirm zero errors.',
+              '   - Commit and push.',
+              '',
+              '## Rules',
+              '',
+              '- Do NOT rewrite articles for style. Only fix factual inaccuracies.',
+              '- Every correction must come from the live product page you fetched.',
+              '- If no corrections are needed, close this issue with a comment: "All tools verified accurate."',
+              '- No em-dash characters in any text you add.',
+            ].join('\n');
+
+            const { data: issue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Maintenance] Weekly deal accuracy audit (${new Date().toISOString().split('T')[0]})`,
+              body: body,
+              labels: ['deal-accuracy', 'copilot'],
+              assignees: ['copilot']
+            });
+
+            console.log(`Created audit issue #${issue.number}`);

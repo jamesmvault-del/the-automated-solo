@@ -17,6 +17,7 @@ This repository powers **The Automated Solo** (theautomatedsolo.com), a premium 
 - **Voice:** All content articles (tools, playbooks, research) use James's first-person voice ("I tested," "my workflow"). Homepage/UI pages use brand voice ("we," "our").
 - **Active deals only.** Do not create tool reviews for expired or discontinued products.
 - **PRODUCT VERIFICATION IS MANDATORY.** Before writing ANY tool review, you MUST use your web browsing tool to fetch the AppSumo product page AND the vendor's website. Confirm both load successfully. If either returns a 404 or redirects to a homepage, STOP and pick a different tool. This also applies to every tool referenced in playbooks.
+- **Deal-breaker limits.** Every tool review must mention the user/seat cap, contact/lead cap, and storage (if under 10GB) from the plan being reviewed. These three limits are the minimum. A weekly accuracy audit verifies these stay correct.
 - **Affiliate links:** Build ONLY from verified URLs. Take the exact AppSumo URL you successfully loaded, URL-encode it, and insert into: `https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded VERIFIED product page}`. NEVER guess a product slug.
 
 ## AI Detection Prevention (Critical for SEO)

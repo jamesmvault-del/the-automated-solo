@@ -88,7 +88,9 @@ The Publisher agent has full authority to remove dead products without waiting f
 
 Our readers are attorneys. Misleading data destroys trust permanently and could expose the site to legal liability. Never fabricate metrics to fill a template or make content look more authoritative.
 
-After writing any content, the agent must re-fetch the primary product or source page and compare every number in the article (pricing, plan limits, feature caps) against the live listing. The agent must also read user reviews on the product page and incorporate recurring complaints that would affect a solo attorney's purchase decision. See Phase 5, Pass 5 of `.github/agents/publisher.agent.md` for the full cross-check procedure.
+After writing any content, the agent must re-fetch the primary product or source page and verify three things: pricing matches the live listing, the three deal-breaker limits are mentioned (user/seat cap, contact/lead cap, storage if under 10GB), and recurring user complaints are acknowledged. See Phase 5, Pass 5 of `.github/agents/publisher.agent.md` for the full cross-check procedure.
+
+A weekly deal accuracy audit (`.github/workflows/deal-accuracy.yml`) runs every Monday to verify published articles still match live product pages. It checks pricing, deal-breaker limits, and deal availability across all tool reviews.
 
 ### 3.6 Geographic Neutrality
 
@@ -258,7 +260,7 @@ The site is designed for low-touch autonomous operation. The Publisher agent han
 
 ### 9.1 How It Works
 
-- **GitHub Actions** trigger on a schedule (Mon/Thu for content, daily for deal health checks)
+- **GitHub Actions** trigger on a schedule (Mon/Thu for content, daily for deal health checks, weekly for deal accuracy audits)
 - The rotation cycle in `src/data/content-calendar.json` determines the content type: `["tool", "playbook", "tool", "playbook", "research"]`
 - **You choose the topic.** The rotation only tells you the type. Research, evaluate, and select the best specific topic autonomously.
 - Full workflow details are in `.github/agents/publisher.agent.md`

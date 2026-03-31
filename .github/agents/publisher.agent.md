@@ -259,26 +259,24 @@ From the LIVE page you just fetched, extract every one of these fields. Then fin
 **For tool reviews, extract from the product page:**
 
 - Plan names and prices for each tier
-- What the deal includes (number of sites, seats, documents, storage, API calls, or whatever unit the product uses)
-- Key feature limits per plan tier (caps, quotas, restrictions)
-- What is NOT included (features locked to higher tiers, features that require add-ons)
-- Whether it is an AppSumo Original, AppSumo Select, or third-party listing
 - The compare-at / standard price shown on the page
+- Whether it is an AppSumo Original, AppSumo Select, or third-party listing
+- The three deal-breaker limits (see below)
 
-**CRITICAL: Every quantitative limit from the plan table must appear somewhere in your article.** If the plan table shows a user cap, a lead cap, a storage limit, a workspace limit, or any other numerical restriction, your article must mention it. Omitting a real limit misleads readers. This is the #1 error our review process catches. Specifically:
+**Deal-Breaker Limits Check.** Your article must mention these three limits if they exist on the plan being reviewed. These are the only limits that change a solo attorney's purchase decision:
 
-- **User/seat limits** must appear in the article if the plan restricts them. A solo attorney with a paralegal needs to know.
-- **Lead/contact/record caps** must appear in the article. A cap of 100 leads means something different to a practice getting 5 inquiries a week vs. 20.
-- **Storage limits** under 10GB must be mentioned.
-- **Workspace limits** must be mentioned if the plan restricts them.
+1. **User/seat cap.** A solo with a paralegal needs to know if the plan is single-user. Always mention.
+2. **Contact/lead/record cap.** A cap of 100 contacts matters differently to a practice getting 5 inquiries a week vs. 20. Always mention.
+3. **Storage limit (only if under 10GB).** Low storage is a deal-breaker for document-heavy practices. Mention if restrictive.
 
-For EACH extracted field, locate the sentence in your article that references it. If your article says something different from the live page, fix the article. If your article does not mention it at all and it would matter to the target audience, ADD it to the limitations section. Common mistakes to watch for:
+You do NOT need to enumerate every tier row, API limit, or webhook count. Focus on what would make a reader regret the purchase.
 
-- Confusing one plan tier's limits with another (e.g., writing the Tier 1 limit as if it applies to all tiers, or using Tier 2 limits when reviewing Tier 1)
-- Saying "per site" when the plan includes multiple sites
+For EACH deal-breaker limit and the pricing fields, locate the sentence in your article that references it. If your article says something different from the live page, fix the article. If a deal-breaker limit exists on the plan but your article doesn't mention it, ADD it to the limitations section. Common mistakes to watch for:
+
+- Confusing one plan tier's limits with another
 - Saying "unlimited" when there is actually a cap, or vice versa
 - Using a monthly subscription price that does not match the vendor's current pricing page
-- **Omitting a limit entirely because you focused on features instead of restrictions**
+- **Omitting a deal-breaker limit because you focused on features instead of restrictions**
 
 If you cannot find a claim on the live page to verify a number you wrote, that number is suspect. Either find a source or reframe it as "In my testing" language.
 

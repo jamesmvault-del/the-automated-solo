@@ -41,25 +41,18 @@ Read `src/data/site-config.json` to get the `monetization.primaryPlatform` and `
 
 1. **Fetch the product page** on the primary platform (e.g., AppSumo). Use the URL from the frontmatter `affiliateLink` to determine the product slug, then fetch the actual product page.
 
-2. **Build the Limits Extraction Table.** This is the single most important step you perform. You MUST write out a table with three columns. Do not skip this. Do not summarize. Write the actual table.
+2. **Check the three deal-breaker limits.** These are the only plan limits that change a solo attorney's purchase decision. For each one, find the value on the live product page and compare it to what the article says:
 
-   For EVERY row in the plan comparison table on the live product page, write:
+   | Limit | Live Page Value | Article States |
+   |-------|----------------|----------------|
+   | **User/seat cap** | (from plan table) | (what article says, or "NOT MENTIONED") |
+   | **Contact/lead/record cap** | (from plan table) | (what article says, or "NOT MENTIONED") |
+   | **Storage** (only if <10GB) | (from plan table) | (what article says, or "NOT MENTIONED") |
 
-   | Field | Live Page Value (Tier being reviewed) | Article States |
-   |-------|---------------------------------------|----------------|
-   | Price | (exact price from page) | (what frontmatter/article says) |
-   | Users | (number from page) | (what article says, or "NOT MENTIONED") |
-   | Storage | (from page) | (what article says, or "NOT MENTIONED") |
-   | Leads/Contacts | (from page) | (what article says, or "NOT MENTIONED") |
-   | (every other row) | ... | ... |
-
-   **Rules for this table:**
-   - Include EVERY quantitative limit from the plan table. Not just the ones the article mentions.
-   - If the article does not mention a limit at all, write "NOT MENTIONED" in the third column.
-   - "NOT MENTIONED" is an error if the limit would affect the target audience. It must be added to the article's limitations section.
-   - Limits that restrict how many people can use the tool (users, seats, team members) are ALWAYS relevant.
-   - Limits that cap how many records/leads/contacts/documents you can have are ALWAYS relevant.
-   - Storage limits under 10GB are ALWAYS relevant.
+   **Rules:**
+   - If the plan page shows a limit for any of these three and the article says "NOT MENTIONED," that is an error. Add it to the article's limitations section.
+   - If the article states a value that differs from the live page, fix it.
+   - You do NOT need to enumerate every tier row, API limit, webhook count, or workspace cap. Focus on what would make a reader regret the purchase.
 
 3. **Identify which tier the article is reviewing.** Match the `dealPrice` in frontmatter to the correct tier. Verify the article only claims features from THAT tier. If a feature belongs to a higher tier, flag it.
 
@@ -97,13 +90,10 @@ Build a checklist comparing every factual claim in the article against the sourc
 - [ ] Every price mentioned in the article body matches the live listing
 - [ ] The plan tier being reviewed is correctly identified (Tier 1, Tier 2, etc.)
 
-### Feature Limits (Reference your Limits Extraction Table from Step 2)
+### Deal-Breaker Limits (Reference your table from Step 2)
 
-- [ ] Every row in your Limits Extraction Table that says "NOT MENTIONED" has been evaluated. If the limit affects the target audience, add it to the article's limitations section.
-- [ ] Specifically check: user/seat count, lead/contact caps, storage limits, workspace limits, API/webhook limits. These are the most commonly omitted.
-- [ ] Every quantitative limit that IS mentioned in the article matches the live listing for the CORRECT tier
-- [ ] Features described as "included" are actually included in the reviewed tier
-- [ ] Features described as "not included" or "missing" are actually absent from the reviewed tier
+- [ ] Every "NOT MENTIONED" entry from your Step 2 table has been added to the article's limitations section
+- [ ] Every limit value that IS mentioned matches the live listing for the CORRECT tier
 - [ ] No feature from a higher tier is attributed to the reviewed tier
 
 ### Product Identity
