@@ -267,6 +267,24 @@ jobs:
                       owner, repo, pull_number: pr.number, state: 'closed'
                     });
                     console.log('Closed superseded Publisher PR #' + pr.number);
+
+                    // Close linked issues (GitHub won't auto-close on PR close, only on merge)
+                    const bodyMatch = (pr.body || '').match(/(?:closes|fixes|resolves)\s+#(\d+)/gi);
+                    if (bodyMatch) {
+                      for (const match of bodyMatch) {
+                        const issueNum = match.match(/#(\d+)/)[1];
+                        try {
+                          await github.rest.issues.update({
+                            owner, repo, issue_number: parseInt(issueNum), state: 'closed',
+                            state_reason: 'completed'
+                          });
+                          console.log('Closed linked issue #' + issueNum);
+                        } catch (e) {
+                          console.log('Could not close issue #' + issueNum + ': ' + e.message);
+                        }
+                      }
+                    }
+
                     try {
                       await github.rest.git.deleteRef({
                         owner, repo, ref: 'heads/' + pr.head.ref
