@@ -1,0 +1,107 @@
+---
+name: "Agency Handy"
+category: "Case Management"
+useCase: "Replace the spreadsheet patchwork. Run intake, proposals, billing, and client updates from one dashboard."
+standardPrice: "$29/mo"
+dealPrice: "$74 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "3 hrs/wk"
+image: "/images/agency-handy.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fagency-handy%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Problem: Seven Tools for One Client Intake
+
+I spent three days mapping the actual administrative workflow of a solo attorney running a general practice. No judgment, but the intake process alone touched seven different tools: a contact form, email, a Google Sheet, a document folder, a scheduling link, a Word template for the retainer, and QuickBooks for invoicing.
+
+Seven tools. Each handoff is a place where something falls through the cracks. And this is the exact reason why so many solo attorneys are drowning in unbillable admin work instead of practicing law.
+
+I tested Agency Handy to see if it could collapse most of that chaos into a single, coherent system. Here is what I found for a solo attorney workflow.
+
+## Setting Up Agency Handy for a Law Practice
+
+First: ignore the "agency" label entirely. The feature set maps cleanly onto any solo attorney's operation. You run a service business. Clients come in, work gets done, invoices go out. Agency Handy is built for exactly that.
+
+**Step 1: Build Your Service Catalog.**
+
+Start by defining your service types. I set up three: Initial Consultation (60 minutes, $150), Flat-Fee Estate Plan ($2,500), and Monthly Retainer (prepaid 10 hours at $300 per hour). The catalog has a real-time preview so you see exactly what the client-facing version looks like before you publish anything. Pricing supports decimals, so hourly rates like $350.00 aren't a problem.
+
+**Step 2: Build the Client Intake Form.**
+
+This is the feature I was most interested in stress-testing. Under "Lead Forms," I built a client intake form with 15 fields: contact info, matter type, opposing party details, a short statement of facts, and referral source. The form supports page breaks, so you can split a dense intake questionnaire into logical sections without overwhelming a new client on arrival.
+
+When someone submits it, their information auto-creates a lead inside the CRM. No manual entry. In my testing, a solid intake form takes about 8 minutes to build from scratch. Once it's live, every new inquiry populates the CRM automatically.
+
+That alone kills 10 to 15 minutes per new inquiry. Multiply that by 10 inquiries a week and you are looking at nearly 2 hours recovered from data entry alone.
+
+**Step 3: The Proposal and Retainer Workflow.**
+
+This is where it gets genuinely useful for a solo attorney. Agency Handy's Proposal V2 walks through service selection, pricing, add-ons, and then drops into a signature flow. Up to 5 signatories, with IP address and timestamp tracking on every signature. The system sends automatic reminders if the prospect hasn't signed after a set number of days.
+
+I configured this as a standard retainer agreement. Client fills out the intake form, gets added as a lead, I send the proposal with retainer terms, client signs electronically. The whole flow from "new inquiry" to "signed retainer" can happen in under an hour if the client is responsive.
+
+**Step 4: Stripe Billing.**
+
+Connecting Stripe takes about 3 minutes. Invoice templates include both party names, itemized services, and tax if you configure it. Invoices auto-generate when a proposal is accepted, so closing the deal and generating the invoice happen in one step.
+
+Credit-based billing is also available. A client purchases a block of hours upfront, and each task or invoice draws down from that balance. This is a clean fit for retainer billing.
+
+<Scorecard
+  summary="Agency Handy handles a solo attorney's core operational workflow at a price that's hard to argue against. The real limitation is that it was built for digital agencies, not law firms. There are no legal-specific templates, no trust accounting, no ABA compliance features. If those are your priority, you need a purpose-built legal platform like Clio. But if your goal is stopping the billing and intake bleeding, this delivers."
+  scores={[
+    { label: "Client Intake Setup", value: 9.0 },
+    { label: "Proposal & E-Signature", value: 8.5 },
+    { label: "Invoicing & Billing", value: 8.0 },
+    { label: "Time Tracking", value: 7.5 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## What Actually Works
+
+The intake-to-proposal pipeline is the standout feature. Most solo attorneys treat client intake and retainer signing as two separate manual processes. Agency Handy makes them one connected workflow: inquiry in, lead created, proposal sent, retainer returned signed. Every step has an audit trail.
+
+Time tracking is functional. Start/stop timers, manual log entries, team timesheets. It is not a sophisticated legal billing tool. There are no matter-level reports, no UTBMS billing codes. But for a solo who isn't running a complex practice management system, it captures hours so you can invoice them. That's the job.
+
+The client portal surprised me. Clients get a branded login where they can see documents, track task status, and pay invoices directly. I've seen solo attorneys pay $60 to $80 per month for standalone client portal software. Agency Handy includes it in the base $74 lifetime plan.
+
+The March 2026 update added credit-based billing, which is exactly what retainer arrangements need. Clients can prepurchase a block of hours and draw it down incrementally.
+
+## What Doesn't Work
+
+No legal-specific templates. Agency Handy ships with zero retainer agreement language, engagement letter copy, or estate planning checklists. You bring your own content and drop it into the proposal builder. This is a meaningful extra step if you don't already have templates sitting in a folder somewhere.
+
+The Tier 1 plan ($74 lifetime) does not include custom domain email. Client-facing emails go out through Agency Handy's hosted system. If you need emails sent from your own domain, that requires Tier 3 ($409 lifetime). For most solo attorneys using the base plan, the hosted email works fine.
+
+There's no native integration with Clio, MyCase, or any legal practice management platform. Agency Handy works best as a primary system, not an add-on to an existing legal PMS. If you're already running Clio, you'd be maintaining two parallel systems.
+
+The "agency" framing of some UI elements can feel odd. You'll see terms like "service catalog" and "order" where a legal workflow would say "engagement" and "matter." It's cosmetic, but it's a reminder that you're adapting a non-legal tool for a legal context.
+
+## The ROI Case
+
+Three spots where solo attorneys hemorrhage billable time:
+
+**Intake data entry.** Manually transcribing client info from email into a spreadsheet or CRM: 10 to 15 minutes per inquiry. At 10 inquiries a week, that's up to 2.5 hours of data entry.
+
+**Proposal and retainer drafting.** Pulling from Word templates, customizing, PDF-ing, emailing, waiting for a scan back: 20 to 30 minutes per engagement. Agency Handy reduces this to a few clicks once the template is configured.
+
+**Invoice chasing.** Following up on unpaid invoices manually takes time that varies wildly depending on your clients. Automated payment reminders and a client portal where clients see and pay invoices cuts this considerably.
+
+In my estimate, a solo attorney managing 8 to 12 active matters at any time could recover 2 to 3 hours per week from admin. At a $300 hourly billing rate, that's $600 to $900 per week in recovered capacity.
+
+The $74 lifetime deal pays for itself in the first 15 minutes of saved admin on a single week.
+
+If you have already set up [TidyCal](/tools/tidycal) for scheduling and [Typedesk](/tools/typedesk) for email snippets, Agency Handy is the third piece that handles everything after the consultation is booked: intake, retainer, billing, and client communication in one place.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fagency-handy%2F"
+  productName="Agency Handy"
+  price="$74 Lifetime"
+/>
