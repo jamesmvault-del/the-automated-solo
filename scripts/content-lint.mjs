@@ -107,9 +107,7 @@ function extractProse(content) {
 }
 
 function countWords(text) {
-  return text
-    .split(/\s+/)
-    .filter((w) => w.length > 0).length;
+  return text.split(/\s+/).filter((w) => w.length > 0).length;
 }
 
 async function lintFile(filePath, contentType) {
@@ -125,7 +123,9 @@ async function lintFile(filePath, contentType) {
     const lines = content.split("\n");
     for (let i = 0; i < lines.length; i++) {
       if (lines[i].includes("\u2014") || lines[i].includes("\u2013")) {
-        violations.push(`Line ${i + 1}: Em-dash character found. Rewrite with comma, colon, or split sentence.`);
+        violations.push(
+          `Line ${i + 1}: Em-dash character found. Rewrite with comma, colon, or split sentence.`,
+        );
       }
     }
   }
@@ -134,7 +134,8 @@ async function lintFile(filePath, contentType) {
   for (const phrase of BANNED_PHRASES) {
     // Special case: "landscape" only banned in market context
     if (phrase === "landscape") {
-      const marketContextPattern = /(?:market|industry|legal|tech|competitive|digital)\s+landscape|landscape\s+(?:of|for|in)/gi;
+      const marketContextPattern =
+        /(?:market|industry|legal|tech|competitive|digital)\s+landscape|landscape\s+(?:of|for|in)/gi;
       const match = prose.match(marketContextPattern);
       if (match) {
         violations.push(`Banned phrase: "${match[0]}" (AI detection trigger)`);
@@ -147,7 +148,9 @@ async function lintFile(filePath, contentType) {
       const verbPattern = /\bleverag(?:e|ed|es|ing)\b/gi;
       const match = prose.match(verbPattern);
       if (match) {
-        violations.push(`Banned phrase: "${match[0]}" used as verb (AI detection trigger)`);
+        violations.push(
+          `Banned phrase: "${match[0]}" used as verb (AI detection trigger)`,
+        );
       }
       continue;
     }
@@ -162,9 +165,14 @@ async function lintFile(filePath, contentType) {
   for (const para of paragraphs) {
     const trimmed = para.trim();
     if (!trimmed) continue;
-    const firstWord = trimmed.split(/[\s,]/)[0].toLowerCase().replace(/[^a-z]/g, "");
+    const firstWord = trimmed
+      .split(/[\s,]/)[0]
+      .toLowerCase()
+      .replace(/[^a-z]/g, "");
     if (BANNED_OPENERS.includes(firstWord)) {
-      violations.push(`Paragraph starts with "${firstWord}" (banned AI-signature opener): "${trimmed.substring(0, 60)}..."`);
+      violations.push(
+        `Paragraph starts with "${firstWord}" (banned AI-signature opener): "${trimmed.substring(0, 60)}..."`,
+      );
     }
   }
 
@@ -179,7 +187,9 @@ async function lintFile(filePath, contentType) {
   const wordCount = countWords(prose);
   const minRequired = MIN_WORDS[contentType] || 800;
   if (wordCount < minRequired) {
-    violations.push(`Word count: ${wordCount} (minimum ${minRequired} for ${contentType})`);
+    violations.push(
+      `Word count: ${wordCount} (minimum ${minRequired} for ${contentType})`,
+    );
   }
 
   // ── "Solo attorney/practitioner" in first 200 words ───────────
@@ -189,7 +199,9 @@ async function lintFile(filePath, contentType) {
     !first200.includes("solo practitioner") &&
     !first200.includes("solo practice")
   ) {
-    violations.push(`Missing "solo attorney/practitioner/practice" in first 200 words (SEO requirement)`);
+    violations.push(
+      `Missing "solo attorney/practitioner/practice" in first 200 words (SEO requirement)`,
+    );
   }
 
   // ── Frontmatter required fields ───────────────────────────────
@@ -197,7 +209,13 @@ async function lintFile(filePath, contentType) {
   if (fmMatch) {
     const fm = fmMatch[1];
     if (contentType === "tools") {
-      const required = ["name", "category", "dealPrice", "affiliateLink", "image"];
+      const required = [
+        "name",
+        "category",
+        "dealPrice",
+        "affiliateLink",
+        "image",
+      ];
       for (const field of required) {
         if (!fm.includes(`${field}:`)) {
           violations.push(`Missing required frontmatter field: ${field}`);
@@ -222,7 +240,10 @@ async function lintFile(filePath, contentType) {
 async function main() {
   const contentDirs = [
     { dir: path.join(process.cwd(), "src/content/tools"), type: "tools" },
-    { dir: path.join(process.cwd(), "src/content/playbooks"), type: "playbooks" },
+    {
+      dir: path.join(process.cwd(), "src/content/playbooks"),
+      type: "playbooks",
+    },
     { dir: path.join(process.cwd(), "src/content/research"), type: "research" },
   ];
 
@@ -254,8 +275,11 @@ async function main() {
       const filePath = path.join(dir, file);
       // If specific files are targeted, only lint those
       if (targetFiles.length > 0) {
-        const relPath = path.relative(process.cwd(), filePath).replace(/\\/g, "/");
-        if (!targetFiles.some((t) => relPath.includes(t) || t.includes(file))) continue;
+        const relPath = path
+          .relative(process.cwd(), filePath)
+          .replace(/\\/g, "/");
+        if (!targetFiles.some((t) => relPath.includes(t) || t.includes(file)))
+          continue;
       }
 
       const result = await lintFile(filePath, type);
@@ -274,10 +298,14 @@ async function main() {
     }
   }
 
-  console.log(`\n── Summary: ${filesChecked} files, ${totalViolations} violations ──\n`);
+  console.log(
+    `\n── Summary: ${filesChecked} files, ${totalViolations} violations ──\n`,
+  );
 
   if (totalViolations > 0) {
-    console.error("🚫 Content lint FAILED. Fix violations before publishing.\n");
+    console.error(
+      "🚫 Content lint FAILED. Fix violations before publishing.\n",
+    );
     process.exit(1);
   }
 
