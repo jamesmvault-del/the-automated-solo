@@ -10,6 +10,8 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 0,
-  "published": []
+  "nextSlot": 1,
+  "published": [
+    {"type": "tool", "title": "Agency Handy Review: A $74 Client Portal That Replaces Your Practice Management Spreadsheet", "slug": "agency-handy", "date": "2026-03-31"}
+  ]
 }

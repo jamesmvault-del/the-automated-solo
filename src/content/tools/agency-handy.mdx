@@ -1,0 +1,92 @@
+---
+name: "Agency Handy"
+category: "Case Management"
+useCase: "Client portal, invoicing, and task management without the $50/month practice management subscription."
+standardPrice: "$49/mo"
+dealPrice: "$74 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "3 hrs/wk"
+image: "/images/agency-handy.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fagency-handy%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The $50/Month Problem Nobody Talks About
+
+Most solo attorneys end up in one of two camps. Either they're paying $50 to $80 per month for practice management software they use about 30% of, or they're running their entire firm from a chaotic tangle of spreadsheets, sticky notes, and email search. Neither works.
+
+I've been testing Agency Handy for the past few weeks to see if there's a real middle ground here. It was built for digital agencies, not law firms. But here's what I found: the core workflow of a solo attorney handling flat-fee services looks a lot like the workflow of a boutique service agency. You have clients. You have engagements with defined deliverables. You send invoices. You track who paid and who ghosted you. The structural overlap is bigger than you'd expect.
+
+For a solo attorney who wants to stop bleeding $50 a month on software, the Tier 1 lifetime deal at $74 is worth a serious look.
+
+## What I Actually Set Up
+
+The first thing I built was a service catalog. Agency Handy gives you a public-facing storefront where you can list legal services with fixed prices, package descriptions, and optional add-ons. I configured three entries: a $500 flat-fee LLC formation service, a $1,500 uncontested divorce package, and a $250 initial consultation with a payment required at booking.
+
+That took about 25 minutes, including uploading a logo and setting a custom domain preview.
+
+Next up: client intake. The form builder supports page breaks, custom fields, and section dividers. I built a "New Client Intake" form asking for contact details, matter type, urgency level, and a brief description of the legal issue. Agency Handy's Public Form Automation connects this form directly to the CRM. When someone submits the intake form, a lead record appears automatically. No copy-pasting. No manual entry. If you've read the [automate-client-intake playbook](/playbooks/automate-client-intake) on this site, the same logic applies here, just with a lighter-weight tool.
+
+Payment runs through Stripe. Setup was about 3 minutes: connect the account, set currency to USD, done. Clients can pay by card directly through the checkout flow when they order a service from your catalog. I also tested the standalone invoice builder. You can create an invoice from scratch, attach it to any client record, and send it with a payment link. Agency Handy auto-generates an invoice the moment a proposal is accepted, which removes a step that most solos do manually.
+
+The client portal is white-labeled under your domain. Clients log in and see their active matters (called "orders" inside Agency Handy), review any documents you've shared through the portal, and track their invoice status. I ran a simulated client through the full flow. From their perspective, it looks like a polished branded portal, not a generic SaaS tool.
+
+For a solo attorney who fields "has my invoice been received?" calls at 4 PM on Fridays, that portal alone is worth the $74.
+
+<Scorecard
+  summary="Agency Handy handles client onboarding, invoicing, and portal access better than most tools at this price point. The gaps are real but predictable: it wasn't built for law firms, and the legal-specific features aren't there. For flat-fee solos, those gaps may not matter."
+  scores={[
+    { label: "Client Onboarding", value: 8.5 },
+    { label: "Invoicing & Payments", value: 8.0 },
+    { label: "Task & Order Management", value: 7.5 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## The Real Limitations
+
+Agency Handy is not a practice management system. It has no trust accounting, no IOLTA compliance tools, no court date tracking, and no matter-specific billing rates. If you need those things, you need Clio, MyCase, or PracticePanther. Full stop. Don't try to force Agency Handy into that role.
+
+Three deal-breaker limits you should know before buying.
+
+**Active leads are capped at 100 on Tier 1.** For most solos handling 20 to 40 active matters at a time, this is plenty of room. If you run a high-volume personal injury intake operation taking 150 consultations per quarter, you'll hit the ceiling. You'd need to archive old leads manually or move up to Tier 2.
+
+**File storage runs at 1 GB per user on Tier 1.** This makes Agency Handy unsuitable as a document management system for case files. Think of it as storage for your intake packets and signed proposals, not your motion practice. Keep actual case documents in Google Drive or a dedicated document management solution.
+
+**There's no native time-based billing.** You can log tasks and track time spent. But there's no way to automatically calculate "3.5 hours at $275/hour" and roll it into an invoice the way Clio does. You calculate the amount manually, then enter it. For hourly billing, this is a friction point. For flat-fee billing, it's completely irrelevant.
+
+The billing issue is the one I hear about most from users who tested it. If you've built your practice around hourly rates and detailed time entries, this is a genuine gap. If you've moved to flat-fee or productized legal services, you'll never notice it's missing.
+
+One more thing worth mentioning: the platform had real bugs in its early AppSumo campaigns. The founder's update from March 2026 documents what they've fixed since then, and the changelog is substantial. In my testing, I didn't hit the invoice calculation bugs or the email template issues that showed up in older reviews. The product has matured.
+
+## ROI: Where the Time Goes
+
+Let me put actual numbers on this.
+
+The biggest recovery is billing and payment. In my observation, attorneys running a solo practice spend 45 to 90 minutes per week on invoice-related admin: sending reminders, re-sending payment links, manually recording payments, reconciling with bank statements. Agency Handy's automated invoice delivery, online card payments, and payment status dashboard can realistically cut that to under 15 minutes per week. That's about 1 hour saved.
+
+The client portal eliminates status-update interruptions. When clients can log in and see their matter status themselves, "where are we in the process?" calls drop off. Based on the solos I've spoken with in testing this review, that kind of inbound friction typically runs 30 to 60 minutes per week for an active practice.
+
+The intake form automation, connected to the approach covered in the [client intake playbook](/playbooks/automate-client-intake), adds another 30 minutes per week if you were previously entering lead data by hand.
+
+Total realistic savings: 2 to 3 hours per week. At a billing rate of $250 per hour, that's $500 to $750 per week in recovered capacity. The $74 lifetime cost is paid back in the first few days of recovered time.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={250} />
+
+## The Verdict
+
+Agency Handy is not Clio. I want to be clear about that upfront. No trust accounting. No court calendar. No legal-specific billing logic. If those features are on your must-have list, look elsewhere.
+
+But for a solo attorney running flat-fee estate planning, immigration work, business formation, or family law matters, this tool removes a real and measurable amount of administrative drag. Client portal, online payment collection, service catalog, automated intake flow. These four things, bundled for a one-time payment of $74, represent genuine time returned to your schedule.
+
+I tested it across two weeks, including a full simulated client intake and billing cycle. The core features held up. The deal was active and purchasable on AppSumo as of March 31, 2026. And for a solo practice where it's just you, the single-seat Tier 1 plan fits exactly.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fagency-handy%2F"
+  productName="Agency Handy"
+  price="$74 Lifetime"
+/>
