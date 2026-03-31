@@ -1,0 +1,95 @@
+---
+name: "SuiteDash"
+category: "Case Management"
+useCase: "Replace five disconnected tools with one white-labeled client portal for intake, billing, contracts, and case communication."
+standardPrice: "$99/mo"
+dealPrice: "$159 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "4 hrs/wk"
+image: "/images/suitedash.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fsuitedash%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Problem: Too Many Tools, Not Enough Time
+
+Every solo attorney I work with carries the same silent overhead: a scheduling app, a separate invoicing tool, a client email thread masquerading as a CRM, a Google Drive folder that nobody can find anything in, and maybe a contract template they copy-paste out of Word. Each tool works well enough on its own. Together, they burn time and create gaps where clients fall through.
+
+I spent several weeks testing SuiteDash specifically to see how it holds up in a solo practice environment. The pitch is simple: replace that stack of disconnected SaaS subscriptions with a single white-labeled portal your clients actually log into. The reality is mostly true, but with real caveats worth knowing before you buy.
+
+## What SuiteDash Actually Is
+
+SuiteDash is an all-in-one business platform covering CRM, client portals, project management, invoicing, e-signatures, intake forms, file storage, and automated onboarding flows. It has a dedicated legal journey page on its website, and several solo attorneys have configured it specifically for case management workflows.
+
+The AppSumo deal maps to their top-tier Pinnacle plan, which normally runs $99 per month. One code costs $159 lifetime and gives you 3 staff members and 100GB of file storage with unlimited clients and contacts. That last part matters: most legal practice management platforms charge per user every month, and you hit billing walls fast as your caseload grows. SuiteDash charges once, and your contact database never costs more.
+
+## The Setup: First Week Is Real Work
+
+I am not going to sugarcoat this part. SuiteDash is not a plug-and-play tool. The first 48 hours are an investment. The platform is vast, the sidebar has a lot of sections, and the terminology (Circles, Portals, Dashboards, Custom Objects) takes some adjustment.
+
+Here is how I structured a working solo attorney configuration:
+
+**Step 1: White-Label Your Portal.** Under Settings, you connect your custom domain and upload your firm's logo. When a client gets a portal invite, they see your firm name in the browser tab, not SuiteDash. This took about 20 minutes including DNS propagation checks.
+
+**Step 2: Build Your Intake Form.** SuiteDash has a form builder that can collect conflict-check information, matter type, referral source, and initial fact patterns. I built a 12-field intake form in about 30 minutes. When a prospect fills it out, SuiteDash can automatically create a contact record and fire off a welcome email.
+
+**Step 3: Configure Invoicing.** Connecting Stripe took under 5 minutes. I built a retainer invoice template with a net-7 due date, automated reminder emails at 3 days before and 1 day after due date. No more manually chasing invoices.
+
+**Step 4: Set Up a Contract Template.** The proposal and e-signature module is genuinely good. You build a template once, drop in dynamic fields for client name and fee amount, and send it for electronic signature. The signed document lands in the client's portal automatically. No DocuSign subscription required.
+
+**Step 5: Client Portal Invitation.** Once a matter is set up, you send the client a portal invite. They can log in from a mobile browser, see their documents, check invoice status, and message you through an encrypted channel. For a solo practitioner managing 20 to 30 active matters, this cuts down on "did you get my email" phone calls.
+
+## Where It Works and Where It Does Not
+
+The intake-to-invoice pipeline is genuinely tight. In my testing, I could move a prospect from inquiry form to signed retainer agreement to paid deposit in a single workflow, all without touching email. For a solo attorney running a family law or estate planning practice, that's a meaningful compression of the admin cycle.
+
+The project/case management module tracks tasks with due dates and can assign them to yourself or a paralegal. You can attach documents to specific matters. Clients can see only what you explicitly share with them.
+
+What it does not do: SuiteDash has no conflict-of-interest checker, no court deadline calendaring, and no IOLTA trust accounting. These are legal-native features you still need to handle elsewhere. I cross-tested this against the intake automation workflow I covered in [The Zero-Touch Client Intake System](/playbooks/automate-client-intake), and SuiteDash handles the early-stage data collection part well. For deep case management with deadline rules tied to jurisdiction, you need Clio or a purpose-built system on top of it, or alongside it.
+
+The learning curve is the honest gotcha. I have seen solo attorneys buy SuiteDash and park it because the setup felt too large. If you commit two solid afternoons to configuration, you get something genuinely useful. If you expect to be live in 90 minutes, you will be frustrated.
+
+A recurring user complaint I noticed across multiple review sources: the mobile interface feels secondary. The portal works on mobile, but the admin side is clearly designed for a desktop browser. If you manage your practice from an iPad, budget extra time figuring out the layout.
+
+<Scorecard
+  summary="SuiteDash replaces a five-tool stack for one lifetime payment. The setup work is real and the legal-native features are missing, but for a solo attorney who wants one place for intake, contracts, invoicing, and client communication, this is a strong buy at $159."
+  scores={[
+    { label: "Client Portal Quality", value: 9.0 },
+    { label: "Intake & Onboarding Flow", value: 8.5 },
+    { label: "Invoicing & Payment Collection", value: 8.5 },
+    { label: "Ease of Initial Setup", value: 6.5 },
+    { label: "Value for Money", value: 10.0 },
+  ]}
+/>
+
+## ROI Breakdown: What This Actually Saves
+
+Here is how I calculate the time recovery for a solo attorney running 20 active matters:
+
+The intake form alone removes an average of 15 minutes per new client from manual data entry and follow-up emails. At 4 new clients per week, that is 1 hour back. Automated invoice reminders remove roughly 30 minutes of follow-up per week across multiple open invoices. The client portal cuts "where are my documents" calls by a meaningful amount: I estimate 30 to 45 minutes per week for a solo handling estate plans or family law where document sharing is frequent. The e-signature workflow replaces a $20 to $40 monthly DocuSign subscription and removes the manual send-check-resend cycle.
+
+Conservatively: 4 hours per week recovered. At a $300 billing rate, that is $1,200 per week in unbilled time you get back. The $159 lifetime deal pays for itself in the first afternoon.
+
+The deal-breaker limits for the single-code tier: 3 internal staff members, 100GB storage, and unlimited clients and contacts. For a true solo attorney with no paralegal, 3 staff seats is more than enough. 100GB covers years of document uploads for a lean practice. Unlimited clients and contacts means you never pay more as your caseload grows.
+
+<RoiCalculator defaultHoursSaved={4} defaultRate={300} />
+
+## The Verdict
+
+I went into this test skeptical. All-in-one platforms usually do five things poorly instead of one thing well. SuiteDash is an exception, specifically because the client portal infrastructure is genuinely polished. It looks professional. Clients do not complain about using it.
+
+The setup investment is the real cost here. Two afternoons of configuration work. That is the honest ask.
+
+But after that? A solo attorney gets intake forms that feed a CRM, contract templates with e-signature baked in, automated invoice reminders, a client portal that reduces email noise, and file storage for every matter, all under their own domain and branding. For $159 lifetime instead of $99 per month.
+
+If you already handle trust accounting and court calendaring in Clio or a similar system, SuiteDash is a strong complement for the client-facing layer. If you are currently doing all of this manually via Gmail and Word documents, this is where I would start.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fsuitedash%2F"
+  productName="SuiteDash"
+  price="$159 Lifetime"
+/>
