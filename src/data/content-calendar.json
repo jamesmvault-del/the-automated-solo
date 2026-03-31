@@ -10,8 +10,6 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 1,
-  "published": [
-    {"type": "tool", "title": "Agency Handy: Client Intake, Proposals, and Billing for the Solo Attorney", "slug": "agency-handy", "date": "2026-03-31"}
-  ]
+  "nextSlot": 0,
+  "published": []
 }

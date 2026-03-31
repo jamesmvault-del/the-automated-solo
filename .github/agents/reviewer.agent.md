@@ -43,9 +43,9 @@ Read `src/data/site-config.json` to get the `monetization.primaryPlatform` and `
 
 2. **Check the three deal-breaker limits.** These are the only plan limits that change a solo attorney's purchase decision. For each one, find the value on the live product page and compare it to what the article says:
 
-   | Limit | Live Page Value | Article States |
-   |-------|----------------|----------------|
-   | **User/seat cap** | (from plan table) | (what article says, or "NOT MENTIONED") |
+   | Limit                       | Live Page Value   | Article States                          |
+   | --------------------------- | ----------------- | --------------------------------------- |
+   | **User/seat cap**           | (from plan table) | (what article says, or "NOT MENTIONED") |
    | **Contact/lead/record cap** | (from plan table) | (what article says, or "NOT MENTIONED") |
    | **Storage** (only if <10GB) | (from plan table) | (what article says, or "NOT MENTIONED") |
 
