@@ -265,28 +265,37 @@ From the LIVE page you just fetched, extract every one of these fields. Then fin
 - Whether it is an AppSumo Original, AppSumo Select, or third-party listing
 - The compare-at / standard price shown on the page
 
-For EACH extracted field, locate the sentence in your article that references it. If your article says something different from the live page, fix the article. Common mistakes to watch for:
+**CRITICAL: Every quantitative limit from the plan table must appear somewhere in your article.** If the plan table shows a user cap, a lead cap, a storage limit, a workspace limit, or any other numerical restriction, your article must mention it. Omitting a real limit misleads readers. This is the #1 error our review process catches. Specifically:
+
+- **User/seat limits** must appear in the article if the plan restricts them. A solo attorney with a paralegal needs to know.
+- **Lead/contact/record caps** must appear in the article. A cap of 100 leads means something different to a practice getting 5 inquiries a week vs. 20.
+- **Storage limits** under 10GB must be mentioned.
+- **Workspace limits** must be mentioned if the plan restricts them.
+
+For EACH extracted field, locate the sentence in your article that references it. If your article says something different from the live page, fix the article. If your article does not mention it at all and it would matter to the target audience, ADD it to the limitations section. Common mistakes to watch for:
 
 - Confusing one plan tier's limits with another (e.g., writing the Tier 1 limit as if it applies to all tiers, or using Tier 2 limits when reviewing Tier 1)
 - Saying "per site" when the plan includes multiple sites
 - Saying "unlimited" when there is actually a cap, or vice versa
 - Using a monthly subscription price that does not match the vendor's current pricing page
+- **Omitting a limit entirely because you focused on features instead of restrictions**
 
 If you cannot find a claim on the live page to verify a number you wrote, that number is suspect. Either find a source or reframe it as "In my testing" language.
 
 #### Step 3: Read user reviews
 
-Read the 10 most recent user reviews on the product page. For each review rated 3 stars or below, note the complaint. After reading all of them, check:
+Read the 10 most recent user reviews on the product page. Read ALL of them, not just negative ones. Positive reviews often mention feature requests and workarounds that reveal real limitations. After reading all 10:
 
-- Do two or more reviewers mention the same limitation? If yes, your article MUST mention it in the limitations section. Not mentioning a pattern complaint that shows up in multiple reviews is a factual omission.
+- Do two or more reviewers mention the same limitation OR request the same missing feature? If yes, your article MUST mention it in the limitations section. Not mentioning a pattern complaint that shows up in multiple reviews is a factual omission.
 - Does any reviewer report that a feature described on the product page does not actually work as advertised? If yes, note it as a limitation or caveat.
-- Does any reviewer describe a gotcha that would specifically affect a solo attorney (e.g., team member access limitations, missing integrations with legal tools, slow support response times)? If yes, mention it.
+- Does any reviewer describe a gotcha that would specifically affect the target audience (e.g., team member access limitations, missing integrations with common tools, slow support response times)? If yes, mention it.
+- If 3 or more reviewers request the same feature (e.g., "need a mobile app"), mention it as a current gap even if no one is complaining about its absence.
 
 You do not need to catalog every minor gripe. Focus on patterns and deal-breakers for the target audience.
 
 #### Step 4: Cross-check ROI math
 
-Re-read your ROI and savings section with a calculator. Verify every arithmetic chain:
+Re-read your ROI and savings section with a calculator. Verify every arithmetic chain. Also verify that `roiEstimate` in frontmatter and `defaultHoursSaved` in any RoiCalculator component use the LOWER end of any range you state in the article body. If you say "2 to 3 hours per week," the frontmatter must say "2 hrs/wk" and the calculator default must be 2, not 3.
 
 - If you say "40 documents at 8 minutes each is 320 minutes," confirm 40 x 8 = 320.
 - If you say "that is over 5 hours," confirm 320 / 60 = 5.33.

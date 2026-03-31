@@ -273,6 +273,7 @@ The content pipeline uses two separate agents to ensure factual accuracy:
 The Publisher and Reviewer are separate agents with separate instructions. The Publisher writes; the Reviewer verifies. This separation exists because a writer fact-checking their own work has proven unreliable across multiple test cycles.
 
 **Flow:**
+
 1. `scheduled-publish.yml` creates an issue assigned to Copilot (Publisher agent writes the article)
 2. Publisher opens a PR with the article
 3. `generate-images.yml` generates hero images, validates the build, and labels the PR `review-ready`

@@ -33,20 +33,45 @@ The article exists on the Publisher's PR branch. Read the content file at the pa
 2. Extract the frontmatter fields: `name`, `category`, `dealPrice`, `standardPrice`, `dealType`, `roiEstimate`, `affiliateLink`.
 3. Identify the content type: tool review, playbook, or research.
 
-## Step 2: Fetch and Extract Source Data
+## Step 2: Fetch and Extract Source Data (MANDATORY OUTPUT)
 
 Read `src/data/site-config.json` to get the `monetization.primaryPlatform` and `monetization.productUrlPattern`.
 
 ### For Tool Reviews:
 
 1. **Fetch the product page** on the primary platform (e.g., AppSumo). Use the URL from the frontmatter `affiliateLink` to determine the product slug, then fetch the actual product page.
-2. **Extract the plan comparison table.** Write down EVERY tier with:
-   - Tier name and price
-   - All quantitative limits (credits, sites, users, documents, storage, flows, records, etc.)
-   - What is included vs. excluded per tier
-3. **Identify which tier the article is reviewing.** Match the `dealPrice` in frontmatter to the correct tier.
+
+2. **Build the Limits Extraction Table.** This is the single most important step you perform. You MUST write out a table with three columns. Do not skip this. Do not summarize. Write the actual table.
+
+   For EVERY row in the plan comparison table on the live product page, write:
+
+   | Field | Live Page Value (Tier being reviewed) | Article States |
+   |-------|---------------------------------------|----------------|
+   | Price | (exact price from page) | (what frontmatter/article says) |
+   | Users | (number from page) | (what article says, or "NOT MENTIONED") |
+   | Storage | (from page) | (what article says, or "NOT MENTIONED") |
+   | Leads/Contacts | (from page) | (what article says, or "NOT MENTIONED") |
+   | (every other row) | ... | ... |
+
+   **Rules for this table:**
+   - Include EVERY quantitative limit from the plan table. Not just the ones the article mentions.
+   - If the article does not mention a limit at all, write "NOT MENTIONED" in the third column.
+   - "NOT MENTIONED" is an error if the limit would affect the target audience. It must be added to the article's limitations section.
+   - Limits that restrict how many people can use the tool (users, seats, team members) are ALWAYS relevant.
+   - Limits that cap how many records/leads/contacts/documents you can have are ALWAYS relevant.
+   - Storage limits under 10GB are ALWAYS relevant.
+
+3. **Identify which tier the article is reviewing.** Match the `dealPrice` in frontmatter to the correct tier. Verify the article only claims features from THAT tier. If a feature belongs to a higher tier, flag it.
+
 4. **Fetch the vendor website** to confirm the product exists and cross-reference any claims about features.
-5. **Read the 10 most recent user reviews** on the product page. For each review rated 3 stars or below, record the complaint in one sentence.
+
+5. **Read user reviews.** Read the 10 most recent user reviews on the product page. Write a list:
+   - For EACH review, note: star rating, one-sentence summary of their main point.
+   - After listing all 10, identify any complaint that appears in 2 or more reviews. These are "pattern complaints."
+   - Pattern complaints MUST appear in the article's limitations section. If they don't, that's an error you must fix.
+   - Also note if 2+ reviewers are requesting a feature (e.g., mobile app, subtasks). If 3+ reviewers request the same thing, mention it as a current gap.
+
+6. **Check the compare-at / standard price.** The `standardPrice` in frontmatter should match EITHER the AppSumo compare-at price OR the vendor's monthly subscription. Note which one it matches and flag if it matches neither.
 
 ### For Playbooks:
 
@@ -72,9 +97,11 @@ Build a checklist comparing every factual claim in the article against the sourc
 - [ ] Every price mentioned in the article body matches the live listing
 - [ ] The plan tier being reviewed is correctly identified (Tier 1, Tier 2, etc.)
 
-### Feature Limits
+### Feature Limits (Reference your Limits Extraction Table from Step 2)
 
-- [ ] Every quantitative limit in the article (users, sites, documents, credits, storage, flows, etc.) matches the live listing for the CORRECT tier
+- [ ] Every row in your Limits Extraction Table that says "NOT MENTIONED" has been evaluated. If the limit affects the target audience, add it to the article's limitations section.
+- [ ] Specifically check: user/seat count, lead/contact caps, storage limits, workspace limits, API/webhook limits. These are the most commonly omitted.
+- [ ] Every quantitative limit that IS mentioned in the article matches the live listing for the CORRECT tier
 - [ ] Features described as "included" are actually included in the reviewed tier
 - [ ] Features described as "not included" or "missing" are actually absent from the reviewed tier
 - [ ] No feature from a higher tier is attributed to the reviewed tier
@@ -85,17 +112,18 @@ Build a checklist comparing every factual claim in the article against the sourc
 - [ ] The `affiliateLink` resolves to the correct product page
 - [ ] The `category` makes sense for what the product does
 
-### User Review Cross-Check
+### User Review Cross-Check (Reference your review list from Step 2)
 
-- [ ] Any complaint appearing in 2+ user reviews rated 3 stars or below is mentioned in the article's limitations section
+- [ ] Every "pattern complaint" you identified in Step 2 (appears in 2+ reviews) is mentioned in the article's limitations section. If not, add it.
+- [ ] Every "pattern feature request" (3+ reviewers asking for the same thing) is noted as a current gap.
 - [ ] The article does not promote a feature that multiple reviewers report as broken or non-functional
 - [ ] Support response time claims in the article are not contradicted by a pattern of reviewer complaints
 
 ### ROI and Math
 
 - [ ] Every arithmetic chain in the ROI section is correct (multiply, divide, totals)
-- [ ] The `roiEstimate` in frontmatter is supported by the math in the article body
-- [ ] The `defaultHoursSaved` in the RoiCalculator component matches the article's demonstrated savings
+- [ ] The `roiEstimate` in frontmatter uses the LOWER end of any range stated in the article. If the article says "2 to 3 hours," frontmatter must say "2 hrs/wk", not "3 hrs/wk".
+- [ ] The `defaultHoursSaved` in the RoiCalculator component uses the LOWER end of any range. Same rule.
 - [ ] Time comparisons (before vs. after) use realistic baselines
 
 ### Internal References
@@ -155,6 +183,7 @@ After making any corrections:
 ## Step 6: Submit for Merge
 
 When your PR is marked ready for review, CI will automatically:
+
 1. Validate the build
 2. Merge your Reviewer PR
 3. Close the original Publisher PR
