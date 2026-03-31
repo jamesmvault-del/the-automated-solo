@@ -68,6 +68,134 @@ jobs:
             core.setOutput('items', JSON.stringify(items));
             core.setOutput('has_items', items.length > 0 ? 'true' : 'false');
 
+      - name: Verify deals are active (sold-out CI gate)
+        id: deal_check
+        if: steps.detect.outputs.has_items == 'true'
+        env:
+          ITEMS: ${{ steps.detect.outputs.items }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const items = JSON.parse(process.env.ITEMS);
+            const toolItems = items.filter(i => i.type === 'tool');
+
+            if (toolItems.length === 0) {
+              console.log('No tool reviews in this PR. Skipping deal check.');
+              return;
+            }
+
+            for (const item of toolItems) {
+              const mdxPath = `src/content/tools/${item.slug}.mdx`;
+              if (!fs.existsSync(mdxPath)) continue;
+              const content = fs.readFileSync(mdxPath, 'utf8');
+
+              // Extract affiliate link from frontmatter
+              const linkMatch = content.match(/affiliateLink:\s*"([^"]+)"/);
+              if (!linkMatch) {
+                console.log(`No affiliate link in ${mdxPath}. Skipping deal check.`);
+                continue;
+              }
+
+              // Decode the AppSumo product URL from the affiliate deep link
+              let productUrl;
+              try {
+                productUrl = decodeURIComponent(new URL(linkMatch[1]).searchParams.get('u'));
+              } catch (e) {
+                console.log(`Could not parse product URL: ${e.message}`);
+                continue;
+              }
+
+              if (!productUrl || !productUrl.includes('appsumo.com')) {
+                console.log(`Product URL is not AppSumo: ${productUrl}`);
+                continue;
+              }
+
+              console.log(`Checking deal status: ${item.slug} → ${productUrl}`);
+
+              let html;
+              try {
+                const res = await fetch(productUrl, {
+                  headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DealChecker/1.0)' }
+                });
+                html = await res.text();
+              } catch (e) {
+                console.log(`Could not fetch ${productUrl}: ${e.message}. Skipping.`);
+                continue;
+              }
+
+              // Check for sold-out indicators
+              const isSoldOut = /sold\s*out/i.test(html) || /notify\s*me\s*when\s*it\s*returns/i.test(html);
+
+              if (isSoldOut) {
+                const msg = `## Deal Check Failed\n\n` +
+                  `**${item.slug}** is **sold out** on AppSumo.\n\n` +
+                  `The Publisher agent selected a product that is not currently purchasable. ` +
+                  `This PR cannot be published.\n\n` +
+                  `Product page: ${productUrl}\n\n` +
+                  `The next scheduled run will create a fresh issue for a different tool.`;
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.payload.pull_request.number,
+                  body: msg
+                });
+
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  state: 'closed'
+                });
+
+                // Close any open Publisher issues
+                const { data: openIssues } = await github.rest.issues.listForRepo({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: 'open',
+                  labels: 'content,copilot',
+                  per_page: 50
+                });
+                for (const issue of openIssues) {
+                  if (issue.pull_request) continue;
+                  if (issue.title.startsWith('[Publisher]')) {
+                    await github.rest.issues.update({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issue.number,
+                      state: 'closed',
+                      state_reason: 'not_planned'
+                    });
+                    await github.rest.issues.createComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issue.number,
+                      body: `Closed: agent selected a sold-out product (${item.slug}). CI deal check failed.`
+                    });
+                    console.log('Closed Publisher issue #' + issue.number);
+                  }
+                }
+
+                // Clean up the branch
+                try {
+                  await github.rest.git.deleteRef({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    ref: 'heads/' + context.payload.pull_request.head.ref
+                  });
+                } catch (e) {
+                  console.log('Branch cleanup: ' + e.message);
+                }
+
+                core.setFailed('Deal check failed: ' + item.slug + ' is sold out on AppSumo');
+                return;
+              }
+
+              console.log('Deal active: ' + item.slug);
+            }
+
       - name: Check GEMINI_API_KEY availability
         id: key_check
         env:
@@ -268,23 +396,6 @@ jobs:
                     });
                     console.log('Closed superseded Publisher PR #' + pr.number);
 
-                    // Close linked issues (GitHub won't auto-close on PR close, only on merge)
-                    const bodyMatch = (pr.body || '').match(/(?:closes|fixes|resolves)\s+#(\d+)/gi);
-                    if (bodyMatch) {
-                      for (const match of bodyMatch) {
-                        const issueNum = match.match(/#(\d+)/)[1];
-                        try {
-                          await github.rest.issues.update({
-                            owner, repo, issue_number: parseInt(issueNum), state: 'closed',
-                            state_reason: 'completed'
-                          });
-                          console.log('Closed linked issue #' + issueNum);
-                        } catch (e) {
-                          console.log('Could not close issue #' + issueNum + ': ' + e.message);
-                        }
-                      }
-                    }
-
                     try {
                       await github.rest.git.deleteRef({
                         owner, repo, ref: 'heads/' + pr.head.ref
@@ -295,6 +406,25 @@ jobs:
                   }
                 } catch (e) {
                   console.log('Error checking PR #' + pr.number + ': ' + e.message);
+                }
+              }
+            }
+
+            // Close all open [Publisher] issues (they won't auto-close since the PR was closed, not merged)
+            const { data: openIssues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: 'content,copilot', per_page: 50
+            });
+            for (const issue of openIssues) {
+              if (issue.pull_request) continue; // skip PRs
+              if (issue.title.startsWith('[Publisher]')) {
+                try {
+                  await github.rest.issues.update({
+                    owner, repo, issue_number: issue.number,
+                    state: 'closed', state_reason: 'completed'
+                  });
+                  console.log('Closed Publisher issue #' + issue.number + ': ' + issue.title);
+                } catch (e) {
+                  console.log('Could not close issue #' + issue.number + ': ' + e.message);
                 }
               }
             }

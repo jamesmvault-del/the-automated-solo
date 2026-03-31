@@ -52,7 +52,7 @@ Before creating ANY new content, you must:
    - The page loads (not a 404, not a redirect to the AppSumo homepage)
    - The product name on the page matches what you intend to review
    - A price or "Get" / "Buy" button is visible (the deal is active)
-   - **The deal is NOT sold out.** If you see "Sold out", "Notify me when it returns", "Coming soon", or no purchase button, the deal is NOT active. STOP and pick a different tool. A product page that exists but cannot be purchased is the same as a dead link for our readers.
+   - **SOLD-OUT CHECK (DO THIS BEFORE READING ANYTHING ELSE ON THE PAGE).** After the page loads, immediately search the ENTIRE fetched page text for these exact strings: `Sold out`, `Notify me when it returns`, `Coming soon`. If ANY of these strings appear ANYWHERE on the page, the deal is NOT active. Do NOT continue reading the page. Do NOT look at the pricing table, features, or reviews. STOP immediately and pick a different tool. A sold-out product page looks nearly identical to an active one (it has pricing tables, features, reviews) but the deal cannot be purchased. The presence of the words "Sold out" anywhere on the page is the definitive signal. This check has been automated in CI and will reject your PR if you skip it.
      b. **Fetch the vendor's own website.** Confirm the product's official site loads and describes the same product. If the vendor site is dead, the product is dead. Do not review it.
      c. **Record the verified URLs.** Before proceeding, write down:
    - Confirmed AppSumo product URL (the one that loaded successfully)

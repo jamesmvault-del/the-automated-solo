@@ -27,6 +27,17 @@ The article exists on the Publisher's PR branch. Read the content file at the pa
 
 **Important:** Title your PR starting with `[Reviewer]` so the CI pipeline knows this is a review correction, not a new article. Example: `[Reviewer] Fact-check corrections: GetTerms tool review`
 
+## Step 0.5: Deal Availability Gate (MANDATORY FIRST CHECK)
+
+**For tool reviews, this step MUST happen before ANY other verification.** If the deal is sold out, nothing else matters.
+
+1. Extract the `affiliateLink` from the article's frontmatter.
+2. Decode the AppSumo product URL from the affiliate link (the `u=` parameter).
+3. Fetch the AppSumo product page using your web tool.
+4. **IMMEDIATELY search the fetched page text for the exact strings "Sold out" and "Notify me when it returns".** Do NOT read the pricing table, features, or reviews first. Sold-out product pages display full pricing tables, feature lists, and user reviews that look identical to active deals. The ONLY reliable indicator is the presence of "Sold out" text on the page.
+5. **If EITHER string appears ANYWHERE on the page:** The deal is not purchasable. Close the PR with a comment: "Deal check failed: [product name] is sold out on AppSumo. This article cannot be published." Do NOT proceed to any other step. Do NOT attempt to fix the article. A sold-out product cannot be reviewed.
+6. If the page does NOT contain "Sold out" or "Notify me when it returns", proceed to Step 1.
+
 ## Step 1: Identify the Content
 
 1. Read the content file from the PR branch (path will be in the issue body).
