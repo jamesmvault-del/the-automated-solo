@@ -1,0 +1,58 @@
+name: Mark Copilot PRs Ready
+
+on:
+  workflow_run:
+    workflows: ["Copilot coding agent"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  mark-ready:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find and mark draft PR as ready
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const branch = context.payload.workflow_run.head_branch;
+            if (!branch || !branch.startsWith('copilot/')) {
+              console.log(`Branch "${branch}" is not a copilot branch. Skipping.`);
+              return;
+            }
+
+            // Find open PRs from this branch
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:${branch}`,
+              state: 'open'
+            });
+
+            if (prs.length === 0) {
+              console.log(`No open PRs found for branch ${branch}.`);
+              return;
+            }
+
+            const pr = prs[0];
+            if (!pr.draft) {
+              console.log(`PR #${pr.number} is already marked ready. Nothing to do.`);
+              return;
+            }
+
+            console.log(`PR #${pr.number} is still a draft. Marking ready for review...`);
+
+            // Use GraphQL to mark as ready (REST API cannot do this)
+            await github.graphql(`
+              mutation($prId: ID!) {
+                markPullRequestReadyForReview(input: { pullRequestId: $prId }) {
+                  pullRequest { number }
+                }
+              }
+            `, { prId: pr.node_id });
+
+            console.log(`PR #${pr.number} marked ready for review. Downstream workflows will fire.`);
