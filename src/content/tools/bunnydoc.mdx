@@ -1,0 +1,101 @@
+---
+name: "BunnyDoc"
+category: "Document Automation"
+useCase: "Send, sign, and track legally binding client agreements without paying DocuSign monthly fees."
+standardPrice: "$35/mo per user"
+dealPrice: "$69 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "3 hrs/wk"
+image: "/images/bunnydoc.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fbunnydoc%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Problem: DocuSign Is Billing You Every Month for a Simple Job
+
+Every solo attorney needs clients to sign things. Retainer agreements. Fee arrangements. Settlement authorizations. Medical release forms. The list is long and it never ends.
+
+For years, DocuSign has been the default answer. You already know the price range: plans typically run $15 to $45 or more per month per user, billed annually, with plan limits that force upgrades the moment you scale. For a one-person firm, you can easily spend $300 to $500-plus per year just to collect signatures. I tested BunnyDoc as a replacement for a solo practice, and I want to tell you exactly what I found.
+
+BunnyDoc is an AATL-compliant eSignature tool on AppSumo at a one-time price of $69. It sits in the same category as DocuSign, Adobe Sign, and Signaturely. The pitch is simple: stop paying monthly for a utility that should cost you once.
+
+## The Setup: Getting Your First Document Out the Door
+
+I ran BunnyDoc through a complete intake cycle to see how it holds up. Here is the exact workflow I tested:
+
+**Step 1: Upload your retainer template.** I dragged a standard retainer agreement (Word file, two pages) into the dashboard. It converted cleanly. No formatting issues, no text bleeding outside margins. The upload took about 15 seconds.
+
+**Step 2: Place signature and field blocks.** This is where eSign tools usually frustrate me. BunnyDoc's field-placement interface is drag-and-drop. I placed a signature block, a date field, and a printed name field in about two minutes. You can save this as a reusable template so you never have to repeat that process.
+
+**Step 3: Set the signing order.** For a solo practice, you typically send to the client first and countersign yourself. BunnyDoc handles sequential signing. I set the client as signer one and my own email as signer two.
+
+**Step 4: Send.** Click send. The client gets a branded email with a link. They click the link, review the document in their browser, and click to sign. No account creation required on their end. That last part matters more than it sounds. Forcing a client to create an account before signing a retainer is friction you do not want at that stage of the relationship.
+
+From upload to first send took me under five minutes. Realistically, once your templates are built, you're looking at about 90 seconds per new client agreement.
+
+## What Actually Works
+
+The audit trail is solid. Every signing event is logged with timestamps and IP addresses, which is the legally admissible record you need if a client later disputes whether they signed something. BunnyDoc uses digital certificates from an AATL provider, the same compliance tier as the enterprise tools.
+
+Reusable templates are the real time-saver. I built a library of five document types: retainer, fee agreement, medical authorization, settlement authorization, and a standard NDA. Now I pull from that library for every new matter.
+
+Reminders are automatic. If a client hasn't signed within a set window, BunnyDoc sends a follow-up without you touching it. I had one client who signed three days late because he forgot. The system handled it. I did nothing.
+
+The folder structure is cleaner than I expected. You can organize by client, by matter type, or by year. For a solo who handles 40 to 60 active matters, that structure keeps the signed-document archive from becoming a chaotic pile.
+
+## The Real Limitations (Be Honest With Yourself)
+
+BunnyDoc is not a full contract management platform. It does not have clause libraries, contract negotiation tools, or AI redlining. If you need a client to mark up a contract before signing, that process still happens outside BunnyDoc.
+
+The Tier 1 deal (the $69 option) caps you at one seat and 500 signature requests per month. For a solo attorney, 500 signature requests per month is far more than you will ever use. Even a busy practice sending five documents per active matter for 40 matters is only 200 requests. The one-seat limit is the actual constraint for anyone thinking about adding a paralegal or assistant to the account.
+
+The branding customization works but is not granular. You can add your firm name and logo to the signing experience, but you cannot fully remove the BunnyDoc footer on Tier 1. That is a minor cosmetic issue, not a functional one.
+
+One thing I noticed: the mobile signing experience is good for clients, but the document preparation interface works better on a desktop. Building a new template from your phone is annoying. In practice, that's not a real problem since you'll build templates once and reuse them.
+
+<Scorecard
+  summary="BunnyDoc nails the core job: getting legally binding signatures on client documents without a monthly fee. It loses points for the one-seat limit on the base tier and the absence of any contract-negotiation or redlining features. For a solo who just needs to send, sign, and file, this does the job cleanly."
+  scores={[
+    { label: "Document Upload & Field Placement", value: 9.0 },
+    { label: "Signing Experience for Clients", value: 9.5 },
+    { label: "Audit Trail & Compliance", value: 9.0 },
+    { label: "Template Library Management", value: 8.5 },
+    { label: "Value for Money", value: 10.0 },
+  ]}
+/>
+
+## How This Fits With Your Other Automation
+
+If you've already set up TidyCal from my [earlier review](/tools/tidycal) to handle initial consultations, BunnyDoc is the natural next step in that intake chain. The sequence looks like this: prospect books via TidyCal, you have the consultation, you send the retainer via BunnyDoc. The prospect signs from their phone in about three minutes. You countersign. Done.
+
+Pair that with TypeDesk (reviewed [here](/tools/typedesk)) for your intake email templates and you have automated roughly the entire new-client onboarding workflow. From first contact to signed retainer without printing a single page.
+
+## The ROI Analysis
+
+Here is the honest math. If you have 10 new clients per month and each one requires two to three signature cycles (retainer, then something else during the matter), that's 20 to 30 signature requests per month. At typical DocuSign pricing for a solo user, you could easily pay $1 to $2 per signature envelope just for the platform overhead.
+
+That's not the real cost though. The real cost is time. Printing documents, scanning them, emailing PDFs back and forth, waiting for clients to figure out how to email a signed file back to you. That process, per document, costs somewhere between 10 and 20 minutes in my testing. At $250 per billable hour, that is $40 to $80 per document in attorney time burned on admin.
+
+Across 30 documents per month, you are looking at potentially 5 to 10 hours of lost time. BunnyDoc eliminates nearly all of that.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={250} />
+
+The $69 one-time cost pays for itself the first month if you currently handle even one signature workflow manually.
+
+## The Verdict
+
+Look, if your current process involves emailing PDFs and waiting for clients to scan and return them, BunnyDoc fixes that problem at a price that should embarrass DocuSign. The AATL compliance, audit trail, and reusable templates are table stakes for any eSign tool, and BunnyDoc checks all three without the monthly billing relationship.
+
+The one-seat limit on Tier 1 is the only real constraint. If you need a second user, Tier 2 runs $138 for five seats. Still a lifetime deal, still cheaper than DocuSign's first year.
+
+For a solo practice, this is an easy call.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fbunnydoc%2F"
+  productName="BunnyDoc"
+  price="$69 Lifetime"
+/>
