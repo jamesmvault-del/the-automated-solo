@@ -1,0 +1,189 @@
+CONSULTATION-TO-CLIENT SNIPPET PACK
+For use with Typedesk (or any text expansion tool)
+James | The Automated Solo | theautomatedsolo.com
+
+HOW TO USE THIS FILE
+--------------------
+Each snippet below is a ready-to-use email template.
+In Typedesk, create a new template for each one, assign
+a short trigger (like :consult-confirm or :retainer-send),
+and use Typedesk's variable fields to fill in the bracketed
+placeholders at send time.
+
+Variables you will set inside Typedesk for each snippet:
+  {{client_name}}     - Client's first name
+  {{date}}            - Consultation date (e.g., April 10, 2026)
+  {{time}}            - Consultation time with timezone (e.g., 2:00 PM ET)
+  {{meeting_link}}    - Your Zoom or Google Meet URL
+  {{fee}}             - Consultation fee you charged (e.g., $150)
+  {{practice_area}}   - Your practice area (e.g., family law, estate planning)
+  {{your_name}}       - Your name
+  {{firm_name}}       - Your firm name
+  {{your_email}}      - Your direct email address
+  {{retainer_amount}} - Retainer fee (e.g., $2,500)
+  {{matter_type}}     - Type of matter (e.g., divorce, will and trust package)
+
+---------------------------------------------------------------------
+SNIPPET 1: CONSULTATION CONFIRMATION
+Trigger suggestion: :consult-confirm
+---------------------------------------------------------------------
+
+Subject: Your Consultation is Confirmed for {{date}}
+
+Hi {{client_name}},
+
+You're booked. Here's what to expect before we talk.
+
+Your consultation is scheduled for {{date}} at {{time}}.
+Join here: {{meeting_link}}
+
+To make the most of our 30 minutes, please have these
+three things ready:
+
+1. A one-paragraph summary of your situation. You don't
+   need to write an essay. Just the basic facts and what
+   outcome you're hoping for.
+
+2. Any relevant documents. If you have a court order,
+   a contract, or a prior attorney's letter related to
+   your issue, upload it or have it open on your screen.
+   I can review it faster than you can describe it.
+
+3. Your questions. Write them down before we start.
+   Consultations move fast. The clients who get the most
+   value come with a list.
+
+The consultation fee of {{fee}} was charged at booking.
+That covers 30 minutes of direct legal analysis, not a
+general Q&A session.
+
+See you on {{date}}.
+
+{{your_name}}
+{{firm_name}}
+{{your_email}}
+
+---------------------------------------------------------------------
+SNIPPET 2: POST-CONSULTATION FOLLOW-UP (SAME DAY)
+Trigger suggestion: :consult-followup
+---------------------------------------------------------------------
+
+Subject: Next Steps After Our Call Today
+
+Hi {{client_name}},
+
+Thanks for talking with me earlier today.
+
+Based on what you described, I think I can help you with
+your {{matter_type}} matter. Here is what happens next
+if you want to move forward.
+
+I'm going to send you an engagement letter and a fee
+agreement within the next few hours. It will come from
+BunnyDoc, an eSign platform I use instead of DocuSign.
+You do not need to create an account. You open the email,
+read the document, and click to sign. It takes about
+two minutes.
+
+The retainer amount is {{retainer_amount}}. Instructions
+for payment are included in the letter.
+
+If you have questions before you sign, reply to this
+email. I typically respond within a few hours on business
+days.
+
+If I haven't heard back from you in 48 hours, I'll follow
+up once. After that, I'll assume you've decided to go a
+different direction, and I'll release the time I've held
+for your matter.
+
+{{your_name}}
+{{firm_name}}
+{{your_email}}
+
+---------------------------------------------------------------------
+SNIPPET 3: RETAINER DELIVERY (BUNNYDOC COVER EMAIL)
+Trigger suggestion: :retainer-send
+---------------------------------------------------------------------
+
+Subject: Your Engagement Letter is Ready to Sign
+
+Hi {{client_name}},
+
+Attached (via the link below) is your engagement letter
+for {{matter_type}}.
+
+Please read through it carefully. It covers:
+- The scope of representation
+- The fee arrangement and retainer amount
+- How we communicate and what to expect
+- How to end the representation if needed
+
+Once you've signed, I'll receive a notification and we
+will be formally engaged. I'll then send you a secure
+intake questionnaire to collect the detailed facts I
+need to get started on your matter.
+
+The retainer of {{retainer_amount}} is due at signing.
+Payment instructions are on the final page of the document.
+
+If anything in the letter looks wrong (incorrect name,
+wrong matter type, anything at all), do not sign. Reply
+here and I'll send a corrected version.
+
+I appreciate you trusting me with this.
+
+{{your_name}}
+{{firm_name}}
+{{your_email}}
+
+---------------------------------------------------------------------
+SNIPPET 4: 48-HOUR RETAINER REMINDER (SOFT FOLLOW-UP)
+Trigger suggestion: :retainer-remind
+---------------------------------------------------------------------
+
+Subject: Quick Check-In on Your Engagement Letter
+
+Hi {{client_name}},
+
+Just checking in. I sent your engagement letter for
+{{matter_type}} about 48 hours ago and haven't seen it
+signed yet.
+
+A couple of common reasons this happens:
+
+The email landed in spam. Search your inbox for
+"BunnyDoc" or "{{firm_name}}" and it should surface.
+
+You had a question about the letter. Reply here. I'm
+happy to walk through anything that's unclear.
+
+If you've decided to go a different direction, no
+problem at all. Just let me know so I can release the
+time I've been holding for your file.
+
+The link in the original email is still active if you're
+ready to sign.
+
+{{your_name}}
+{{firm_name}}
+
+---------------------------------------------------------------------
+NOTES ON TONE
+---------------------------------------------------------------------
+These templates are intentionally direct. Solo attorneys
+often over-soften follow-up emails out of fear of seeming
+pushy. That's a mistake. Clients who are serious about
+moving forward appreciate clear, professional communication.
+Clients who are not serious won't be offended by directness.
+
+Every template here uses plain text formatting by design.
+Do not add HTML styling, your firm logo, or social media
+icons. Plain text emails have significantly higher open
+and reply rates with legal consumers compared to
+visually designed newsletter-style emails.
+
+Import these into Typedesk, assign your triggers, and
+you will spend less than two minutes on client
+communications per new matter from first booking to
+signed retainer.
