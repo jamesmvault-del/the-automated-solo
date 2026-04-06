@@ -10,8 +10,9 @@
     }
   },
   "rotation": ["tool", "playbook", "tool", "playbook", "research"],
-  "nextSlot": 1,
+  "nextSlot": 2,
   "published": [
-    {"type": "tool", "title": "BunnyDoc: eSign Client Agreements Without the DocuSign Monthly Fee", "slug": "bunnydoc", "date": "2026-04-02"}
+    {"type": "tool", "title": "BunnyDoc: eSign Client Agreements Without the DocuSign Monthly Fee", "slug": "bunnydoc", "date": "2026-04-02"},
+    {"type": "playbook", "title": "The Consultation-to-Client Pipeline: From Booked Call to Signed Retainer Without the Manual Grind", "slug": "consultation-to-client-pipeline", "date": "2026-04-06"}
   ]
 }
