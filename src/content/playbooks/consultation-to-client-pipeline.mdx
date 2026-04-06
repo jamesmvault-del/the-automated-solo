@@ -79,11 +79,11 @@ That last part is the one most attorneys skip, and it costs them every week. Man
 
 Set your buffer time to 15 minutes after each booking. This gives you space to take notes before the next appointment or before the afternoon grind swallows your window for follow-up.
 
-### Step 2: Build Your Three Typedesk Snippets
+### Step 2: Build Your Four Typedesk Snippets
 
-[Typedesk](/tools/typedesk/) is where the biggest time savings happen in this stack. Every new client journey involves the same three emails: the pre-consultation prep, the post-consultation follow-up, and the retainer cover email. You will write versions of these emails hundreds of times over the life of your practice. Every single one of those should be a snippet.
+[Typedesk](/tools/typedesk/) is where the biggest time savings happen in this stack. Every new client journey involves the same four emails: the pre-consultation prep, the post-consultation follow-up, the retainer cover email, and a 48-hour nudge if they haven't signed yet. You will write versions of these emails hundreds of times over the life of your practice. Every single one of those should be a snippet.
 
-Open Typedesk and create three templates. Use the dynamic variable feature for anything that changes between clients, like the client's name, the scheduled date, the meeting link, and the retainer amount. Here's how I set mine up:
+Open Typedesk and create four templates. Use the dynamic variable feature for anything that changes between clients, like the client's name, the scheduled date, the meeting link, and the retainer amount. Here's how I set mine up:
 
 **Snippet 1: The Confirmation Prep** (trigger: `:consult-confirm`)
 Fires the moment you see a new booking. Covers what they should bring, what to expect, and how long the call will run. It takes about three seconds to deploy from your keyboard and looks like you typed it personally.
@@ -94,7 +94,10 @@ Sent within one hour of ending the call. Sets expectations for when the retainer
 **Snippet 3: The Retainer Cover Email** (trigger: `:retainer-send`)
 Sent alongside the BunnyDoc signing link. Explains the document contents, confirms the retainer amount, and tells them what happens after they sign.
 
-I put all three of these templates into a free download at the bottom of this article. You don't have to write them from scratch.
+**Snippet 4: The 48-Hour Nudge** (trigger: `:retainer-remind`)
+If you haven't seen a signature after 48 hours, this snippet fires a soft follow-up. It addresses the two most common reasons the link sits unclicked: the email landed in spam, or they had a question about the letter. It closes most of the stragglers without feeling pushy.
+
+I put all four of these templates into a free download at the bottom of this article. You don't have to write them from scratch.
 
 The whole Typedesk configuration took me about 40 minutes. That includes writing the copy and testing the variable insertion. It is a one-time investment.
 
@@ -120,7 +123,7 @@ You have the call. Within 60 minutes of hanging up, you fire `:consult-followup`
 
 You go to BunnyDoc, open your saved retainer template, fill in the client's name and the fee, and hit send. The retainer is in their inbox within the same hour as the follow-up email.
 
-If you haven't seen a signature within 48 hours, fire `:retainer-remind` (a fourth snippet that's included in the download below). That soft nudge closes most of the stragglers.
+If you haven't seen a signature within 48 hours, fire `:retainer-remind`. That soft nudge closes most of the stragglers.
 
 The entire active time you spent on all of this, excluding the consultation itself, is about 10 minutes.
 
@@ -132,7 +135,7 @@ The other gap is matter-specific customization. If your practice area involves v
 
 ## The ROI
 
-The math on this system is not complicated. I estimated time savings across four touch points: booking setup (no more phone tag), three templated emails per new client, and document tracking instead of manual follow-up.
+The math on this system is not complicated. I estimated time savings across four touch points: booking setup (no more phone tag), four templated emails per new client, document tracking instead of manual follow-up, and the 48-hour nudge that eliminates most of the manual chase work.
 
 For a solo handling six new clients a month, the setup time pays back within three weeks. After that, every month you use this system, you are recovering real time that was previously spent on mechanical repetition.
 
