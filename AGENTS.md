@@ -16,6 +16,7 @@ A premium PWA authority site for solo attorney automation. The site publishes to
 - **Stack:** Astro 6, Tailwind CSS 4, MDX, Cloudflare Pages
 - **Content pipeline:** Publisher agent creates articles on a Mon/Thu rotation schedule via GitHub Actions. A separate Reviewer agent independently fact-checks every article before it merges.
 - **Niche config:** All niche-specific values (audience, categories, author, affiliate format) live in `src/data/site-config.json`. To adapt this system for a different niche, edit that file. The workflow and agent instructions read from it automatically.
+- **Niche adaptation:** To re-skin this entire project for a new niche, follow `NICHE-ADAPTATION-CHECKLIST.md` in the project root. It covers every file that needs changing (38 files to modify, 15 to delete) in a phased, step-by-step order. Start with `site-config.json`, then work through the checklist. Any agent asked to switch niches MUST read and follow that checklist.
 
 ---
 
@@ -60,7 +61,13 @@ Never publish `[VERIFY]`, `[TODO]`, `[PLACEHOLDER]`, or `[TBD]` to any file.
 
 All text, whether in an article, a downloadable checklist, or a component description, must pass AI detection tools. It must sound human, natural, and match James's writing patterns. See section 7 for the full style fingerprint.
 
-### 3.4 Product Verification (HARD GATE)
+### 3.4 Answer Search Optimization (ASO)
+
+All content must be optimized for AI answer engines (ChatGPT, Gemini, Perplexity, Claude) in addition to traditional search. AI models are now a primary way our audience finds tool recommendations and workflow advice. Content that AI models cannot cite is invisible to a growing share of our readers.
+
+Every article must include: a direct, quotable answer in the opening sentences; question-shaped H2 headings that match how people ask AI assistants; specific competitor comparisons with verifiable data; a confident "best for" verdict statement; and claim-evidence pairs (claim sentence immediately followed by evidence sentence). See `.github/agents/publisher.agent.md` Phase 7: ASO Checklist for the full requirements.
+
+### 3.5 Product Verification (HARD GATE)
 
 **NEVER publish content about a product without first verifying it exists.** This rule was created after an agent fabricated an entire tool review for a product that was not on AppSumo. It is the single most important verification step in the pipeline.
 
@@ -84,7 +91,7 @@ If a previously reviewed product becomes inactive, the agent must:
 
 The Publisher agent has full authority to remove dead products without waiting for approval. Stale listings erode reader trust.
 
-### 3.5 Absolute Factual Accuracy
+### 3.6 Absolute Factual Accuracy
 
 Our readers are attorneys. Misleading data destroys trust permanently and could expose the site to legal liability. Never fabricate metrics to fill a template or make content look more authoritative.
 
@@ -92,7 +99,7 @@ After writing any content, the agent must re-fetch the primary product or source
 
 A weekly deal accuracy audit (`.github/workflows/deal-accuracy.yml`) runs every Monday to verify published articles still match live product pages. It checks pricing, deal-breaker limits, and deal availability across all tool reviews.
 
-### 3.6 Geographic Neutrality
+### 3.7 Geographic Neutrality
 
 Do not mention James's physical location. Focus on the US legal-tech market.
 

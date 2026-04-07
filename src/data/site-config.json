@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "Niche configuration for the site. To adapt this system for a different niche (dog grooming, ebikes, etc.), edit this file. All workflow instructions, agent prompts, and content templates read from here. No other files need niche-specific changes.",
+    "description": "Niche configuration for the site. To adapt this system for a different niche (dog grooming, ebikes, etc.), edit this file first, then follow NICHE-ADAPTATION-CHECKLIST.md in the project root for the full 12-phase switchover. All workflow instructions, agent prompts, and content templates read from here. Any agent asked to switch niches MUST read and follow that checklist.",
     "instructions": "Change every field below to match your new niche. The workflow and agent instructions inject these values automatically."
   },
   "site": {

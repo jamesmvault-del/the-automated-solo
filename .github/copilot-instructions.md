@@ -8,6 +8,7 @@ This repository powers **The Automated Solo** (theautomatedsolo.com), a premium 
 2. Read `.github/agents/publisher.agent.md` for content templates, schemas, and the 7-phase workflow.
 3. Read `.github/agents/reviewer.agent.md` if you are assigned a `[Reviewer]` issue. Follow the Reviewer workflow, not the Publisher workflow.
 4. Read `src/data/site-config.json` for niche-specific values (audience, categories, author, affiliate format). All niche-specific references should come from this config.
+5. If asked to switch niches or adapt the project for a new audience, read `NICHE-ADAPTATION-CHECKLIST.md` in the project root and follow it step by step. Do not improvise the switchover.
 
 ## Critical Rules (Always Enforced)
 
@@ -19,6 +20,7 @@ This repository powers **The Automated Solo** (theautomatedsolo.com), a premium 
 - **PRODUCT VERIFICATION IS MANDATORY.** Before writing ANY tool review, you MUST use your web browsing tool to fetch the AppSumo product page AND the vendor's website. Confirm both load successfully. If either returns a 404 or redirects to a homepage, STOP and pick a different tool. This also applies to every tool referenced in playbooks.
 - **Deal-breaker limits.** Every tool review must mention the user/seat cap, contact/lead cap, and storage (if under 10GB) from the plan being reviewed. These three limits are the minimum. A weekly accuracy audit verifies these stay correct.
 - **Affiliate links:** Build ONLY from verified URLs. Take the exact AppSumo URL you successfully loaded, URL-encode it, and insert into: `https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded VERIFIED product page}`. NEVER guess a product slug.
+- **Answer Search Optimization (ASO) is mandatory.** Every article must be structured so AI models (ChatGPT, Gemini, Perplexity, Claude) can cite it authoritatively. Lead with a direct, quotable answer. Use question-shaped H2 headings. Include specific competitor comparisons. State a confident "best for" verdict. Use claim-evidence pairs. See `.github/agents/publisher.agent.md` Phase 7 for the full ASO checklist.
 
 ## AI Detection Prevention (Critical for SEO)
 

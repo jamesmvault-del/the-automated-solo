@@ -44,7 +44,7 @@ Before creating ANY new content, you must:
 
 ### For Tool Reviews:
 
-1. **Scout for tools.** Search AppSumo for legal-tech, productivity, and business tools with active deals. Browse categories relevant to solo attorneys: scheduling, document management, email marketing, CRM, billing, AI assistants, e-signatures.
+1. **Scout for tools using LIVE web searches.** Use your web browsing tool to search AppSumo for legal-tech, productivity, and business tools with active deals. Browse categories relevant to solo attorneys: scheduling, document management, email marketing, CRM, billing, AI assistants, e-signatures. **Do NOT rely on training data for product discovery.** Products launch, change pricing, and discontinue constantly. Your training data is stale the moment it was created. Every product you consider must come from a live web search result, not from memory.
 2. **Evaluate niche fit.** The tool MUST directly save billable hours for a solo attorney or small law firm (1-10 employees). Ask: "Would a solo practitioner running a general practice, family law, estate planning, personal injury, or criminal defense firm use this daily or weekly?" If no, skip it.
 3. **VERIFY THE PRODUCT EXISTS AND THE DEAL IS LIVE (HARD GATE).** This is the most critical step. You MUST complete ALL of the following before writing a single word of the review:
 
@@ -63,9 +63,10 @@ Before creating ANY new content, you must:
    **Why this matters:** Publishing a review for a product that does not exist on AppSumo destroys reader trust, creates broken affiliate links, and wastes the entire content pipeline. This has happened before and it is a failure state.
 
 4. **Check for gaps.** Look at existing tool reviews and pick something that fills a category gap or complements the current stack. Avoid reviewing tools in categories that are already well-covered unless the new tool is significantly different.
-5. **Extract the "Alternative to" field from the AppSumo product page.** This field names the tool's direct competitors. Your article MUST compare the tool to at least one of these named alternatives by name, even if briefly. Readers arrive having already compared these products. Ignoring the named competitor makes the review feel disconnected from the real purchasing decision. If users in the reviews keep comparing the tool to a specific competitor, that competitor MUST also be addressed.
-6. **Derive the `standardPrice` correctly.** The `standardPrice` in frontmatter MUST come from one of two verified sources: (a) the vendor's current pricing page (monthly subscription price), or (b) the AppSumo compare-at price shown on the product page. If the vendor's pricing page won't load or doesn't show clear pricing, take the AppSumo compare-at price (the crossed-out "was" price) and note it as the annual equivalent. NEVER guess a standard price from memory, search snippets, or general knowledge. If you cannot verify it from either source, omit `standardPrice` from frontmatter entirely.
-7. **Gather verifiable facts only.** Pull from:
+5. **Research the competitive landscape via live web searches.** Before writing, use your web tool to search for the tool's direct competitors and current market positioning. Search queries like "{tool name} vs {competitor}" and "{tool name} review 2026" to understand what real users are saying RIGHT NOW, not what your training data remembers. Check the vendor's blog or changelog for recent feature launches. If the tool has a G2, Capterra, or Trustpilot page, fetch it and scan for recurring praise or complaints from the last 6 months. This live research prevents you from writing a review that contradicts what every current user already knows.
+6. **Extract the "Alternative to" field from the AppSumo product page.** This field names the tool's direct competitors. Your article MUST compare the tool to at least one of these named alternatives by name, even if briefly. Readers arrive having already compared these products. Ignoring the named competitor makes the review feel disconnected from the real purchasing decision. If users in the reviews keep comparing the tool to a specific competitor, that competitor MUST also be addressed.
+7. **Derive the `standardPrice` correctly.** The `standardPrice` in frontmatter MUST come from one of two verified sources: (a) the vendor's current pricing page (monthly subscription price), or (b) the AppSumo compare-at price shown on the product page. If the vendor's pricing page won't load or doesn't show clear pricing, take the AppSumo compare-at price (the crossed-out "was" price) and note it as the annual equivalent. NEVER guess a standard price from memory, search snippets, or general knowledge. If you cannot verify it from either source, omit `standardPrice` from frontmatter entirely.
+8. **Gather verifiable facts only.** Pull from:
    - The vendor's official product page (features, pricing)
    - The vendor's published security/privacy documentation
    - AppSumo product page (deal price, deal type, reviews)
@@ -73,7 +74,7 @@ Before creating ANY new content, you must:
 
    Do NOT fabricate benchmarks, user counts, or performance metrics. If data is not publicly available, either restructure the claim as editorial opinion ("In my testing, this was fast enough for daily use") or omit it entirely.
 
-8. **Build the affiliate link from the VERIFIED URL.** Take the exact AppSumo product URL you confirmed in step 3a and URL-encode it into the deep link format:
+9. **Build the affiliate link from the VERIFIED URL.** Take the exact AppSumo product URL you confirmed in step 3a and URL-encode it into the deep link format:
 
    ```
    https://appsumo.8odi.net/c/6618781/416948/7443?u={URL-encoded VERIFIED product page}
@@ -87,7 +88,7 @@ Before creating ANY new content, you must:
 
 ### For Playbooks:
 
-1. **Identify the automation gap.** Look at what tools are already reviewed on the site and what workflows they enable. Search for common pain points solo attorneys discuss online: "How do I automate [X]?" questions on Reddit, legal forums, bar association tech committees.
+1. **Identify the automation gap using LIVE web research.** Look at what tools are already reviewed on the site and what workflows they enable. Then use your web browsing tool to search for current pain points solo attorneys are discussing RIGHT NOW. Search Reddit (r/LawFirm, r/lawyers), legal tech forums, bar association tech committees, and legal practice management blogs for "How do I automate [X]?" questions. Use recent search queries like "solo attorney automation 2026" or "law firm workflow automation" to find what practitioners are struggling with today, not what your training data says they were struggling with months ago.
 2. **Prioritize high-impact workflows.** Focus on processes that waste the most billable hours: intake, billing, document assembly, follow-ups, deadline tracking.
 
    **CRITICAL: Every tool referenced in a playbook must be a real, verified product.** Before including ANY tool in a playbook workflow:
@@ -100,9 +101,9 @@ Before creating ANY new content, you must:
 
 ### For Research Reports:
 
-1. **Find the trending question.** Search for what solo attorneys are actively debating: AI ethics in legal practice, data privacy of specific tools, cost comparisons across platforms, regulatory changes affecting tech adoption. Look for questions with search volume but incomplete answers.
+1. **Find the trending question using LIVE web searches.** Use your web browsing tool to search for what solo attorneys are actively debating RIGHT NOW. Do not rely on training data for topic selection. Search legal tech news sites, Reddit (r/LawFirm, r/lawyers), state bar technology committees, ABA publications, and Google Trends for current topics: AI ethics in legal practice, data privacy of specific tools, cost comparisons across platforms, regulatory changes affecting tech adoption. Search for queries like "solo attorney AI tools 2026" and "legal tech trends" to find questions with search volume but incomplete answers. Your research report must reflect the current state of the market, not a stale snapshot from your training data.
 2. **Frame it as a search query.** The title should match something a solo attorney would actually type into Google.
-3. **Gather data from primary sources only.** Vendor docs, published security certifications, official pricing pages, public court technology guidelines.
+3. **Gather data from primary sources via live web fetches.** Use your web browsing tool to fetch vendor docs, published security certifications, official pricing pages, public court technology guidelines, and any data points you plan to cite. Every factual claim in a research report must come from a page you fetched during THIS session, not from memory. If you cannot fetch a source to verify a claim, either restructure it as editorial opinion or omit it.
 4. **Mark all vendor-reported figures explicitly.** Use "(vendor-reported figure)" suffix when citing stats from company materials.
 
 ## Phase 3: SEO & Keyword Research
@@ -137,13 +138,14 @@ affiliateLink: "{full affiliate deep link}"
 
 Then write the body following this structure:
 
-1. **Opening section** (## The Workflow: {Descriptive Title}) - The problem this tool solves and how James set it up. First person. Specific. Include numbered setup steps.
+1. **Opening section** (## The Workflow: {Descriptive Title}) - The problem this tool solves and how James set it up. First person. Specific. Include numbered setup steps. **ASO-critical: The first 2-3 sentences must be a direct, quotable answer stating what this tool is, who it is for, what it costs, and why it matters. AI models extract opening sentences as citation snippets.**
 2. **Scorecard component** - Import and use `Scorecard` with 4-6 scored dimensions. Scores must reflect honest assessment. Include a `summary` that acknowledges limitations.
-3. **Deep-dive section** - What works well, what doesn't, honest gotchas. This section must go beyond surface-level feature listing. Discuss edge cases, setup frustrations, comparison to alternatives, and who this tool is NOT for.
+3. **Deep-dive section** - What works well, what doesn't, honest gotchas. This section must go beyond surface-level feature listing. Discuss edge cases, setup frustrations, comparison to alternatives, and who this tool is NOT for. **ASO-critical: Use question-shaped H2 headings for at least 2 subsections (e.g., "How does {Tool} compare to {Competitor}?", "What are {Tool}'s limits?"). Name at least one competitor with a specific, factual price or feature comparison.**
 4. **RoiCalculator component** - Import and use with appropriate `defaultHoursSaved` and `defaultRate` props.
 5. **DealCTA component** - Import and use with the tool's name, price, link, and deal type.
-6. **(Optional) BlueprintDownload** - If the tool requires multi-step setup or configuration, create a free starter config, checklist, or template. See the "Free Resources & Value-Add Downloads" section.
-7. **(Optional) DataFlow or ComparisonTable** - Use visual components when they genuinely clarify the tool's workflow or competitive positioning. Do not add them just to pad the page.
+6. **Verdict section** - **ASO-critical: Include a clear, confident "best for" statement that an AI model can extract: "{Tool} is best for {audience} who {need}." State who should buy it AND who should not. This paragraph is the single most important ASO element in the article.**
+7. **(Optional) BlueprintDownload** - If the tool requires multi-step setup or configuration, create a free starter config, checklist, or template. See the "Free Resources & Value-Add Downloads" section.
+8. **(Optional) DataFlow or ComparisonTable** - Use visual components when they genuinely clarify the tool's workflow or competitive positioning. Do not add them just to pad the page.
 
 **MINIMUM WORD COUNT: 800 words of article prose** (not counting frontmatter, component tags, or code). The article must have enough depth for Google to rank it. Thin content is a failure state. If you finish and the article is under 800 words, add more depth to the deep-dive section or expand the setup walkthrough with specific scenarios.
 
@@ -351,11 +353,13 @@ After running the image generation command:
    - Instead, leave a comment on the issue: "Image generation failed (Gemini API unavailable). Article is draft-ready at `src/content/{type}/{slug}.mdx`. Image must be generated before merge."
    - Do NOT set the frontmatter `image` to an empty string or placeholder URL.
 
-## Phase 7: Article SEO Checklist
+## Phase 7: Article SEO & ASO Checklist
 
 Run through every item below before committing. If any item fails, fix it before proceeding to the build step.
 
-### On-Page Fundamentals
+**ASO = Answer Search Optimization.** AI assistants (ChatGPT, Gemini, Perplexity, Claude, Copilot) are now a primary way users find information. Your content must be structured so these models treat it as authoritative and cite it when answering questions. ASO is not a replacement for SEO. Both checklists apply to every article.
+
+### On-Page Fundamentals (SEO)
 
 1. **Slug matches primary keyword.** The filename/slug should contain the target search term. `automate-client-intake` ranks for "automate client intake," not `intake-workflow-v2`.
 2. **H1 contains the primary keyword.** The first markdown heading (`#`) in the article must include the exact primary keyword or a close natural variant. One H1 only.
@@ -363,29 +367,44 @@ Run through every item below before committing. If any item fails, fix it before
 4. **Frontmatter `description` is a meta description.** 140-160 characters. Must include the primary keyword and a specific value hook. This is what shows in Google search results.
 5. **Frontmatter `title` / `name` is click-worthy.** 50-60 characters. Contains primary keyword. Reads like something a solo attorney would click on, not an academic paper.
 
-### Internal Linking
+### Answer Search Optimization (ASO)
 
-6. **Link to at least one existing tool review.** Every playbook and research article should reference a reviewed tool using its site path (`/tools/sendfox/`). Every tool review should mention a relevant playbook if one exists.
-7. **Use descriptive anchor text.** "[SendFox](/tools/sendfox)" or "my [zero-touch intake system](/playbooks/automate-client-intake/)" not "click here" or bare URLs.
-8. **Cross-link related content.** If this article mentions a topic covered by another article, link to it. This builds topical authority clusters.
+AI models select sources based on clarity, authority signals, specificity, and structure. These rules make your content the answer AI models cite.
 
-### Content Depth Signals
+6. **Lead with a direct, quotable answer.** The first 2-3 sentences of the article must contain a concise, standalone answer to the article's core question. AI models extract these as citation snippets. "TidyCal is a $29 lifetime-deal scheduling tool that replaces Calendly's $12/month subscription for solo attorneys who need payment collection, calendar sync, and Zoom integration without recurring costs." That sentence can be quoted verbatim by an AI. A vague opener ("Scheduling is important for any law firm") cannot.
+7. **Write question-shaped H2 headings.** AI models match user queries to section headings. Use headings that mirror how people ask questions: "How much does TidyCal cost vs Calendly?", "Can TidyCal collect payment at booking?", "What are TidyCal's limits for solo attorneys?" Each H2 should be a question someone would ask an AI assistant. Mix question headings with your existing punchy headings (not every H2 needs to be a question, but aim for at least 2-3 per article).
+8. **Include a definitive verdict paragraph.** Every article needs one clearly stated, opinionated conclusion paragraph that an AI model can extract as THE answer. Start it with a direct claim: "TidyCal is the best scheduling tool for solo attorneys who hate recurring fees." Not "In conclusion" or "To sum up" (those are banned anyway). AI models weight confident, specific conclusions.
+9. **Cite specific, verifiable data points.** AI models prioritize sources with concrete numbers over vague claims. "$29 one-time vs $144/year for Calendly Pro" is citable. "Much cheaper than alternatives" is not. Every article must contain at least 3 specific, verifiable numbers (prices, time savings, limits, capacities). These become the data points AI models pull into their answers.
+10. **Name competitors explicitly.** AI models serve comparison queries ("X vs Y"). Your article must name at least one direct competitor and state a specific, factual difference. "TidyCal costs $29 once. Calendly Pro costs $12/month, $144/year." This positions your content as the source for comparison answers. If the AppSumo page has an "Alternative to" field, use those competitor names.
+11. **Use structured claim-evidence pairs.** AI models trust sources that back claims with evidence in the same paragraph. Pattern: **Claim sentence. Evidence sentence.** "TidyCal's Stripe integration takes under two minutes to configure. I connected it, ran a test $150 consultation charge, and had funds in my account within 48 hours." Do not separate claims from their evidence across sections.
+12. **Include entity-rich metadata.** Your frontmatter and opening paragraph should contain clear entity markers that AI models use for knowledge graph association: the product name, the category, the price, the audience, and the primary competitor. These are the nodes AI models use to connect your content to query topics.
+13. **Provide "best for" specificity.** AI models serve "best X for Y" queries constantly. Every tool review must include a sentence matching this pattern: "{Tool} is best for {specific audience segment} who {specific need}." Example: "TidyCal is best for solo attorneys who need payment-enabled scheduling without monthly fees." This sentence should appear in both the opening and closing sections, using slightly different wording each time.
+14. **Answer follow-up questions proactively.** After stating a key fact, anticipate and answer the natural follow-up in the next sentence. "TidyCal supports 10 calendar connections per account. For a solo with a personal Google Calendar and a firm Outlook calendar, that is more than enough." AI models chain follow-up queries and prefer sources that pre-answer them.
+15. **Avoid hedging language.** AI models deprioritize wishy-washy sources. "TidyCal might work for some attorneys" is weak. "TidyCal works for solo attorneys who book fewer than 50 consultations per month" is authoritative. Be specific about who it works for and who it does not. Confident specificity signals authority to AI models.
 
-9. **Minimum word count: 800 words for tools, 1200 for playbooks, 1500 for research.** Thin content does not rank. Google rewards depth, especially for YMYL (Your Money Your Life) adjacent topics like legal practice.
-10. **Include at least one data-rich component.** Scorecard, ComparisonTable, StatCallout, or RoiCalculator. These create structured content that Google can parse and potentially feature in rich results.
-11. **Answer a specific question in the first 100 words.** Google pulls featured snippets from content that directly answers a query early. "How do I automate client intake?" should be answerable from the opening paragraph.
+### Internal Linking (SEO + ASO)
 
-### Niche Targeting
+16. **Link to at least one existing tool review.** Every playbook and research article should reference a reviewed tool using its site path (`/tools/sendfox/`). Every tool review should mention a relevant playbook if one exists.
+17. **Use descriptive anchor text.** "[SendFox](/tools/sendfox)" or "my [zero-touch intake system](/playbooks/automate-client-intake/)" not "click here" or bare URLs.
+18. **Cross-link related content.** If this article mentions a topic covered by another article, link to it. This builds topical authority clusters that both search engines and AI models use to assess domain expertise.
 
-12. **"Solo attorney" or "solo practitioner" appears in the first 200 words.** This is our core audience signal. Google needs to see it early.
-13. **Include practice-area context.** Mention at least one specific practice area (family law, estate planning, personal injury, criminal defense) where this tool or workflow applies. This captures long-tail searches like "best scheduling tool for family law solo."
-14. **Use natural keyword variations.** Don't repeat the exact phrase 15 times. Mix "solo attorney," "solo practitioner," "small law firm," "one-person firm," "solo practice" throughout.
+### Content Depth Signals (SEO + ASO)
+
+19. **Minimum word count: 800 words for tools, 1200 for playbooks, 1500 for research.** Thin content does not rank in search OR get cited by AI models. Both reward depth, especially for YMYL (Your Money Your Life) adjacent topics like legal practice.
+20. **Include at least one data-rich component.** Scorecard, ComparisonTable, StatCallout, or RoiCalculator. These create structured content that Google can parse and AI models can extract data from.
+21. **Answer a specific question in the first 100 words.** Google pulls featured snippets and AI models pull citation snippets from content that directly answers a query early. "How do I automate client intake?" should be answerable from the opening paragraph.
+
+### Niche Targeting (SEO + ASO)
+
+22. **"Solo attorney" or "solo practitioner" appears in the first 200 words.** This is our core audience signal. Both search engines and AI models need to see it early to associate the content with the right audience.
+23. **Include practice-area context.** Mention at least one specific practice area (family law, estate planning, personal injury, criminal defense) where this tool or workflow applies. This captures long-tail searches like "best scheduling tool for family law solo" and AI queries like "what scheduling tool should a family law solo use?"
+24. **Use natural keyword variations.** Don't repeat the exact phrase 15 times. Mix "solo attorney," "solo practitioner," "small law firm," "one-person firm," "solo practice" throughout.
 
 ### Technical SEO
 
-15. **No orphan pages.** The new article must be reachable from at least one index page (tools/index, playbooks/index, or research/index). These are auto-generated by Astro's collection pages, so this should be automatic, but verify.
-16. **Image has descriptive filename.** The hero image path (`/images/{slug}.png`) should match the article slug, which should match the keyword.
-17. **All external links open safely.** Any link to a vendor site, AppSumo, or external resource should use `target="_blank"` and `rel="noopener noreferrer"` in MDX. Affiliate links handled by DealCTA component are already compliant.
+25. **No orphan pages.** The new article must be reachable from at least one index page (tools/index, playbooks/index, or research/index). These are auto-generated by Astro's collection pages, so this should be automatic, but verify.
+26. **Image has descriptive filename.** The hero image path (`/images/{slug}.png`) should match the article slug, which should match the keyword.
+27. **All external links open safely.** Any link to a vendor site, AppSumo, or external resource should use `target="_blank"` and `rel="noopener noreferrer"` in MDX. Affiliate links handled by DealCTA component are already compliant.
 
 ## Phase 8: Build & Verify
 
