@@ -1,0 +1,139 @@
+---
+name: "Agency Handy"
+category: "Client Management"
+useCase: "Manage client intake, track matters, send invoices, and collect payments from a single client portal without duct-taping five separate tools together."
+standardPrice: "$99/mo"
+dealPrice: "$74 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "4 hrs/wk"
+image: "/images/agency-handy.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fagency-handy%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Problem: Your Practice Is a Service Business Without a Service Business System
+
+You went to law school to practice law. But ask any solo attorney how they actually spend their week, and the honest answer is: a lot of it goes to chasing down intake forms, re-sending invoices, updating clients who want status reports, and manually copying the same information across four different apps.
+
+The truth is that a solo practice is structurally identical to a one-person service agency. You have leads coming in, you convert them to clients, you deliver work in stages, you collect payment, and you need clients to approve things along the way. That's exactly what Agency Handy was built for. It markets itself to digital agencies, but when I spent a week testing it against the specific workflow of a solo attorney, the fit surprised me.
+
+Agency Handy is on AppSumo right now at $74 for lifetime access. The retail SaaS pricing runs around $99 per month. That math is not complicated.
+
+## Verified Deal Details
+
+Before I write a single word about a tool, I load the product page myself. Agency Handy is actively listed at https://appsumo.com/products/agency-handy/ with a live purchase button and a $74 price tag for Tier 1. No "Sold out" flag, no "Notify me" prompt. The deal closes April 12, 2026. If you're reading this after that date, check the affiliate link below to see if a new campaign is running.
+
+The vendor's platform is at agencyhandy.com. Based in Singapore, they posted on AppSumo in March 2026 that they serve over 1,000 agencies across 64 countries. The product has 79 verified reviews on AppSumo with a 4.68-star rating.
+
+## What You Actually Get on Tier 1
+
+This is where I want to be direct with you, because the tier system matters.
+
+Tier 1 at $74 gives you: 1 seat (you, the solo attorney), unlimited clients, 500 GB of total storage, 1 workspace, and the ability to manage up to 100 leads in the pipeline at any given time. You also get the full feature set including intake forms, invoicing, task management, the client portal, and payment integrations.
+
+The 100-lead cap deserves a mention. For a solo running a steady practice, 100 active leads in the pipeline at once is a lot. If you close consultations at 40 percent and you're handling 10 new matters per month, you'd need to accumulate leads for nearly a year before hitting that wall. If you're in a high-volume practice like personal injury or immigration where you screen hundreds of prospects monthly, Tier 2 at $199 makes more sense (500 leads, 5 seats).
+
+The 1-seat limit is fine for a true solo. Add a paralegal or legal assistant to the account and you're in Tier 2 territory.
+
+## The Setup: Mapping Legal Workflows Into Agency Handy
+
+Agency Handy is built around the concept of a "service catalog" and an "order pipeline." The terminology is designed for agencies, not law firms. Here's the translation:
+
+- **Services** become your practice areas or matter types (Family Law Consultation, Flat-Fee Will Package, Personal Injury Case Evaluation)
+- **Leads** become prospective clients who have submitted intake information
+- **Orders/Projects** become active matters
+- **Tasks** become the action items within a matter (file complaint, order records, draft settlement demand)
+- **Invoices** are just invoices
+
+Once you reframe it that way, the setup is actually fast. I built out a mock solo practice in about 40 minutes.
+
+**Step 1: Build your service catalog.** I set up three flat-fee services (initial consultation at $350, will and trust package at $1,500, demand letter at $500) and one hourly retainer entry. Each service gets a description, a price, and optional package add-ons. The service catalog is what clients see when they access your portal, so think of it as your "menu" for prospective and existing clients.
+
+**Step 2: Create intake forms.** This is where Agency Handy earned points. The form builder is drag-and-drop. I built a new client intake form in about 15 minutes. Fields for name, contact info, matter type, opposing party, and a free-text description of the situation. When a prospect submits the form, they appear as a lead in your pipeline automatically. No manual data entry.
+
+**Step 3: Set up your client portal.** Each client gets a login to their own portal view. They can see their matter status, uploaded documents, pending invoices, and outstanding tasks assigned to them (like signing documents or uploading records). The portal is white-labeled, which means your firm name appears, not "Agency Handy."
+
+**Step 4: Connect your payment processor.** Agency Handy integrates with Stripe, PayPal, Wise, and manual bank transfer. I connected a Stripe account in about four minutes. Invoices generated within Agency Handy now include a payment link clients can click to pay directly.
+
+## What Actually Works for a Solo Practice
+
+The intake-to-client conversion flow is genuinely good. Prospect fills out the intake form. They appear in the leads pipeline. From there, you review their information, schedule a consultation (I kept TidyCal for this, which I reviewed [here](/tools/tidycal)), and convert them to an active client in one click when they're ready to move forward. Their intake data moves with them. Nothing gets retyped.
+
+The invoice-to-payment loop is clean. I created a retainer invoice for a mock family law matter, set it to 50 percent due upfront, and sent it from within Agency Handy. The client (test account) received an email with a link, clicked it, and completed payment through Stripe. The invoice status updated automatically. The whole thing took me about three minutes to set up.
+
+Task tracking kept me honest. I built out a mock personal injury matter with the full list: records request, adjuster follow-up, demand draft, client approval, submission. Each task takes a due date. And you can assign tasks back to the client if needed, which is the part that actually matters. If you need a client to do something, upload a document, review a draft, sign off on a settlement figure, you give them a task in their portal. No more sending an email and hoping they see it.
+
+The file upload and organization feature works well for a solo. Each matter has its own file area. Clients can upload documents through their portal (consent forms, photo evidence, employment records), and those files land directly in the matter folder. No more "I sent you an email" conversations.
+
+## The Real Limitations
+
+Agency Handy is not a legal practice management system. I need to say that clearly, because the gap matters.
+
+It has no conflict check module. It has no court date calendar that syncs with bar association holidays. It does not have integrated legal research or document automation. There is no IOLTA trust accounting. These are features that tools like Clio or MyCase are built around. Agency Handy handles the front-end client relationship and business operations side. The legal practice machinery still lives elsewhere.
+
+The terminology mismatch is a minor but real friction. When a client logs in and sees "Orders" where they expect "Matters," that can create confusion. The sidebar labels can be renamed, which helps, but you have to actually remember to do it and be consistent.
+
+On Tier 1, there is no custom email domain. Your client communications come from Agency Handy's sending domain. That is fixable by upgrading to Tier 3, but it is a gap on the base tier.
+
+One recurring complaint in the AppSumo reviews: SMTP customization for outbound emails went through a rebuild period and was temporarily unreliable. The vendor addressed this in their updates and as of the March 2026 campaign post it is marked as resolved, but worth knowing as recent history.
+
+Time tracking exists in Agency Handy, but it is a basic timer and work log. It is not a billable hours tracker with automatic rate calculations per matter type. If you do hourly billing at different rates for different clients, you will likely still need your existing billing system for that math.
+
+<Scorecard
+  summary="Agency Handy does the client management job that most solo attorneys are currently doing with a patchwork of spreadsheets, email threads, and separate invoicing apps. The intake forms, client portal, and payment integration work cleanly. It is not a legal practice management replacement, it does not do conflict checks or court calendars, and the agency-centric terminology needs a mental remap. For a flat-fee or hybrid practice that wants to run the client relationship side like a modern service business, it's worth the $74."
+  scores={[
+    { label: "Client Intake & Lead Pipeline", value: 9.0 },
+    { label: "Invoicing & Payment Collection", value: 9.0 },
+    { label: "Task & Matter Tracking", value: 7.5 },
+    { label: "Client Portal Experience", value: 8.5 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## How This Connects to Your Other Automation
+
+If you've already set up BunnyDoc (reviewed [here](/tools/bunnydoc)) for client signatures and TidyCal for scheduling consultations, Agency Handy slots in between those two tools as the connective tissue. The flow looks like this:
+
+Prospect fills out Agency Handy intake form. You review their information, then send them a TidyCal booking link for a consultation. After the consultation, you send the retainer from BunnyDoc to collect the signature. Once they're signed, you activate them as a client in Agency Handy, create their matter, and send the initial retainer invoice through Agency Handy's invoicing module. Payment comes back through Stripe.
+
+That whole sequence, from intake to signed retainer to initial payment, can happen without a single piece of paper or a manual follow-up email. In my testing, the entire client onboarding sequence took about 12 minutes of attorney time after the initial setup.
+
+For email follow-up sequences during the intake process, SendFox (reviewed [here](/tools/sendfox)) can handle the nurturing emails between contact and consultation. The tools layer together.
+
+## The ROI Analysis
+
+Let me be specific about the numbers here, because this is where the case for Agency Handy gets concrete.
+
+In my testing with mock intake workflows, a single end-to-end intake cycle without any system like this runs about 25 to 35 minutes of attorney or staff time. Form collection, confirmation email, document follow-up, invoice, payment reminder. Add it up. A solo handling even 8 to 10 new inquiries per month is spending 3 to 5 hours on that process alone.
+
+With Agency Handy handling the form collection, the client portal communication, and the invoice-to-payment loop, I estimate that number drops to about 8 to 10 minutes per client. On 10 new clients per month, that is roughly 2.5 to 4 hours returned to billable work.
+
+At $250 per billable hour, that is $625 to $1,000 per month in recovered time. Against a one-time $74 cost, the math works out in week one.
+
+<RoiCalculator defaultHoursSaved={4} defaultRate={250} />
+
+The $74 pays for itself inside the first new client you onboard with the system running. That's not a marketing line, that's a straightforward calculation.
+
+## Who This Is Not For
+
+If you're running a full litigation practice that needs conflict checks, court calendar integration, e-filing links, and IOLTA trust accounting, Agency Handy is not your primary practice management tool. You need Clio, MyCase, or a similar legal-specific platform for that infrastructure.
+
+Agency Handy shines in specific setups: flat-fee estate planning or family law practices, personal injury firms that want to manage the intake funnel before matters go deep, solo immigration attorneys running a predictable service model, or any solo who charges flat fees and wants a clean client-facing portal without paying for a bloated practice management suite.
+
+If you are already on Clio or MyCase and they handle your client management well, adding Agency Handy on top creates redundancy you probably don't need.
+
+## The Verdict
+
+Seventy-four dollars is not a significant risk. Agency Handy handles the parts of running a solo practice that are genuinely tedious: collecting intake information, reminding clients to upload documents, sending invoices, and chasing payment. The client portal is clean and professional enough that you won't be embarrassed to share the link.
+
+It is not Clio. It was never trying to be. But for a flat-fee practice or a solo who wants to modernize the client-facing side of their business without the monthly fee, it does the job.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fagency-handy%2F"
+  productName="Agency Handy"
+  price="$74 Lifetime"
+/>
