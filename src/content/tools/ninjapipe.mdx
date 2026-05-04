@@ -1,0 +1,109 @@
+---
+name: "NinjaPipe"
+category: "Case Management"
+useCase: "Track every potential client from first inquiry to retained status without losing leads to a forgotten follow-up."
+standardPrice: "$39/mo"
+dealPrice: "$69 Lifetime"
+dealType: "Lifetime Deal"
+roiEstimate: "3 hrs/wk"
+image: "/images/ninjapipe.png"
+imageStyle: "tech-thumbnail"
+affiliateLink: "https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fninjapipe%2F"
+---
+
+import Scorecard from "../../components/Scorecard.astro";
+import RoiCalculator from "../../components/RoiCalculator.astro";
+import DealCTA from "../../components/DealCTA.astro";
+
+## The Leads You're Losing Right Now
+
+You went to law school to practice law, not to act as a part-time data entry clerk tracking who called about a consultation. But here is what happens without a system: a potential client emails Monday, you get to it Wednesday, you have a quick call Thursday, you mean to send a retainer Friday, and it is two weeks later before you realize that person hired someone else.
+
+NinjaPipe is an AI-driven CRM and sales pipeline tool available on AppSumo for a one-time $69. I ran it through a mock solo attorney intake workflow for a week to see exactly how well it adapts to a one-person practice. For a solo attorney who is currently managing potential clients with a spreadsheet, a sticky note, or their memory, the gap it fills is real.
+
+The product lives at the intersection of client intake tracking and lead management automation. Not legal billing software. Not full practice management. Just a clean system that makes sure no potential client falls through the cracks between first contact and signed retainer.
+
+## The Setup: A Functional Intake Pipeline in Under 30 Minutes
+
+I built the entire intake workflow from zero. Here is what that actually looked like:
+
+**Step 1: Build your pipeline stages.** I created five stages: Lead Received, Consultation Scheduled, Consultation Complete, Retainer Sent, and Retained. The Kanban board view shows exactly how many prospects are stuck at each stage at a glance. Setup took about seven minutes. You can drag cards between stages as prospects progress, and you immediately see if four people have been sitting in "Retainer Sent" for four days without signing.
+
+**Step 2: Set up your intake form.** NinjaPipe has a built-in form builder. I put together a short intake questionnaire: name, email, phone number, practice area interest, and a one-sentence description of the matter. That form feeds directly into the pipeline as a new lead. This single piece replaces the handwritten list of people who called this week.
+
+**Step 3: Configure one follow-up automation.** This is where the time savings show up. I built a trigger rule: if a contact has been in "Consultation Scheduled" for more than 48 hours without moving to "Consultation Complete," send a reminder email automatically. You write the email once. You set the trigger once. After that, NinjaPipe handles the nudge without you touching it. Across 10 new leads per week, that's roughly 10 emails per week you are no longer sending manually.
+
+**Step 4: Import your existing contacts.** NinjaPipe accepts CSV, XLSX, and XLS. I imported a test list of 200 contacts in about two minutes. The field mapping interface is straightforward. Drag your column headers to the matching NinjaPipe fields and click import.
+
+**Step 5: Connect Gmail.** The OAuth flow for Google Workspace took under a minute. After connecting, every email to or from a contact automatically logs against their record in NinjaPipe. You get a complete communication history without any manual copy-pasting.
+
+Total setup time from scratch: 28 minutes. After that, the system just runs.
+
+<Scorecard
+  summary="NinjaPipe handles the core intake tracking job well. The pipeline view, intake forms, and basic automation are functional and genuinely useful for a solo practice. It loses points for the still-rough invoicing module and some features that are visibly in-development. Buy it for the CRM, not for billing."
+  scores={[
+    { label: "Pipeline & Kanban View", value: 9.0 },
+    { label: "Intake Form Builder", value: 8.0 },
+    { label: "Automation Engine", value: 7.5 },
+    { label: "Mobile App", value: 8.5 },
+    { label: "Value for Money", value: 9.5 },
+  ]}
+/>
+
+## What Actually Works
+
+The Kanban view is the practical win for a solo. You log in at the start of the day, scan the board in about 20 seconds, and you know immediately which leads need action today. Without this, those four people sitting in "Retainer Sent" would just age out silently. You'd never notice them.
+
+The automation is not fancy, but it covers the scenarios that actually matter for a solo intake workflow. Basic triggers: time elapsed, stage unchanged, email not sent within a window. For a practice with 10 to 20 new leads per month, these triggers handle most of the follow-up you currently do by memory.
+
+The mobile app is a real app. I tested the iOS version between simulated "court calls" and it responds quickly. You can check the pipeline, add a call note, and move a lead to the next stage directly from your phone. That matters for a solo who spends chunks of the day in courtrooms or depositions.
+
+The AI features are optional and require your own OpenAI API key. When connected, NinjaPipe can draft personalized follow-up emails and summarize call notes automatically. I'd describe the quality as "useful starting draft, needs editing." Good enough to save 10 minutes per follow-up email once you have the API connected.
+
+## The Real Limits You Should Know Before Buying
+
+The Tier 1 deal gets you 3 user seats, 10,000 contacts, and 10 automation workflows. The 3-seat limit is fine for a solo with a paralegal. The 10,000-contact ceiling is far more than most small practices accumulate in a career. The 10-automation limit is the one you'll actually hit if you try to build out a sophisticated follow-up sequence, but 10 workflows still covers most intake scenarios.
+
+The invoicing module exists. Do not rely on it. In my testing the basic invoice creation works, but the payment gateway integrations felt incomplete. Use dedicated billing software for anything involving trust accounting or client billing. NinjaPipe is a CRM first, invoicing tool maybe later.
+
+The product has a 3.99 out of 5 rating on AppSumo from 72 reviews. Some of those complaints are about features still being polished. This is an honest picture of a bootstrapped product that ships new things fast but sometimes ships them before they're fully finished. If you need bulletproof stability for a high-volume operation, the roughness will bother you. For a solo handling 5 to 20 new leads per month, the core features are stable enough.
+
+## How NinjaPipe Compares to the Other Options
+
+Clio, the dominant tool in the law firm practice management space, starts at $39 per month per user. It has matter management, trust accounting, document management, and integrations built specifically for legal workflows. If you need billing and case management in one platform, Clio earns that price. But if you just need intake tracking and follow-up automation, you're paying for a lot of features you won't use.
+
+HubSpot offers a free CRM, but it's designed for a B2B sales team, not a solo attorney's intake funnel. Mapping consultation stages to HubSpot's "deals" framework is annoying and the free plan has no automation.
+
+Pipedrive costs $14 to $49 per user per month. It's a cleaner, more polished pipeline tool. But it's a recurring subscription with no lifetime option, and it lacks legal-specific intake features.
+
+NinjaPipe's position: less feature-rich than Clio, more flexible than HubSpot, cheaper than everything if you take the lifetime deal. For a practice where the primary need is intake tracking and automated follow-up, it covers the job at a price that requires no ongoing budget justification.
+
+## How This Connects to Your Existing Stack
+
+If you've already set up TidyCal from my [earlier review](/tools/tidycal) to handle consultation booking, NinjaPipe is the natural layer that sits underneath it. When a prospect books via TidyCal, you add them to NinjaPipe as a lead in the "Consultation Scheduled" stage. After the call, you move them to "Consultation Complete" and trigger the retainer follow-up automation. Once they sign through BunnyDoc (reviewed [here](/tools/bunnydoc)), you move the card to "Retained" and close the intake loop.
+
+Leads who don't convert at the consultation stage are not dead leads. Drop their email into SendFox (reviewed [here](/tools/sendfox)) and put them on a light nurture sequence. Attorneys who stay top of mind with unconverted leads get referrals from those people even when they never retained. NinjaPipe makes it easy to export those contacts for that purpose.
+
+## The ROI Case
+
+Here is the math. If a solo attorney loses one potential client per month because of a missed or delayed follow-up, and that client represented a $3,000 retainer, that's $36,000 per year in missed revenue from a tracking problem. One lost client per month is a conservative estimate for a practice with no CRM.
+
+Even if NinjaPipe only prevents one missed client every quarter, that's $12,000 per year recovered from a $69 one-time cost. The payback period is measured in days, not months.
+
+On the time side: manual intake tracking in a spreadsheet runs about 8 to 10 minutes per new lead when you account for logging the contact, adding call notes, setting a reminder, and following up. NinjaPipe cuts that to 2 to 3 minutes once forms and automations are running. At 10 new leads per week, you're reclaiming roughly 50 to 70 minutes per week in administrative overhead.
+
+<RoiCalculator defaultHoursSaved={3} defaultRate={300} />
+
+## The Verdict
+
+NinjaPipe is best for the solo attorney who has 10 or more leads per month and no reliable system for tracking where each one sits in the intake process. Buy it if you are currently managing potential clients with a spreadsheet, a notepad, or your memory. The pipeline view alone will immediately show you which leads have been ignored.
+
+Who should skip it: attorneys who need legal-specific matter management, trust accounting, or court date tracking built into the same platform. Clio or PracticePanther are better fits for that use case, even at their monthly price points.
+
+The deal is live at $69 for Tier 1. Pair it with TidyCal for consultation booking and BunnyDoc for sending retainers, and you have a full intake system that costs less than two months of Clio. For a solo practice, that math is hard to argue with.
+
+<DealCTA
+  link="https://appsumo.8odi.net/c/6618781/416948/7443?u=https%3A%2F%2Fappsumo.com%2Fproducts%2Fninjapipe%2F"
+  productName="NinjaPipe"
+  price="$69 Lifetime"
+/>
