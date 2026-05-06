@@ -40,7 +40,9 @@ jobs:
               /^src\/content\/(tools|playbooks|research)\/.+\.mdx$/.test(f.filename)
             );
 
-            if (hasContent) {
+            const isReviewerPR = context.payload.pull_request.title.startsWith('[Reviewer]');
+
+            if (hasContent && !isReviewerPR) {
               console.log('PR contains new content. Applying review-ready label to trigger Content Review Gate.');
               // Ensure the label exists
               try {
