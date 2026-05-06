@@ -41,7 +41,26 @@ jobs:
             );
 
             if (hasContent) {
-              console.log('PR contains new content. Skipping auto-merge (Reviewer agent will handle).');
+              console.log('PR contains new content. Applying review-ready label to trigger Content Review Gate.');
+              // Ensure the label exists
+              try {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: 'review-ready',
+                  color: '0075ca',
+                  description: 'Content PR ready for Reviewer agent fact-check'
+                });
+              } catch (e) {
+                if (!e.message.includes('already_exists')) console.log(`Label note: ${e.message}`);
+              }
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                labels: ['review-ready']
+              });
+              console.log('Applied review-ready label. Content Review Gate workflow will now fire.');
               core.setOutput('skip', 'true');
             } else {
               console.log('No new content files. Safe to auto-merge.');

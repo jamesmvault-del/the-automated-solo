@@ -2,7 +2,7 @@ name: Mark Copilot PRs Ready
 
 on:
   workflow_run:
-    workflows: ["Copilot coding agent"]
+    workflows: ["Copilot cloud agent"]
     types: [completed]
 
 permissions:

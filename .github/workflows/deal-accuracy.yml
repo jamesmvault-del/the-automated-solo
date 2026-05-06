@@ -136,7 +136,20 @@ jobs:
               title: `[Maintenance] Weekly deal accuracy audit (${new Date().toISOString().split('T')[0]})`,
               body: body,
               labels: ['deal-accuracy', 'copilot'],
-              assignees: ['copilot']
+              assignees: ['copilot-swe-agent[bot]']
             });
 
             console.log(`Created audit issue #${issue.number}`);
+
+            // Post @copilot comment as fallback if bot assignee didn't take
+            const assignees = (issue.assignees || []).map(a => a.login.toLowerCase());
+            if (!assignees.some(a => a.includes('copilot'))) {
+              await new Promise(resolve => setTimeout(resolve, 3000));
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: '@copilot'
+              });
+              console.log('Posted @copilot fallback comment.');
+            }
