@@ -1,4 +1,4 @@
-const CACHE_NAME = "autosolo-v1.23.3";
+const CACHE_NAME = "autosolo-v1.23.4";
 const OFFLINE_URL = "/";
 
 const PRECACHE_URLS = [
